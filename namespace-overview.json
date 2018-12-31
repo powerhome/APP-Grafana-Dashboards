@@ -14,9 +14,9 @@
   },
   "editable": true,
   "gnetId": null,
-  "graphTooltip": 0,
+  "graphTooltip": 1,
   "id": 11,
-  "iteration": 1546264389686,
+  "iteration": 1546275701754,
   "links": [],
   "panels": [
     {
@@ -160,14 +160,14 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(kube_pod_container_resource_limits{namespace=~\"$namespace\", resource=\"cpu\"})",
+          "expr": "sum(kube_pod_container_resource_requests{namespace=~\"$namespace\", resource=\"cpu\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
         }
       ],
       "thresholds": "",
-      "title": "CPU  Committed",
+      "title": "CPU  Requested",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -178,6 +178,86 @@
         }
       ],
       "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": null,
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 3,
+        "x": 6,
+        "y": 0
+      },
+      "id": 12,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": " Cores",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": true
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "sum(kube_pod_container_resource_limits{namespace=~\"$namespace\", resource=\"cpu\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "thresholds": "",
+      "title": "CPU Limits",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
     },
     {
       "cacheTimeout": null,
@@ -200,7 +280,7 @@
       "gridPos": {
         "h": 4,
         "w": 3,
-        "x": 6,
+        "x": 9,
         "y": 0
       },
       "id": 8,
@@ -247,7 +327,7 @@
         }
       ],
       "thresholds": "",
-      "title": "Memory Committed",
+      "title": "Memory Limits",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -337,7 +417,7 @@
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
@@ -421,7 +501,7 @@
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
@@ -449,9 +529,10 @@
         "allValue": null,
         "current": {
           "tags": [],
-          "text": "All",
+          "text": "huddle-staging + huddle-production",
           "value": [
-            "$__all"
+            "huddle-staging",
+            "huddle-production"
           ]
         },
         "datasource": "Prometheus",
@@ -462,7 +543,7 @@
         "name": "namespace",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "All",
             "value": "$__all"
           },
@@ -492,7 +573,7 @@
             "value": "monitoring"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "huddle-staging",
             "value": "huddle-staging"
           },
@@ -512,7 +593,7 @@
             "value": "auth"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "huddle-production",
             "value": "huddle-production"
           },
@@ -591,5 +672,5 @@
   "timezone": "",
   "title": "Namespace Resources",
   "uid": "t5KGzMUmk",
-  "version": 4
+  "version": 5
 }
