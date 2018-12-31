@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "id": null,
-  "iteration": 1546034591527,
+  "id": 10,
+  "iteration": 1546219314602,
   "links": [],
   "panels": [
     {
@@ -56,10 +56,10 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (label_role) (irate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[5m]) * on (pod_name) group_left(label_release,label_role) label_replace(kube_pod_labels{label_release=\"$environment\", label_role=~\"$role\"}, \"pod_name\", \"$1\", \"pod\", \"(.*)\"))",
+          "expr": "sum by (label_app, label_role) (irate(container_cpu_usage_seconds_total{namespace=\"$namespace\"}[5m]) * on (pod_name) group_left(label_release,label_app, label_role) label_replace(kube_pod_labels{label_release=\"$environment\", label_app=~\"$app\", label_role=~\"$role\"}, \"pod_name\", \"$1\", \"pod\", \"(.*)\"))",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{ label_role }}",
+          "legendFormat": "{{ label_app }}: {{ label_role }}",
           "refId": "A"
         }
       ],
@@ -140,12 +140,12 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (label_role) (container_memory_usage_bytes{namespace=\"$namespace\"} * on (pod_name) group_left(label_release,label_role) label_replace(kube_pod_labels{label_release=\"$environment\", label_role=~\"$role\"}, \"pod_name\", \"$1\", \"pod\", \"(.*)\"))",
+          "expr": "sum by (label_app, label_role) (container_memory_usage_bytes{namespace=\"$namespace\"} * on (pod_name) group_left(label_release,label_app,label_role) label_replace(kube_pod_labels{label_release=\"$environment\", label_app=~\"$app\", label_role=~\"$role\"}, \"pod_name\", \"$1\", \"pod\", \"(.*)\"))",
           "format": "time_series",
           "instant": false,
           "interval": "10s",
           "intervalFactor": 1,
-          "legendFormat": "{{ label_role}}",
+          "legendFormat": "{{ label_app }}: {{ label_role }}",
           "refId": "A"
         }
       ],
@@ -190,6 +190,7 @@
       }
     }
   ],
+  "refresh": false,
   "schemaVersion": 16,
   "style": "dark",
   "tags": [
@@ -225,8 +226,8 @@
         "allValue": null,
         "current": {
           "tags": [],
-          "text": "nitro-demo12",
-          "value": "nitro-demo12"
+          "text": "nitro-devtb2",
+          "value": "nitro-devtb2"
         },
         "datasource": "Prometheus",
         "hide": 0,
@@ -246,12 +247,53 @@
         "useTags": false
       },
       {
-        "allValue": null,
+        "allValue": "",
         "current": {
           "tags": [],
-          "text": "web",
+          "text": "All",
           "value": [
-            "web"
+            "$__all"
+          ]
+        },
+        "datasource": "Prometheus",
+        "hide": 0,
+        "includeAll": true,
+        "label": "App",
+        "multi": true,
+        "name": "app",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "nitro",
+            "value": "nitro"
+          },
+          {
+            "selected": false,
+            "text": "redis",
+            "value": "redis"
+          }
+        ],
+        "query": "label_values(kube_pod_labels{namespace=\"$namespace\", label_release=\"$environment\"}, label_app)",
+        "refresh": 0,
+        "regex": "",
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": null,
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
           ]
         },
         "datasource": "Prometheus",
@@ -260,80 +302,9 @@
         "label": "Role",
         "multi": true,
         "name": "role",
-        "options": [
-          {
-            "selected": false,
-            "text": "All",
-            "value": "$__all"
-          },
-          {
-            "selected": false,
-            "text": "rpush",
-            "value": "rpush"
-          },
-          {
-            "selected": false,
-            "text": "resque-single-connect_presence",
-            "value": "resque-single-connect_presence"
-          },
-          {
-            "selected": true,
-            "text": "web",
-            "value": "web"
-          },
-          {
-            "selected": false,
-            "text": "resque-scheduler",
-            "value": "resque-scheduler"
-          },
-          {
-            "selected": false,
-            "text": "call-loop",
-            "value": "call-loop"
-          },
-          {
-            "selected": false,
-            "text": "resque-single-connect_room_management",
-            "value": "resque-single-connect_room_management"
-          },
-          {
-            "selected": false,
-            "text": "resque-single-sale_updates",
-            "value": "resque-single-sale_updates"
-          },
-          {
-            "selected": false,
-            "text": "cron",
-            "value": "cron"
-          },
-          {
-            "selected": false,
-            "text": "connect-server",
-            "value": "connect-server"
-          },
-          {
-            "selected": false,
-            "text": "resque-single-connect_notifications",
-            "value": "resque-single-connect_notifications"
-          },
-          {
-            "selected": false,
-            "text": "resque-pool",
-            "value": "resque-pool"
-          },
-          {
-            "selected": false,
-            "text": "resque-single-smb_password_changes",
-            "value": "resque-single-smb_password_changes"
-          },
-          {
-            "selected": false,
-            "text": "master",
-            "value": "master"
-          }
-        ],
-        "query": "label_values(kube_pod_labels{namespace=\"$namespace\", label_release=\"$environment\"}, label_role)",
-        "refresh": 0,
+        "options": [],
+        "query": "label_values(kube_pod_labels{namespace=\"$namespace\", label_release=\"$environment\", label_app=~\"$app\"}, label_role)",
+        "refresh": 1,
         "regex": "",
         "sort": 0,
         "tagValuesQuery": "",
@@ -345,7 +316,7 @@
     ]
   },
   "time": {
-    "from": "now-14d",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
@@ -375,6 +346,6 @@
   },
   "timezone": "",
   "title": "Environment Resource Utilization",
-  "uid": null,
-  "version": 0
+  "uid": "UKPOnWUmk",
+  "version": 7
 }
