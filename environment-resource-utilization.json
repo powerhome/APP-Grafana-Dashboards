@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": 10,
-  "iteration": 1546219314602,
+  "iteration": 1546267031087,
   "links": [],
   "panels": [
     {
@@ -201,6 +201,7 @@
       {
         "allValue": null,
         "current": {
+          "selected": true,
           "tags": [],
           "text": "nitro-demos",
           "value": "nitro-demos"
@@ -225,9 +226,8 @@
       {
         "allValue": null,
         "current": {
-          "tags": [],
-          "text": "nitro-devtb2",
-          "value": "nitro-devtb2"
+          "text": "nitro-demo12",
+          "value": "nitro-demo12"
         },
         "datasource": "Prometheus",
         "hide": 0,
@@ -249,11 +249,8 @@
       {
         "allValue": "",
         "current": {
-          "tags": [],
           "text": "All",
-          "value": [
-            "$__all"
-          ]
+          "value": "$__all"
         },
         "datasource": "Prometheus",
         "hide": 0,
@@ -261,25 +258,9 @@
         "label": "App",
         "multi": true,
         "name": "app",
-        "options": [
-          {
-            "selected": true,
-            "text": "All",
-            "value": "$__all"
-          },
-          {
-            "selected": false,
-            "text": "nitro",
-            "value": "nitro"
-          },
-          {
-            "selected": false,
-            "text": "redis",
-            "value": "redis"
-          }
-        ],
+        "options": [],
         "query": "label_values(kube_pod_labels{namespace=\"$namespace\", label_release=\"$environment\"}, label_app)",
-        "refresh": 0,
+        "refresh": 1,
         "regex": "",
         "sort": 0,
         "tagValuesQuery": "",
@@ -292,9 +273,7 @@
         "allValue": null,
         "current": {
           "text": "All",
-          "value": [
-            "$__all"
-          ]
+          "value": "$__all"
         },
         "datasource": "Prometheus",
         "hide": 0,
@@ -316,7 +295,7 @@
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {
@@ -347,5 +326,5 @@
   "timezone": "",
   "title": "Environment Resource Utilization",
   "uid": "UKPOnWUmk",
-  "version": 7
+  "version": 9
 }
