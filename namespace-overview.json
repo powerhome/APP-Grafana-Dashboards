@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": 11,
-  "iteration": 1546275701754,
+  "iteration": 1546291529423,
   "links": [],
   "panels": [
     {
@@ -340,7 +340,12 @@
       "valueName": "current"
     },
     {
-      "aliasColors": {},
+      "aliasColors": {
+        "Limit": "#bf1b00",
+        "Limit logging": "#bf1b00",
+        "logging Limit": "#bf1b00",
+        "namespace Limit": "#bf1b00"
+      },
       "bars": false,
       "dashLength": 10,
       "dashes": false,
@@ -381,23 +386,47 @@
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "alias": "/Limit$/",
+          "fill": 0
+        },
+        {
+          "alias": "/ Request$/",
+          "fill": 0
+        }
+      ],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (namespace) (irate(container_cpu_usage_seconds_total{namespace=~\"$namespace\"}[5m]))",
+          "expr": "sum by (namespace) (irate(container_cpu_usage_seconds_total{namespace=\"$namespace\", container_name=~\".*\", container_name!=\"POD\"}[5m])) / sum by (namespace) (kube_pod_container_resource_limits_cpu_cores{namespace=\"$namespace\"})",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{ namespace }}",
+          "legendFormat": "{{ namespace }} Usage",
           "refId": "A"
+        },
+        {
+          "expr": "sum by (namespace) (kube_pod_container_resource_requests_cpu_cores{namespace=\"$namespace\"}) / sum by (namespace) (kube_pod_container_resource_limits_cpu_cores{namespace=\"$namespace\"})",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "{{ namespace }} Request",
+          "refId": "B"
+        },
+        {
+          "expr": "1",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "Limit",
+          "refId": "C"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "CPU Time Consumed",
+      "title": "CPU",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -413,10 +442,11 @@
       },
       "yaxes": [
         {
-          "format": "s",
+          "decimals": null,
+          "format": "percentunit",
           "label": null,
           "logBase": 1,
-          "max": null,
+          "max": "1",
           "min": "0",
           "show": true
         },
@@ -435,7 +465,9 @@
       }
     },
     {
-      "aliasColors": {},
+      "aliasColors": {
+        "logging Limit": "#bf1b00"
+      },
       "bars": false,
       "dashLength": 10,
       "dashes": false,
@@ -465,23 +497,39 @@
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "alias": "/Limit$/",
+          "fill": 0
+        },
+        {
+          "alias": "/Request$/",
+          "fill": 0
+        }
+      ],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (namespace) (container_memory_usage_bytes{namespace=~\"$namespace\"})",
+          "expr": "sum by (namespace) (container_memory_working_set_bytes{namespace=~\"$namespace\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ namespace }}",
           "refId": "A"
+        },
+        {
+          "expr": "sum by (namespace) (container_spec_memory_limit_bytes{namespace=\"$namespace\"})",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "{{ namespace }} Limit",
+          "refId": "C"
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Memory Used",
+      "title": "Memory",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -528,11 +576,11 @@
       {
         "allValue": null,
         "current": {
+          "selected": false,
           "tags": [],
-          "text": "huddle-staging + huddle-production",
+          "text": "logging",
           "value": [
-            "huddle-staging",
-            "huddle-production"
+            "logging"
           ]
         },
         "datasource": "Prometheus",
@@ -563,7 +611,7 @@
             "value": "ingress"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "logging",
             "value": "logging"
           },
@@ -573,7 +621,7 @@
             "value": "monitoring"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "huddle-staging",
             "value": "huddle-staging"
           },
@@ -593,7 +641,7 @@
             "value": "auth"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "huddle-production",
             "value": "huddle-production"
           },
@@ -641,7 +689,7 @@
     ]
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
@@ -672,5 +720,5 @@
   "timezone": "",
   "title": "Namespace Resources",
   "uid": "t5KGzMUmk",
-  "version": 5
+  "version": 9
 }
