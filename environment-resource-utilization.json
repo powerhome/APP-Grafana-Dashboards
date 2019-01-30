@@ -760,14 +760,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (pod_name) (container_memory_working_set_bytes{namespace=~\"$namespace\", container_name!=\"POD\"} * on (pod_name) group_left(label_release,label_app,label_role) (\n      label_replace(\n        kube_pod_labels{label_release=\"$environment\", label_app=~\"$app\", label_role=~\"$role\"},\n       \"pod_name\", \"$1\", \"pod\", \"(.+)\"\n      )\n  )\n)",
+          "expr": "sum by (pod_name) (container_memory_working_set_bytes{namespace=~\"$namespace\", container_name!=\"POD\", container_name=~\".+\"} * on (pod_name) group_left(label_release,label_app,label_role) (\n      label_replace(\n        kube_pod_labels{label_release=\"$environment\", label_app=~\"$app\", label_role=~\"$role\"},\n       \"pod_name\", \"$1\", \"pod\", \"(.+)\"\n      )\n  )\n)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ pod_name }}",
           "refId": "A"
         },
         {
-          "expr": "sum by (pod_name) (container_spec_memory_limit_bytes{namespace=\"$namespace\", container_name!=\"POD\"} * on (pod_name) group_left(label_release,label_app,label_role) (\n      label_replace(\n        kube_pod_labels{label_release=\"$environment\", label_app=~\"$app\", label_role=~\"$role\"},\n       \"pod_name\", \"$1\", \"pod\", \"(.+)\"\n      )\n  ))",
+          "expr": "sum by (pod_name) (container_spec_memory_limit_bytes{namespace=\"$namespace\", container_name!=\"POD\", container_name=~\".+\"} * on (pod_name) group_left(label_release,label_app,label_role) (\n      label_replace(\n        kube_pod_labels{label_release=\"$environment\", label_app=~\"$app\", label_role=~\"$role\"},\n       \"pod_name\", \"$1\", \"pod\", \"(.+)\"\n      )\n  ))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{ pod_name }} Limit",
