@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": 10,
-  "iteration": 1547677753818,
+  "iteration": 1548871736457,
   "links": [
     {
       "icon": "external link",
@@ -853,17 +853,17 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by(namespace) (irate(container_network_transmit_bytes_total{namespace=\"$namespace\"}[5m]))",
+          "expr": "sum by(pod_name) (irate(container_network_transmit_bytes_total{namespace=\"$namespace\"}[5m]) * on (pod_name) group_left(label_release,label_app,label_role) (\n      label_replace(\n        kube_pod_labels{label_release=\"$environment\", label_app=~\"$app\", label_role=~\"$role\"},\n       \"pod_name\", \"$1\", \"pod\", \"(.+)\"\n      )\n  )\n)",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{namespace}} Sent",
+          "legendFormat": "{{pod_name}} Sent",
           "refId": "A"
         },
         {
-          "expr": "sum by(namespace) (irate(container_network_receive_bytes_total{namespace=\"$namespace\"}[5m])) * -1",
+          "expr": "sum by(pod_name) (irate(container_network_receive_bytes_total{namespace=\"$namespace\"}[5m]) * on (pod_name) group_left(label_release,label_app,label_role) (\n      label_replace(\n        kube_pod_labels{label_release=\"$environment\", label_app=~\"$app\", label_role=~\"$role\"},\n       \"pod_name\", \"$1\", \"pod\", \"(.+)\"\n      )\n  )\n) * -1",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{namespace}} Received",
+          "legendFormat": "{{pod_name}} Received",
           "refId": "B"
         }
       ],
@@ -900,7 +900,7 @@
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": true
+          "show": false
         }
       ],
       "yaxis": {
@@ -944,17 +944,17 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum by (namespace) (irate(container_fs_reads_bytes_total{namespace=\"$namespace\"}[5m]))",
+          "expr": "sum by (pod_name) (irate(container_fs_reads_bytes_total{namespace=\"$namespace\"}[5m]) * on (pod_name) group_left(label_release,label_app,label_role) (\n      label_replace(\n        kube_pod_labels{label_release=\"$environment\", label_app=~\"$app\", label_role=~\"$role\"},\n       \"pod_name\", \"$1\", \"pod\", \"(.+)\"\n      )\n  )\n)",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{namespace}} read",
+          "legendFormat": "{{pod_name}} read",
           "refId": "A"
         },
         {
-          "expr": "sum by (namespace) (irate(container_fs_writes_bytes_total{namespace=\"$namespace\"}[5m])) * -1",
+          "expr": "sum by (pod_name) (irate(container_fs_writes_bytes_total{namespace=\"$namespace\"}[5m]) * on (pod_name) group_left(label_release,label_app,label_role) (\n      label_replace(\n        kube_pod_labels{label_release=\"$environment\", label_app=~\"$app\", label_role=~\"$role\"},\n       \"pod_name\", \"$1\", \"pod\", \"(.+)\"\n      )\n  )\n) * -1",
           "format": "time_series",
           "intervalFactor": 1,
-          "legendFormat": "{{namespace}} written",
+          "legendFormat": "{{pod_name}} written",
           "refId": "B"
         }
       ],
@@ -1146,5 +1146,5 @@
   "timezone": "",
   "title": "Environment Resource Utilization",
   "uid": "UKPOnWUmk",
-  "version": 20
+  "version": 22
 }
