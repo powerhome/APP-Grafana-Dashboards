@@ -16,8 +16,7 @@
   "editable": true,
   "gnetId": 315,
   "graphTooltip": 0,
-  "id": 9,
-  "iteration": 1546265623400,
+  "iteration": 1560301083223,
   "links": [],
   "panels": [
     {
@@ -55,7 +54,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 8,
+        "w": 6,
         "x": 0,
         "y": 1
       },
@@ -132,10 +131,10 @@
         "rgba(245, 54, 54, 0.9)"
       ],
       "datasource": "Prometheus",
-      "decimals": 0,
+      "decimals": 2,
       "editable": true,
       "error": false,
-      "format": "none",
+      "format": "bytes",
       "gauge": {
         "maxValue": 100,
         "minValue": 0,
@@ -145,13 +144,13 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 8,
+        "w": 6,
+        "x": 6,
         "y": 1
       },
       "height": "1px",
       "hideTimeOverride": true,
-      "id": 53,
+      "id": 10,
       "interval": null,
       "isNew": true,
       "links": [],
@@ -169,8 +168,8 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
-      "postfix": " pods",
-      "postfixFontSize": "30%",
+      "postfix": "",
+      "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
       "rangeMaps": [
@@ -189,8 +188,9 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count (container_last_seen{container_name=\"POD\", kubernetes_io_hostname=~\"^$Node$\"}) - count(kube_pod_container_resource_limits_memory_bytes{node=~\"^$Node$\"})",
+          "expr": "sum (machine_memory_bytes{kubernetes_io_hostname=~\"^$Node$\"})",
           "format": "time_series",
+          "instant": true,
           "interval": "10s",
           "intervalFactor": 1,
           "refId": "A",
@@ -199,7 +199,7 @@
       ],
       "thresholds": "",
       "timeFrom": "1m",
-      "title": "Pods without memory limit",
+      "title": "Existent memory",
       "type": "singlestat",
       "valueFontSize": "70%",
       "valueMaps": [
@@ -234,7 +234,7 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 8,
+        "w": 6,
         "x": 12,
         "y": 1
       },
@@ -323,13 +323,13 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 20,
+        "w": 6,
+        "x": 18,
         "y": 1
       },
       "height": "1px",
       "hideTimeOverride": true,
-      "id": 54,
+      "id": 12,
       "interval": null,
       "isNew": true,
       "links": [],
@@ -347,7 +347,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
-      "postfix": " pods",
+      "postfix": " cores",
       "postfixFontSize": "30%",
       "prefix": "",
       "prefixFontSize": "50%",
@@ -367,7 +367,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count (container_last_seen{container_name=\"POD\", kubernetes_io_hostname=~\"^$Node$\"}) - count(kube_pod_container_resource_limits_cpu_cores{node=~\"^$Node$\"})",
+          "expr": "sum (machine_cpu_cores{kubernetes_io_hostname=~\"^$Node$\"})",
           "format": "time_series",
           "instant": true,
           "interval": "10s",
@@ -378,7 +378,7 @@
       ],
       "thresholds": "",
       "timeFrom": "1m",
-      "title": "Pods without CPU limit",
+      "title": "Existent CPU cores",
       "type": "singlestat",
       "valueFontSize": "70%",
       "valueMaps": [
@@ -412,8 +412,8 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 3,
-        "w": 3,
+        "h": 4,
+        "w": 6,
         "x": 0,
         "y": 5
       },
@@ -502,9 +502,9 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 3,
+        "h": 4,
+        "w": 6,
+        "x": 6,
         "y": 5
       },
       "height": "1px",
@@ -557,187 +557,7 @@
       ],
       "thresholds": "",
       "timeFrom": "1m",
-      "title": "Minimum requested",
-      "type": "singlestat",
-      "valueFontSize": "70%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
-      "datasource": "Prometheus",
-      "decimals": 2,
-      "editable": true,
-      "error": false,
-      "format": "bytes",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 6,
-        "y": 5
-      },
-      "height": "1px",
-      "hideTimeOverride": true,
-      "id": 48,
-      "interval": null,
-      "isNew": true,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "sum (kube_pod_container_resource_limits_memory_bytes{node=~\"^$Node$\"})",
-          "format": "time_series",
-          "instant": true,
-          "interval": "10s",
-          "intervalFactor": 1,
-          "refId": "A",
-          "step": 10
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": "1m",
-      "title": "Maximum limit",
-      "type": "singlestat",
-      "valueFontSize": "70%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
-      "datasource": "Prometheus",
-      "decimals": 2,
-      "editable": true,
-      "error": false,
-      "format": "bytes",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 9,
-        "y": 5
-      },
-      "height": "1px",
-      "hideTimeOverride": true,
-      "id": 10,
-      "interval": null,
-      "isNew": true,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "sum (machine_memory_bytes{kubernetes_io_hostname=~\"^$Node$\"})",
-          "format": "time_series",
-          "instant": true,
-          "interval": "10s",
-          "intervalFactor": 1,
-          "refId": "A",
-          "step": 10
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": "1m",
-      "title": "Existent memory",
+      "title": "Reserved memory",
       "type": "singlestat",
       "valueFontSize": "70%",
       "valueMaps": [
@@ -771,8 +591,8 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 3,
-        "w": 3,
+        "h": 4,
+        "w": 6,
         "x": 12,
         "y": 5
       },
@@ -827,7 +647,7 @@
       ],
       "thresholds": "",
       "timeFrom": "1m",
-      "title": "Used CPU",
+      "title": "Used CPU cores",
       "type": "singlestat",
       "valueFontSize": "70%",
       "valueMaps": [
@@ -861,9 +681,9 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 15,
+        "h": 4,
+        "w": 6,
+        "x": 18,
         "y": 5
       },
       "height": "1px",
@@ -917,186 +737,7 @@
       ],
       "thresholds": "",
       "timeFrom": "1m",
-      "title": "Minimum requested",
-      "type": "singlestat",
-      "valueFontSize": "70%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
-      "datasource": "Prometheus",
-      "decimals": 2,
-      "editable": true,
-      "error": false,
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 18,
-        "y": 5
-      },
-      "height": "1px",
-      "hideTimeOverride": true,
-      "id": 46,
-      "interval": null,
-      "isNew": true,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": " cores/min",
-      "postfixFontSize": "30%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "sum (kube_pod_container_resource_limits_cpu_cores{node=~\"^$Node$\"})",
-          "format": "time_series",
-          "interval": "10s",
-          "intervalFactor": 1,
-          "refId": "A",
-          "step": 10
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": "1m",
-      "title": "Maximum limit",
-      "type": "singlestat",
-      "valueFontSize": "70%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
-      "datasource": "Prometheus",
-      "decimals": 0,
-      "editable": true,
-      "error": false,
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 21,
-        "y": 5
-      },
-      "height": "1px",
-      "hideTimeOverride": true,
-      "id": 12,
-      "interval": null,
-      "isNew": true,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": " cores",
-      "postfixFontSize": "30%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "sum (machine_cpu_cores{kubernetes_io_hostname=~\"^$Node$\"})",
-          "format": "time_series",
-          "instant": true,
-          "interval": "10s",
-          "intervalFactor": 1,
-          "refId": "A",
-          "step": 10
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": "1m",
-      "title": "Existent CPU cores",
+      "title": "Reserved CPUs",
       "type": "singlestat",
       "valueFontSize": "70%",
       "valueMaps": [
@@ -1131,9 +772,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 8,
+        "w": 6,
         "x": 0,
-        "y": 8
+        "y": 9
       },
       "height": "180px",
       "hideTimeOverride": false,
@@ -1210,10 +851,10 @@
         "rgba(245, 54, 54, 0.9)"
       ],
       "datasource": "Prometheus",
-      "decimals": 0,
+      "decimals": 2,
       "editable": true,
       "error": false,
-      "format": "none",
+      "format": "bytes",
       "gauge": {
         "maxValue": 100,
         "minValue": 0,
@@ -1223,13 +864,13 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 8,
-        "y": 8
+        "w": 6,
+        "x": 6,
+        "y": 9
       },
       "height": "1px",
       "hideTimeOverride": true,
-      "id": 56,
+      "id": 14,
       "interval": null,
       "isNew": true,
       "links": [],
@@ -1247,8 +888,8 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
-      "postfix": " PVs",
-      "postfixFontSize": "30%",
+      "postfix": "",
+      "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
       "rangeMaps": [
@@ -1267,9 +908,8 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count (kube_persistentvolume_info)",
+          "expr": "sum (container_fs_limit_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",kubernetes_io_hostname=~\"^$Node$\"})",
           "format": "time_series",
-          "instant": true,
           "interval": "10s",
           "intervalFactor": 1,
           "refId": "A",
@@ -1278,7 +918,7 @@
       ],
       "thresholds": "",
       "timeFrom": "1m",
-      "title": "Persistent volumes",
+      "title": "Existent ephemeral storage",
       "type": "singlestat",
       "valueFontSize": "70%",
       "valueMaps": [
@@ -1313,9 +953,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 8,
+        "w": 6,
         "x": 12,
-        "y": 8
+        "y": 9
       },
       "height": "180px",
       "id": 49,
@@ -1403,9 +1043,9 @@
       },
       "gridPos": {
         "h": 4,
-        "w": 4,
-        "x": 20,
-        "y": 8
+        "w": 6,
+        "x": 18,
+        "y": 9
       },
       "height": "1px",
       "hideTimeOverride": true,
@@ -1480,10 +1120,10 @@
         "rgba(245, 54, 54, 0.9)"
       ],
       "datasource": "Prometheus",
-      "decimals": 2,
+      "decimals": 0,
       "editable": true,
       "error": false,
-      "format": "bytes",
+      "format": "none",
       "gauge": {
         "maxValue": 100,
         "minValue": 0,
@@ -1492,14 +1132,14 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 3,
-        "w": 4,
+        "h": 4,
+        "w": 3,
         "x": 0,
-        "y": 12
+        "y": 13
       },
       "height": "1px",
       "hideTimeOverride": true,
-      "id": 13,
+      "id": 56,
       "interval": null,
       "isNew": true,
       "links": [],
@@ -1517,8 +1157,8 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
+      "postfix": " PVs",
+      "postfixFontSize": "30%",
       "prefix": "",
       "prefixFontSize": "50%",
       "rangeMaps": [
@@ -1537,7 +1177,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (container_fs_usage_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",kubernetes_io_hostname=~\"^$Node$\"})",
+          "expr": "count (kube_persistentvolume_info)",
           "format": "time_series",
           "instant": true,
           "interval": "10s",
@@ -1548,96 +1188,7 @@
       ],
       "thresholds": "",
       "timeFrom": "1m",
-      "title": "Used storage",
-      "type": "singlestat",
-      "valueFontSize": "70%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
-      "datasource": "Prometheus",
-      "decimals": 2,
-      "editable": true,
-      "error": false,
-      "format": "bytes",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 4,
-        "y": 12
-      },
-      "height": "1px",
-      "hideTimeOverride": true,
-      "id": 14,
-      "interval": null,
-      "isNew": true,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "sum (container_fs_limit_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",kubernetes_io_hostname=~\"^$Node$\"})",
-          "format": "time_series",
-          "interval": "10s",
-          "intervalFactor": 1,
-          "refId": "A",
-          "step": 10
-        }
-      ],
-      "thresholds": "",
-      "timeFrom": "1m",
-      "title": "Existent storage",
+      "title": "Persistent volumes",
       "type": "singlestat",
       "valueFontSize": "70%",
       "valueMaps": [
@@ -1671,10 +1222,10 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 8,
-        "y": 12
+        "h": 4,
+        "w": 3,
+        "x": 3,
+        "y": 13
       },
       "height": "1px",
       "hideTimeOverride": true,
@@ -1749,6 +1300,96 @@
         "rgba(245, 54, 54, 0.9)"
       ],
       "datasource": "Prometheus",
+      "decimals": 2,
+      "editable": true,
+      "error": false,
+      "format": "bytes",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 6,
+        "y": 13
+      },
+      "height": "1px",
+      "hideTimeOverride": true,
+      "id": 13,
+      "interval": null,
+      "isNew": true,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "sum (container_fs_usage_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",kubernetes_io_hostname=~\"^$Node$\"})",
+          "format": "time_series",
+          "instant": true,
+          "interval": "10s",
+          "intervalFactor": 1,
+          "refId": "A",
+          "step": 10
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": "1m",
+      "title": "Used ephemeral storage",
+      "type": "singlestat",
+      "valueFontSize": "70%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "rgba(50, 172, 45, 0.97)",
+        "rgba(237, 129, 40, 0.89)",
+        "rgba(245, 54, 54, 0.9)"
+      ],
+      "datasource": "Prometheus",
       "decimals": 0,
       "editable": true,
       "error": false,
@@ -1761,10 +1402,10 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 3,
-        "w": 4,
+        "h": 4,
+        "w": 3,
         "x": 12,
-        "y": 12
+        "y": 13
       },
       "height": "1px",
       "hideTimeOverride": true,
@@ -1851,10 +1492,10 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 16,
-        "y": 12
+        "h": 4,
+        "w": 3,
+        "x": 15,
+        "y": 13
       },
       "height": "1px",
       "hideTimeOverride": true,
@@ -1941,10 +1582,10 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 20,
-        "y": 12
+        "h": 4,
+        "w": 6,
+        "x": 18,
+        "y": 13
       },
       "height": "1px",
       "hideTimeOverride": true,
@@ -2024,7 +1665,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 15
+        "y": 17
       },
       "height": "200px",
       "id": 32,
@@ -2079,6 +1720,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Network I/O usage",
       "tooltip": {
@@ -2134,7 +1776,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 15
+        "y": 17
       },
       "height": "200px",
       "id": 55,
@@ -2221,6 +1863,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Pod history",
       "tooltip": {
@@ -2276,7 +1919,7 @@
         "h": 7,
         "w": 12,
         "x": 0,
-        "y": 22
+        "y": 24
       },
       "height": "200px",
       "id": 59,
@@ -2321,6 +1964,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Container error by type",
       "tooltip": {
@@ -2377,7 +2021,7 @@
         "h": 7,
         "w": 12,
         "x": 12,
-        "y": 22
+        "y": 24
       },
       "height": "200px",
       "id": 60,
@@ -2436,6 +2080,7 @@
       ],
       "thresholds": [],
       "timeFrom": null,
+      "timeRegions": [],
       "timeShift": null,
       "title": "Container errors by node",
       "tooltip": {
@@ -2482,7 +2127,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 29
+        "y": 31
       },
       "id": 35,
       "panels": [
@@ -2501,7 +2146,7 @@
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 15
+            "y": 32
           },
           "height": "",
           "id": 17,
@@ -2544,6 +2189,7 @@
           ],
           "thresholds": [],
           "timeFrom": null,
+          "timeRegions": [],
           "timeShift": null,
           "title": "Pods CPU usage (1m avg)",
           "tooltip": {
@@ -2594,7 +2240,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 30
+        "y": 32
       },
       "id": 37,
       "panels": [
@@ -2728,7 +2374,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 31
+        "y": 33
       },
       "id": 39,
       "panels": [
@@ -2839,7 +2485,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 32
+        "y": 34
       },
       "id": 41,
       "panels": [
@@ -2968,7 +2614,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 33
+        "y": 35
       },
       "id": 43,
       "panels": [
@@ -3088,7 +2734,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 36
       },
       "id": 44,
       "panels": [
@@ -3262,6 +2908,7 @@
           ]
         },
         "datasource": "Prometheus",
+        "definition": "",
         "hide": 0,
         "includeAll": true,
         "label": null,
@@ -3271,6 +2918,7 @@
         "query": "label_values(kubernetes_io_hostname)",
         "refresh": 1,
         "regex": "(app-.*)-.*",
+        "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
         "tags": [],
@@ -3287,6 +2935,7 @@
           ]
         },
         "datasource": "Prometheus",
+        "definition": "",
         "hide": 0,
         "includeAll": true,
         "label": null,
@@ -3296,6 +2945,7 @@
         "query": "label_values(kubernetes_io_hostname)",
         "refresh": 2,
         "regex": "$Class-(.*)",
+        "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
         "tags": [],
@@ -3312,6 +2962,7 @@
           ]
         },
         "datasource": "Prometheus",
+        "definition": "",
         "hide": 2,
         "includeAll": true,
         "label": null,
@@ -3321,6 +2972,7 @@
         "query": "label_values(kubernetes_io_hostname)",
         "refresh": 2,
         "regex": "($Class-$ID)",
+        "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
         "tags": [],
@@ -3362,5 +3014,5 @@
   "timezone": "browser",
   "title": "Kube at a Glance",
   "uid": "mG-D07Nmk2",
-  "version": 17
+  "version": 2
 }
