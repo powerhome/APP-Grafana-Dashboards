@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": 315,
   "graphTooltip": 0,
-  "iteration": 1560301083223,
+  "iteration": 1565280985305,
   "links": [],
   "panels": [
     {
@@ -77,6 +77,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -109,7 +110,6 @@
       "thresholds": "65, 90",
       "timeFrom": "1m",
       "title": "Memory usage",
-      "transparent": false,
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -168,6 +168,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -257,6 +258,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -347,6 +349,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": " cores",
       "postfixFontSize": "30%",
       "prefix": "",
@@ -437,6 +440,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "20%",
       "prefix": "",
@@ -527,6 +531,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -616,6 +621,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": " cores/min",
       "postfixFontSize": "30%",
       "prefix": "",
@@ -706,6 +712,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": " cores/min",
       "postfixFontSize": "30%",
       "prefix": "",
@@ -796,6 +803,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -888,6 +896,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -976,6 +985,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -1067,6 +1077,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": " docks",
       "postfixFontSize": "30%",
       "prefix": "",
@@ -1157,6 +1168,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": " PVs",
       "postfixFontSize": "30%",
       "prefix": "",
@@ -1247,6 +1259,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "PVCs",
       "postfixFontSize": "30%",
       "prefix": "",
@@ -1337,6 +1350,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -1427,6 +1441,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": " slots",
       "postfixFontSize": "30%",
       "prefix": "",
@@ -1517,6 +1532,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": " slots",
       "postfixFontSize": "30%",
       "prefix": "",
@@ -1607,6 +1623,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "/min",
       "postfixFontSize": "30%",
       "prefix": "",
@@ -1688,6 +1705,7 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1729,7 +1747,6 @@
         "sort": 0,
         "value_type": "cumulative"
       },
-      "transparent": false,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -1799,6 +1816,7 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1833,20 +1851,6 @@
           "step": 10
         },
         {
-          "expr": "count (container_last_seen{container_name=\"POD\", kubernetes_io_hostname=~\"^$Node$\"}) - count(kube_pod_container_resource_limits_memory_bytes{node=~\"^$Node$\"})",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "Pods without memory limit",
-          "refId": "B"
-        },
-        {
-          "expr": "count (container_last_seen{container_name=\"POD\", kubernetes_io_hostname=~\"^$Node$\"}) - count(kube_pod_container_resource_limits_cpu_cores{node=~\"^$Node$\"})",
-          "format": "time_series",
-          "intervalFactor": 1,
-          "legendFormat": "Pods without CPU limit",
-          "refId": "C"
-        },
-        {
           "expr": "sum (kube_node_status_capacity_pods{node=~\"^$Node$\"})",
           "format": "time_series",
           "intervalFactor": 1,
@@ -1865,14 +1869,13 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Pod history",
+      "title": "Pod and container history",
       "tooltip": {
         "msResolution": false,
         "shared": true,
         "sort": 0,
         "value_type": "cumulative"
       },
-      "transparent": false,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -1942,6 +1945,7 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1973,7 +1977,6 @@
         "sort": 0,
         "value_type": "cumulative"
       },
-      "transparent": false,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -2044,6 +2047,7 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {},
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -2089,7 +2093,6 @@
         "sort": 0,
         "value_type": "cumulative"
       },
-      "transparent": false,
       "type": "graph",
       "xaxis": {
         "buckets": null,
@@ -2168,6 +2171,7 @@
           "linewidth": 2,
           "links": [],
           "nullPointMode": "connected",
+          "options": {},
           "percentage": false,
           "pointradius": 5,
           "points": false,
@@ -2198,7 +2202,6 @@
             "sort": 2,
             "value_type": "cumulative"
           },
-          "transparent": false,
           "type": "graph",
           "xaxis": {
             "buckets": null,
@@ -2892,7 +2895,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 16,
+  "schemaVersion": 18,
   "style": "dark",
   "tags": [
     "kubernetes"
@@ -3013,6 +3016,6 @@
   },
   "timezone": "browser",
   "title": "Kube at a Glance",
-  "uid": "mG-D07Nmk2",
-  "version": 2
+  "uid": "kube-at-a-glance",
+  "version": 19
 }
