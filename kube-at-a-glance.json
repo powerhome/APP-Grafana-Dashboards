@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": 315,
   "graphTooltip": 0,
-  "iteration": 1565280985305,
+  "iteration": 1565799464931,
   "links": [],
   "panels": [
     {
@@ -1952,7 +1952,7 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
@@ -3017,5 +3017,5 @@
   "timezone": "browser",
   "title": "Kube at a Glance",
   "uid": "kube-at-a-glance",
-  "version": 19
+  "version": 20
 }
