@@ -1911,7 +1911,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Denied CPU usage",
+      "title": "Ephemeral storage usage",
       "tooltip": {
         "msResolution": true,
         "shared": true,
