@@ -16,11 +16,12 @@
   "editable": true,
   "gnetId": 315,
   "graphTooltip": 0,
-  "iteration": 1565799464931,
+  "iteration": 1575331586790,
   "links": [],
   "panels": [
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -98,7 +99,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (container_memory_working_set_bytes{id=\"/\",kubernetes_io_hostname=~\"^$Node$\"}) / sum (machine_memory_bytes{kubernetes_io_hostname=~\"^$Node$\"}) * 100",
+          "expr": "sum (container_memory_working_set_bytes{id=\"/\",node=~\"^$Node$\"}) / sum (machine_memory_bytes{node=~\"^$Node$\"}) * 100",
           "format": "time_series",
           "instant": true,
           "interval": "10s",
@@ -189,7 +190,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (machine_memory_bytes{kubernetes_io_hostname=~\"^$Node$\"})",
+          "expr": "sum (machine_memory_bytes{node=~\"^$Node$\"})",
           "format": "time_series",
           "instant": true,
           "interval": "10s",
@@ -279,7 +280,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (rate (container_cpu_usage_seconds_total{id=\"/\",kubernetes_io_hostname=~\"^$Node$\"}[1m])) / sum (machine_cpu_cores{kubernetes_io_hostname=~\"^$Node$\"}) * 100",
+          "expr": "sum (rate (container_cpu_usage_seconds_total{id=\"/\",node=~\"^$Node$\"}[1m])) / sum (machine_cpu_cores{node=~\"^$Node$\"}) * 100",
           "format": "time_series",
           "instant": true,
           "interval": "10s",
@@ -370,7 +371,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (machine_cpu_cores{kubernetes_io_hostname=~\"^$Node$\"})",
+          "expr": "sum (machine_cpu_cores{node=~\"^$Node$\"})",
           "format": "time_series",
           "instant": true,
           "interval": "10s",
@@ -461,7 +462,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (container_memory_working_set_bytes{id=\"/\",kubernetes_io_hostname=~\"^$Node$\"})",
+          "expr": "sum (container_memory_working_set_bytes{id=\"/\",node=~\"^$Node$\"})",
           "format": "time_series",
           "instant": true,
           "interval": "10s",
@@ -642,7 +643,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (rate (container_cpu_usage_seconds_total{id=\"/\",kubernetes_io_hostname=~\"^$Node$\"}[1m]))",
+          "expr": "sum (rate (container_cpu_usage_seconds_total{id=\"/\",node=~\"^$Node$\"}[1m]))",
           "format": "time_series",
           "instant": true,
           "interval": "10s",
@@ -824,7 +825,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (container_fs_usage_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",kubernetes_io_hostname=~\"^$Node$\"}) / sum (container_fs_limit_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",kubernetes_io_hostname=~\"^$Node$\"}) * 100",
+          "expr": "sum (container_fs_usage_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",node=~\"^$Node$\"}) / sum (container_fs_limit_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",node=~\"^$Node$\"}) * 100",
           "format": "time_series",
           "instant": true,
           "interval": "10s",
@@ -917,7 +918,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (container_fs_limit_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",kubernetes_io_hostname=~\"^$Node$\"})",
+          "expr": "sum (container_fs_limit_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",node=~\"^$Node$\"})",
           "format": "time_series",
           "interval": "10s",
           "intervalFactor": 1,
@@ -1006,7 +1007,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count (container_last_seen{container_name=\"POD\", kubernetes_io_hostname=~\"^$Node$\"}) / sum (kube_node_status_capacity_pods{node=~\"^$Node$\"}) * 100",
+          "expr": "count (container_last_seen{container_name=\"POD\", node=~\"^$Node$\"}) / sum (kube_node_status_capacity_pods{node=~\"^$Node$\"}) * 100",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -1098,7 +1099,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count (container_last_seen{kubernetes_io_hostname=~\"^$Node$\"})",
+          "expr": "count (container_last_seen{node=~\"^$Node$\"})",
           "format": "time_series",
           "instant": true,
           "interval": "10s",
@@ -1371,7 +1372,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (container_fs_usage_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",kubernetes_io_hostname=~\"^$Node$\"})",
+          "expr": "sum (container_fs_usage_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",node=~\"^$Node$\"})",
           "format": "time_series",
           "instant": true,
           "interval": "10s",
@@ -1462,7 +1463,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count (container_last_seen{container_name=\"POD\", kubernetes_io_hostname=~\"^$Node$\"})",
+          "expr": "count (container_last_seen{container_name=\"POD\", node=~\"^$Node$\"})",
           "format": "time_series",
           "instant": true,
           "interval": "10s",
@@ -1677,6 +1678,7 @@
       "editable": true,
       "error": false,
       "fill": 1,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 7,
@@ -1705,7 +1707,9 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1716,7 +1720,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum (rate (container_network_receive_bytes_total{kubernetes_io_hostname=~\"^$Node$\"}[1m]))",
+          "expr": "sum (rate (container_network_receive_bytes_total{node=~\"^$Node$\"}[1m]))",
           "format": "time_series",
           "interval": "10s",
           "intervalFactor": 1,
@@ -1726,7 +1730,7 @@
           "step": 10
         },
         {
-          "expr": "- sum (rate (container_network_transmit_bytes_total{kubernetes_io_hostname=~\"^$Node$\"}[1m]))",
+          "expr": "- sum (rate (container_network_transmit_bytes_total{node=~\"^$Node$\"}[1m]))",
           "format": "time_series",
           "interval": "10s",
           "intervalFactor": 1,
@@ -1788,6 +1792,7 @@
       "editable": true,
       "error": false,
       "fill": 1,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 7,
@@ -1816,7 +1821,9 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1841,7 +1848,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "count (container_last_seen{container_name=\"POD\", kubernetes_io_hostname=~\"^$Node$\"})",
+          "expr": "count (container_last_seen{container_name=\"POD\", node=~\"^$Node$\"})",
           "format": "time_series",
           "interval": "10s",
           "intervalFactor": 1,
@@ -1858,7 +1865,7 @@
           "refId": "D"
         },
         {
-          "expr": "count (container_last_seen{kubernetes_io_hostname=~\"^$Node$\"})",
+          "expr": "count (container_last_seen{node=~\"^$Node$\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Containers",
@@ -1917,6 +1924,7 @@
       "editable": true,
       "error": false,
       "fill": 5,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 7,
@@ -1945,7 +1953,9 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1956,7 +1966,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(kubelet_docker_operations_errors{instance=~\"^$Node$\"}[1m])) by (operation_type)",
+          "expr": "sum(rate(kubelet_docker_operations_errors{node=~\"^$Node$\"}[1m])) by (operation_type)",
           "format": "time_series",
           "interval": "10s",
           "intervalFactor": 1,
@@ -2019,6 +2029,7 @@
       "editable": true,
       "error": false,
       "fill": 1,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 7,
@@ -2047,7 +2058,9 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -2072,11 +2085,11 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(kubelet_docker_operations_errors{instance=~\"^$Node$\"}[1m])) by (instance)",
+          "expr": "sum(rate(kubelet_docker_operations_errors{node=~\"^$Node$\"}[1m])) by (node)",
           "format": "time_series",
           "interval": "10s",
           "intervalFactor": 1,
-          "legendFormat": "{{instance}}",
+          "legendFormat": "{{node}}",
           "metric": "network",
           "refId": "A",
           "step": 10
@@ -2126,6 +2139,7 @@
     },
     {
       "collapsed": true,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2144,6 +2158,7 @@
           "editable": true,
           "error": false,
           "fill": 0,
+          "fillGradient": 0,
           "grid": {},
           "gridPos": {
             "h": 7,
@@ -2171,7 +2186,9 @@
           "linewidth": 2,
           "links": [],
           "nullPointMode": "connected",
-          "options": {},
+          "options": {
+            "dataLinks": []
+          },
           "percentage": false,
           "pointradius": 5,
           "points": false,
@@ -2182,7 +2199,7 @@
           "steppedLine": true,
           "targets": [
             {
-              "expr": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\"}[1m])) by (pod_name)",
+              "expr": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\"}[1m])) by (pod_name)",
               "interval": "10s",
               "intervalFactor": 1,
               "legendFormat": "{{ pod_name }}",
@@ -2239,145 +2256,12 @@
     },
     {
       "collapsed": true,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
         "y": 32
-      },
-      "id": 37,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "Prometheus",
-          "decimals": 3,
-          "editable": true,
-          "error": false,
-          "fill": 0,
-          "grid": {},
-          "gridPos": {
-            "h": 7,
-            "w": 24,
-            "x": 0,
-            "y": 16
-          },
-          "height": "",
-          "id": 24,
-          "isNew": true,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "hideEmpty": false,
-            "hideZero": false,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sideWidth": null,
-            "sort": "current",
-            "sortDesc": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "nullPointMode": "connected",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": true,
-          "targets": [
-            {
-              "expr": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",container_name!=\"POD\",kubernetes_io_hostname=~\"^$Node$\"}[1m])) by (container_name, pod_name)",
-              "hide": false,
-              "interval": "10s",
-              "intervalFactor": 1,
-              "legendFormat": "pod: {{ pod_name }} | {{ container_name }}",
-              "metric": "container_cpu",
-              "refId": "A",
-              "step": 10
-            },
-            {
-              "expr": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name!~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\"}[1m])) by (kubernetes_io_hostname, name, image)",
-              "hide": false,
-              "interval": "10s",
-              "intervalFactor": 1,
-              "legendFormat": "docker: {{ kubernetes_io_hostname }} | {{ image }} ({{ name }})",
-              "metric": "container_cpu",
-              "refId": "B",
-              "step": 10
-            },
-            {
-              "expr": "sum (rate (container_cpu_usage_seconds_total{rkt_container_name!=\"\",kubernetes_io_hostname=~\"^$Node$\"}[1m])) by (kubernetes_io_hostname, rkt_container_name)",
-              "interval": "10s",
-              "intervalFactor": 1,
-              "legendFormat": "rkt: {{ kubernetes_io_hostname }} | {{ rkt_container_name }}",
-              "metric": "container_cpu",
-              "refId": "C",
-              "step": 10
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Containers CPU usage (1m avg)",
-          "tooltip": {
-            "msResolution": true,
-            "shared": true,
-            "sort": 2,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "none",
-              "label": "cores",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
-      "title": "Containers CPU usage",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 33
       },
       "id": 39,
       "panels": [
@@ -2391,12 +2275,13 @@
           "editable": true,
           "error": false,
           "fill": 0,
+          "fillGradient": 0,
           "grid": {},
           "gridPos": {
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 25
+            "y": 34
           },
           "id": 25,
           "isNew": true,
@@ -2418,6 +2303,9 @@
           "linewidth": 2,
           "links": [],
           "nullPointMode": "connected",
+          "options": {
+            "dataLinks": []
+          },
           "percentage": false,
           "pointradius": 5,
           "points": false,
@@ -2428,7 +2316,7 @@
           "steppedLine": true,
           "targets": [
             {
-              "expr": "sum (container_memory_working_set_bytes{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\"}) by (pod_name)",
+              "expr": "sum (container_memory_working_set_bytes{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\"}) by (pod_name)",
               "interval": "10s",
               "intervalFactor": 1,
               "legendFormat": "{{ pod_name }}",
@@ -2439,6 +2327,7 @@
           ],
           "thresholds": [],
           "timeFrom": null,
+          "timeRegions": [],
           "timeShift": null,
           "title": "Pods memory usage",
           "tooltip": {
@@ -2484,140 +2373,12 @@
     },
     {
       "collapsed": true,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 34
-      },
-      "id": 41,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "Prometheus",
-          "decimals": 2,
-          "editable": true,
-          "error": false,
-          "fill": 0,
-          "grid": {},
-          "gridPos": {
-            "h": 7,
-            "w": 24,
-            "x": 0,
-            "y": 26
-          },
-          "id": 27,
-          "isNew": true,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sideWidth": 200,
-            "sort": "current",
-            "sortDesc": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "nullPointMode": "connected",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": true,
-          "targets": [
-            {
-              "expr": "sum (container_memory_working_set_bytes{image!=\"\",name=~\"^k8s_.*\",container_name!=\"POD\",kubernetes_io_hostname=~\"^$Node$\"}) by (container_name, pod_name)",
-              "interval": "10s",
-              "intervalFactor": 1,
-              "legendFormat": "pod: {{ pod_name }} | {{ container_name }}",
-              "metric": "container_memory_usage:sort_desc",
-              "refId": "A",
-              "step": 10
-            },
-            {
-              "expr": "sum (container_memory_working_set_bytes{image!=\"\",name!~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\"}) by (kubernetes_io_hostname, name, image)",
-              "interval": "10s",
-              "intervalFactor": 1,
-              "legendFormat": "docker: {{ kubernetes_io_hostname }} | {{ image }} ({{ name }})",
-              "metric": "container_memory_usage:sort_desc",
-              "refId": "B",
-              "step": 10
-            },
-            {
-              "expr": "sum (container_memory_working_set_bytes{rkt_container_name!=\"\",kubernetes_io_hostname=~\"^$Node$\"}) by (kubernetes_io_hostname, rkt_container_name)",
-              "interval": "10s",
-              "intervalFactor": 1,
-              "legendFormat": "rkt: {{ kubernetes_io_hostname }} | {{ rkt_container_name }}",
-              "metric": "container_memory_usage:sort_desc",
-              "refId": "C",
-              "step": 10
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Containers memory usage",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "sort": 2,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "bytes",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
-      "title": "Containers memory usage",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 35
+        "y": 33
       },
       "id": 43,
       "panels": [
@@ -2631,12 +2392,13 @@
           "editable": true,
           "error": false,
           "fill": 1,
+          "fillGradient": 0,
           "grid": {},
           "gridPos": {
             "h": 7,
             "w": 24,
             "x": 0,
-            "y": 36
+            "y": 43
           },
           "id": 16,
           "isNew": true,
@@ -2658,6 +2420,9 @@
           "linewidth": 2,
           "links": [],
           "nullPointMode": "connected",
+          "options": {
+            "dataLinks": []
+          },
           "percentage": false,
           "pointradius": 5,
           "points": false,
@@ -2668,7 +2433,7 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum (rate (container_network_receive_bytes_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\"}[1m])) by (pod_name)",
+              "expr": "sum (rate (container_network_receive_bytes_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\"}[1m])) by (pod_name)",
               "interval": "10s",
               "intervalFactor": 1,
               "legendFormat": "-> {{ pod_name }}",
@@ -2677,7 +2442,7 @@
               "step": 10
             },
             {
-              "expr": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\"}[1m])) by (pod_name)",
+              "expr": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\"}[1m])) by (pod_name)",
               "interval": "10s",
               "intervalFactor": 1,
               "legendFormat": "<- {{ pod_name }}",
@@ -2688,6 +2453,7 @@
           ],
           "thresholds": [],
           "timeFrom": null,
+          "timeRegions": [],
           "timeShift": null,
           "title": "Pods network I/O (1m avg)",
           "tooltip": {
@@ -2730,172 +2496,10 @@
       ],
       "title": "Pods network I/O",
       "type": "row"
-    },
-    {
-      "collapsed": true,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 36
-      },
-      "id": 44,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "Prometheus",
-          "decimals": 2,
-          "editable": true,
-          "error": false,
-          "fill": 1,
-          "grid": {},
-          "gridPos": {
-            "h": 7,
-            "w": 24,
-            "x": 0,
-            "y": 37
-          },
-          "id": 30,
-          "isNew": true,
-          "legend": {
-            "alignAsTable": true,
-            "avg": true,
-            "current": true,
-            "max": false,
-            "min": false,
-            "rightSide": true,
-            "show": true,
-            "sideWidth": 200,
-            "sort": "current",
-            "sortDesc": true,
-            "total": false,
-            "values": true
-          },
-          "lines": true,
-          "linewidth": 2,
-          "links": [],
-          "nullPointMode": "connected",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "sum (rate (container_network_receive_bytes_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\"}[1m])) by (container_name, pod_name)",
-              "hide": false,
-              "interval": "10s",
-              "intervalFactor": 1,
-              "legendFormat": "-> pod: {{ pod_name }} | {{ container_name }}",
-              "metric": "network",
-              "refId": "B",
-              "step": 10
-            },
-            {
-              "expr": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\"}[1m])) by (container_name, pod_name)",
-              "hide": false,
-              "interval": "10s",
-              "intervalFactor": 1,
-              "legendFormat": "<- pod: {{ pod_name }} | {{ container_name }}",
-              "metric": "network",
-              "refId": "D",
-              "step": 10
-            },
-            {
-              "expr": "sum (rate (container_network_receive_bytes_total{image!=\"\",name!~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\"}[1m])) by (kubernetes_io_hostname, name, image)",
-              "hide": false,
-              "interval": "10s",
-              "intervalFactor": 1,
-              "legendFormat": "-> docker: {{ kubernetes_io_hostname }} | {{ image }} ({{ name }})",
-              "metric": "network",
-              "refId": "A",
-              "step": 10
-            },
-            {
-              "expr": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name!~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\"}[1m])) by (kubernetes_io_hostname, name, image)",
-              "hide": false,
-              "interval": "10s",
-              "intervalFactor": 1,
-              "legendFormat": "<- docker: {{ kubernetes_io_hostname }} | {{ image }} ({{ name }})",
-              "metric": "network",
-              "refId": "C",
-              "step": 10
-            },
-            {
-              "expr": "sum (rate (container_network_transmit_bytes_total{rkt_container_name!=\"\",kubernetes_io_hostname=~\"^$Node$\"}[1m])) by (kubernetes_io_hostname, rkt_container_name)",
-              "hide": false,
-              "interval": "10s",
-              "intervalFactor": 1,
-              "legendFormat": "-> rkt: {{ kubernetes_io_hostname }} | {{ rkt_container_name }}",
-              "metric": "network",
-              "refId": "E",
-              "step": 10
-            },
-            {
-              "expr": "- sum (rate (container_network_transmit_bytes_total{rkt_container_name!=\"\",kubernetes_io_hostname=~\"^$Node$\"}[1m])) by (kubernetes_io_hostname, rkt_container_name)",
-              "hide": false,
-              "interval": "10s",
-              "intervalFactor": 1,
-              "legendFormat": "<- rkt: {{ kubernetes_io_hostname }} | {{ rkt_container_name }}",
-              "metric": "network",
-              "refId": "F",
-              "step": 10
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Containers network I/O (1m avg)",
-          "tooltip": {
-            "msResolution": false,
-            "shared": true,
-            "sort": 2,
-            "value_type": "cumulative"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "Bps",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": false
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
-      "title": "Containers network I/O",
-      "type": "row"
     }
   ],
-  "refresh": "10s",
-  "schemaVersion": 18,
+  "refresh": "30s",
+  "schemaVersion": 20,
   "style": "dark",
   "tags": [
     "kubernetes"
@@ -3017,5 +2621,5 @@
   "timezone": "browser",
   "title": "Kube at a Glance",
   "uid": "kube-at-a-glance",
-  "version": 20
+  "version": 1
 }
