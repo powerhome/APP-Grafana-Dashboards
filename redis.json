@@ -16,8 +16,8 @@
   "editable": true,
   "gnetId": 763,
   "graphTooltip": 0,
-  "id": 91,
-  "iteration": 1576616576408,
+  "id": 121,
+  "iteration": 1576691199996,
   "links": [],
   "panels": [
     {
@@ -86,7 +86,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(max_over_time(redis_uptime_in_seconds{instance=~\"$instance\"}[$__interval]))",
+          "expr": "max(max_over_time(redis_uptime_in_seconds{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"}[$__interval]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -176,7 +176,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "redis_connected_clients{instance=~\"$instance\"}",
+          "expr": "sum(redis_connected_clients{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"})",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "",
@@ -267,7 +267,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "100 * (redis_memory_used_bytes{instance=~\"$instance\"}  / redis_memory_max_bytes{instance=~\"$instance\"} )",
+          "expr": "100 * (sum(redis_memory_used_bytes{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"})  / sum(redis_memory_max_bytes{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"}) )",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "",
@@ -336,7 +336,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(redis_commands_processed_total{instance=~\"$instance\"}[1m])",
+          "expr": "label_replace(\n  sum(\n    rate(redis_commands_processed_total{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"}[1m])\n  ) by (pod),\n  \"pod\", \n  \"$1\",\n  \"pod\",\n  \"(.*)\"\n)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -410,10 +410,12 @@
       "id": 1,
       "isNew": true,
       "legend": {
+        "alignAsTable": false,
         "avg": false,
         "current": false,
         "max": false,
         "min": false,
+        "rightSide": false,
         "show": false,
         "total": false,
         "values": false
@@ -435,7 +437,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(redis_keyspace_hits_total{instance=~\"$instance\"}[5m])",
+          "expr": "irate(redis_keyspace_hits_total{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"}[5m])",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -447,7 +449,7 @@
           "target": ""
         },
         {
-          "expr": "irate(redis_keyspace_misses_total{instance=~\"$instance\"}[5m])",
+          "expr": "irate(redis_keyspace_misses_total{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"}[5m])",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -550,7 +552,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "redis_memory_used_bytes{instance=~\"$instance\"} ",
+          "expr": "redis_memory_used_bytes{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "used",
@@ -560,7 +562,7 @@
           "target": ""
         },
         {
-          "expr": "redis_memory_max_bytes{instance=~\"$instance\"} ",
+          "expr": "redis_memory_max_bytes{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"} ",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -656,7 +658,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(redis_net_input_bytes_total{instance=~\"$instance\"}[5m])",
+          "expr": "rate(redis_net_input_bytes_total{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"}[5m])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{ input }}",
@@ -664,7 +666,7 @@
           "step": 240
         },
         {
-          "expr": "rate(redis_net_output_bytes_total{instance=~\"$instance\"}[5m])",
+          "expr": "rate(redis_net_output_bytes_total{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"}[5m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -762,7 +764,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum (redis_db_keys{instance=~\"$instance\"}) by (db)",
+          "expr": "sum(redis_db_keys{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"}) by (db)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -859,7 +861,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum (redis_db_keys{instance=~\"$instance\"}) - sum (redis_db_keys_expiring{instance=~\"$instance\"}) ",
+          "expr": "sum (redis_db_keys{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"}) - sum (redis_db_keys_expiring{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"}) ",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -869,7 +871,7 @@
           "target": ""
         },
         {
-          "expr": "sum (redis_db_keys_expiring{instance=~\"$instance\"}) ",
+          "expr": "sum (redis_db_keys_expiring{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"}) ",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -945,6 +947,7 @@
       "id": 8,
       "isNew": true,
       "legend": {
+        "alignAsTable": false,
         "avg": false,
         "current": false,
         "max": false,
@@ -975,7 +978,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(redis_expired_keys_total{instance=~\"$instance\"}[5m])) by (instance)",
+          "expr": "sum(rate(redis_expired_keys_total{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"}[5m])) by (pod)",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -987,7 +990,7 @@
           "target": ""
         },
         {
-          "expr": "sum(rate(redis_evicted_keys_total{instance=~\"$instance\"}[5m])) by (instance)",
+          "expr": "sum(rate(redis_evicted_keys_total{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"}[5m])) by (pod)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1018,7 +1021,7 @@
       "yaxes": [
         {
           "format": "short",
-          "label": null,
+          "label": "",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -1056,6 +1059,7 @@
         "y": 21
       },
       "id": 14,
+      "interval": "",
       "isNew": true,
       "legend": {
         "avg": false,
@@ -1083,7 +1087,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "topk(5, irate(redis_commands_total{instance=~\"$instance\"} [1m]))",
+          "expr": "topk(5, irate(redis_commands_total{namespace=~\"$namespace\", pod=~\".*$filter.*\", pod=~\"$pod\"} [1m]))",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1146,17 +1150,68 @@
   "templating": {
     "list": [
       {
-        "allValue": null,
-        "current": {},
-        "datasource": null,
-        "definition": "label_values(redis_up, instance)",
+        "allValue": ".+",
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "Prometheus",
+        "definition": "",
         "hide": 0,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "instance",
+        "includeAll": true,
+        "label": "Namespace",
+        "multi": true,
+        "name": "namespace",
         "options": [],
-        "query": "label_values(redis_up, instance)",
+        "query": "label_values(kube_pod_info, namespace)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "text": ".+",
+          "value": ".+"
+        },
+        "hide": 0,
+        "label": "Regex Filter",
+        "name": "filter",
+        "options": [
+          {
+            "selected": true,
+            "text": ".+",
+            "value": ".+"
+          }
+        ],
+        "query": ".+",
+        "skipUrlSync": false,
+        "type": "textbox"
+      },
+      {
+        "allValue": ".+",
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(redis_instance_info{namespace=~\"$namespace\", pod=~\".*$filter.*\"}, pod)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Pod",
+        "multi": true,
+        "name": "pod",
+        "options": [],
+        "query": "label_values(redis_instance_info{namespace=~\"$namespace\", pod=~\".*$filter.*\"}, pod)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
