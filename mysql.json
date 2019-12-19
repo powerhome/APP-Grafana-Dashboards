@@ -4783,9 +4783,9 @@
         "datasource": "Prometheus",
         "definition": "label_values(kube_pod_info, namespace)",
         "hide": 0,
-        "includeAll": true,
+        "includeAll": false,
         "label": "Namespace",
-        "multi": true,
+        "multi": false,
         "multiFormat": "regex values",
         "name": "namespace",
         "options": [],
@@ -4882,5 +4882,5 @@
   "timezone": "browser",
   "title": "MySQL Overview",
   "uid": "MQWgroiiz",
-  "version": 3
+  "version": 4
 }
