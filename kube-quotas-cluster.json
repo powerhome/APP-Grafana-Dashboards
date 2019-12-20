@@ -149,7 +149,7 @@
             "refId": "E"
           },
           {
-            "expr": "sum(\n  avg_over_time(\n    machine_memory_bytes{kubernetes_io_hostname=~\".*worker.*\"}[5m]\n  )\n)",
+            "expr": "sum(\n  avg_over_time(\n    machine_memory_bytes{node=~\".*worker.*\"}[5m]\n  )\n)",
             "format": "time_series",
             "hide": false,
             "interval": "",
@@ -317,7 +317,7 @@
             "refId": "D"
           },
           {
-            "expr": "sum(\n    machine_cpu_cores{kubernetes_io_hostname=~\".*worker.*\"}\n)",
+            "expr": "sum(\n    machine_cpu_cores{node=~\".*worker.*\"}\n)",
             "format": "time_series",
             "interval": "1m",
             "intervalFactor": 1,
@@ -490,5 +490,5 @@
     "timezone": "",
     "title": "Kube Quotas (Cluster)",
     "uid": "XN5am50Zz",
-    "version": 15
+    "version": 16
 }
