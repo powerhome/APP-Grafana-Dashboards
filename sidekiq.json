@@ -79,7 +79,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "rate(sidekiq_enqueued_jobs[1m])",
+          "expr": "rate(sidekiq_enqueued_jobs{namespace=~\"$namespace\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -159,7 +159,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "rate(sidekiq_processed_jobs_total[1m])",
+          "expr": "rate(sidekiq_processed_jobs_total{namespace=~\"$namespace\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -239,7 +239,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "increase(sidekiq_failed_jobs_total[1m])",
+          "expr": "increase(sidekiq_failed_jobs_total{namespace=~\"$namespace\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -319,7 +319,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sidekiq_retry_jobs",
+          "expr": "sidekiq_retry_jobs{namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -399,7 +399,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sidekiq_dead_jobs",
+          "expr": "sidekiq_dead_jobs{namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -479,7 +479,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sidekiq_enqueued_jobs",
+          "expr": "sidekiq_enqueued_jobs{namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -559,7 +559,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sidekiq_busy_workers",
+          "expr": "sidekiq_busy_workers{namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -639,7 +639,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sidekiq_scheduled_jobs",
+          "expr": "sidekiq_scheduled_jobs{namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -702,14 +702,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(sidekiq_queue_latency_seconds[1m])",
+          "expr": "rate(sidekiq_queue_latency_seconds{namespace=~\"$namespace\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
           "refId": "A"
         },
         {
-          "expr": "rate(sidekiq_processed_jobs_total[1m])",
+          "expr": "rate(sidekiq_processed_jobs_total{namespace=~\"$namespace\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "processing rate",
@@ -790,7 +790,7 @@
       "targets": [
         {
           "$$hashKey": "object:957",
-          "expr": "sidekiq_queue_enqueued_jobs",
+          "expr": "sidekiq_queue_enqueued_jobs{namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
@@ -837,11 +837,39 @@
     }
   ],
   "refresh": "5s",
-  "schemaVersion": 16,
+  "schemaVersion": 20,
   "style": "dark",
   "tags": [],
   "templating": {
-    "list": []
+    "list": [
+      {
+        "allValue": ".+",
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "Prometheus",
+        "definition": "",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Namespace",
+        "multi": true,
+        "name": "namespace",
+        "options": [],
+        "query": "label_values(kube_pod_info, namespace)",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
   },
   "time": {
     "from": "now-30m",
