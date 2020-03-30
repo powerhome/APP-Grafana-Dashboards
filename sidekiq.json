@@ -79,7 +79,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "rate(sidekiq_enqueued_jobs{namespace=~\"$namespace\"}[1m])",
+          "expr": "sum(rate(sidekiq_enqueued_jobs{namespace=~\"$namespace\"}[1m]))",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -239,7 +239,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "increase(sidekiq_failed_jobs_total{namespace=~\"$namespace\"}[1m])",
+          "expr": "sum(increase(sidekiq_failed_jobs_total{namespace=~\"$namespace\"}[1m]))",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -399,7 +399,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sidekiq_dead_jobs{namespace=~\"$namespace\"}",
+          "expr": "sum(sidekiq_dead_jobs{namespace=~\"$namespace\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -479,7 +479,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sidekiq_enqueued_jobs{namespace=~\"$namespace\"}",
+          "expr": "sum(sidekiq_enqueued_jobs{namespace=~\"$namespace\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -559,7 +559,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sidekiq_busy_workers{namespace=~\"$namespace\"}",
+          "expr": "sum(sidekiq_busy_workers{namespace=~\"$namespace\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -639,7 +639,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sidekiq_scheduled_jobs{namespace=~\"$namespace\"}",
+          "expr": "sum(sidekiq_scheduled_jobs{namespace=~\"$namespace\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -702,14 +702,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(sidekiq_queue_latency_seconds{namespace=~\"$namespace\"}[1m])",
+          "expr": "sum by (name) (rate(sidekiq_queue_latency_seconds{namespace=~\"$namespace\"}[1m]))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
           "refId": "A"
         },
         {
-          "expr": "rate(sidekiq_processed_jobs_total{namespace=~\"$namespace\"}[1m])",
+          "expr": "sum by (name) (rate(sidekiq_processed_jobs_total{namespace=~\"$namespace\"}[1m]))",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "processing rate",
@@ -790,7 +790,7 @@
       "targets": [
         {
           "$$hashKey": "object:957",
-          "expr": "sidekiq_queue_enqueued_jobs{namespace=~\"$namespace\"}",
+          "expr": "sum by (name) (sidekiq_queue_enqueued_jobs{namespace=~\"$namespace\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
