@@ -80,7 +80,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(rate(sidekiq_enqueued_jobs{namespace=~\"$namespace\"}[1m]))",
+          "expr": "rate(sidekiq_enqueued_jobs{namespace=~\"$namespace\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -161,9 +161,8 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(rate(sidekiq_processed_jobs_total{namespace=~\"$namespace\"}[1m]))",
+          "expr": "rate(sidekiq_processed_jobs_total{namespace=~\"$namespace\"}[1m])",
           "format": "time_series",
-          "hide": false,
           "intervalFactor": 1,
           "refId": "A"
         }
@@ -243,7 +242,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(increase(sidekiq_failed_jobs_total{namespace=~\"$namespace\"}[1m]))",
+          "expr": "increase(sidekiq_failed_jobs_total{namespace=~\"$namespace\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -324,7 +323,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(sidekiq_retry_jobs{namespace=~\"$namespace\"})",
+          "expr": "sidekiq_retry_jobs{namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -405,7 +404,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(sidekiq_dead_jobs{namespace=~\"$namespace\"})",
+          "expr": "sidekiq_dead_jobs{namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -486,7 +485,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(sidekiq_enqueued_jobs{namespace=~\"$namespace\"})",
+          "expr": "sidekiq_enqueued_jobs{namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -567,7 +566,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(sidekiq_busy_workers{namespace=~\"$namespace\"})",
+          "expr": "sidekiq_busy_workers{namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -648,7 +647,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "max(sidekiq_scheduled_jobs{namespace=~\"$namespace\"})",
+          "expr": "sidekiq_scheduled_jobs{namespace=~\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "refId": "A"
@@ -715,14 +714,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "max(rate(sidekiq_queue_latency_seconds{namespace=~\"$namespace\", name!~\"sidekiq_alive.*\"}[1m]))",
+          "expr": "rate(sidekiq_queue_latency_seconds{namespace=~\"$namespace\", name!~\"sidekiq_alive.*\"}[1m])",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
           "refId": "A"
         },
         {
-          "expr": "max(rate(sidekiq_processed_jobs_total{namespace=~\"$namespace\"}[1m]))",
+          "expr": "rate(sidekiq_processed_jobs_total{namespace=~\"$namespace\"}[1m])",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -817,7 +816,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "max(sidekiq_queue_enqueued_jobs{namespace=~\"$namespace\", name!~\"sidekiq_alive.*\"})",
+          "expr": "sidekiq_queue_enqueued_jobs{namespace=~\"$namespace\", name!~\"sidekiq_alive.*\"}",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
