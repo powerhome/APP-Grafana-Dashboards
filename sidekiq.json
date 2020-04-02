@@ -715,24 +715,19 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "max(rate(sidekiq_queue_latency_seconds{namespace=~\"$namespace\", name!~\"sidekiq_alive.*\"}[1m]))",
+          "expr": "max(rate(sidekiq_queue_latency_seconds{namespace=~\"$namespace\", name!~\"sidekiq_alive.*\"}[1m])) by (name)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
           "refId": "A"
         },
         {
-          "expr": "max(rate(sidekiq_processed_jobs_total{namespace=~\"$namespace\"}[1m]))",
+          "expr": "max(rate(sidekiq_processed_jobs_total{namespace=~\"$namespace\", name!~\"sidekiq_alive.*\"}[1m])) by (name)",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
           "legendFormat": "processing rate",
           "refId": "B"
-        },
-        {
-          "expr": "rate(sidekiq_queue_latency_seconds{namespace=~\"$namespace\", name=~\"sidekiq_alive.*\"}[1m])",
-          "legendFormat": "pods",
-          "refId": "C"
         }
       ],
       "thresholds": [],
@@ -817,16 +812,11 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "max(sidekiq_queue_enqueued_jobs{namespace=~\"$namespace\", name!~\"sidekiq_alive.*\"})",
+          "expr": "max(sidekiq_queue_enqueued_jobs{namespace=~\"$namespace\", name!~\"sidekiq_alive.*\"}) by (name)",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "{{name}}",
           "refId": "A"
-        },
-        {
-          "expr": "sidekiq_queue_enqueued_jobs{namespace=~\"$namespace\", name=~\"sidekiq_alive.*\"}",
-          "legendFormat": "pods",
-          "refId": "B"
         }
       ],
       "thresholds": [],
