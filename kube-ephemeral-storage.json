@@ -16,8 +16,8 @@
   "editable": true,
   "gnetId": 315,
   "graphTooltip": 0,
-  "id": 38,
-  "iteration": 1574774805232,
+  "id": 63,
+  "iteration": 1585935664193,
   "links": [],
   "panels": [
     {
@@ -101,7 +101,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (container_fs_usage_bytes{image!=\"\",name=~\"^k8s_.*\"}) / sum (node_filesystem_size_bytes{job=\"node-exporter\",fstype!=\"\"}) * 100",
+          "expr": "sum (container_fs_usage_bytes{image!=\"\",name=~\"^k8s_.*\", node=~\"$Node\"}) / sum (kube_node_status_allocatable{resource=\"ephemeral_storage\", node=~\"$Node\"}) * 100",
           "interval": "10s",
           "intervalFactor": 1,
           "refId": "A",
@@ -188,7 +188,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (container_fs_usage_bytes{image!=\"\",name=~\"^k8s_.*\"})",
+          "expr": "sum (container_fs_usage_bytes{image!=\"\",name=~\"^k8s_.*\", node=~\"$Node\"})",
           "format": "time_series",
           "interval": "10s",
           "intervalFactor": 1,
@@ -276,7 +276,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (node_filesystem_size_bytes{job=\"node-exporter\",fstype!=\"\"})",
+          "expr": "sum (kube_node_status_allocatable{resource=\"ephemeral_storage\", node=~\"$Node\"})",
           "interval": "10s",
           "intervalFactor": 1,
           "refId": "A",
@@ -524,20 +524,21 @@
   "templating": {
     "list": [
       {
-        "allValue": ".*",
+        "allValue": ".+",
         "current": {
+          "tags": [],
           "text": "All",
           "value": "$__all"
         },
         "datasource": "Prometheus",
-        "definition": "",
+        "definition": "label_values(node)",
         "hide": 0,
         "includeAll": true,
         "label": null,
         "multi": false,
         "name": "Node",
         "options": [],
-        "query": "label_values(kubernetes_io_hostname)",
+        "query": "label_values(node)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -551,9 +552,8 @@
       {
         "allValue": ".+",
         "current": {
-          "tags": [],
-          "text": "nitro-demos",
-          "value": "nitro-demos"
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": "Prometheus",
         "definition": "label_values(container_fs_usage_bytes{node=~\"$Node\"}, namespace)",
@@ -651,5 +651,5 @@
   "timezone": "browser",
   "title": "Ephemeral Storage",
   "uid": "mG-D07Nmh2",
-  "version": 2
+  "version": 3
 }
