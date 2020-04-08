@@ -82,7 +82,7 @@
         "steppedLine": false,
         "targets": [
           {
-            "expr": "sum (rate (container_network_receive_bytes_total{kubernetes_io_hostname=~\"^$Node$\"}[1m]))",
+            "expr": "sum (rate (container_network_receive_bytes_total{node=~\"^$Node$\"}[1m]))",
             "interval": "10s",
             "intervalFactor": 1,
             "legendFormat": "Received",
@@ -91,7 +91,7 @@
             "step": 10
           },
           {
-            "expr": "- sum (rate (container_network_transmit_bytes_total{kubernetes_io_hostname=~\"^$Node$\"}[1m]))",
+            "expr": "- sum (rate (container_network_transmit_bytes_total{node=~\"^$Node$\"}[1m]))",
             "interval": "10s",
             "intervalFactor": 1,
             "legendFormat": "Sent",
@@ -221,7 +221,7 @@
         "tableColumn": "",
         "targets": [
           {
-            "expr": "sum (container_memory_working_set_bytes{id=\"/\",kubernetes_io_hostname=~\"^$Node$\"}) / sum (machine_memory_bytes{kubernetes_io_hostname=~\"^$Node$\"}) * 100",
+            "expr": "sum (container_memory_working_set_bytes{id=\"/\",node=~\"^$Node$\"}) / sum (machine_memory_bytes{node=~\"^$Node$\"}) * 100",
             "interval": "10s",
             "intervalFactor": 1,
             "refId": "A",
@@ -308,7 +308,7 @@
         "tableColumn": "",
         "targets": [
           {
-            "expr": "sum (rate (container_cpu_usage_seconds_total{id=\"/\",kubernetes_io_hostname=~\"^$Node$\"}[1m])) / sum (machine_cpu_cores{kubernetes_io_hostname=~\"^$Node$\"}) * 100",
+            "expr": "sum (rate (container_cpu_usage_seconds_total{id=\"/\",node=~\"^$Node$\"}[1m])) / sum (machine_cpu_cores{node=~\"^$Node$\"}) * 100",
             "interval": "10s",
             "intervalFactor": 1,
             "refId": "A",
@@ -395,7 +395,7 @@
         "tableColumn": "",
         "targets": [
           {
-            "expr": "sum (container_fs_usage_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",kubernetes_io_hostname=~\"^$Node$\"}) / sum (container_fs_limit_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",kubernetes_io_hostname=~\"^$Node$\"}) * 100",
+            "expr": "sum (container_fs_usage_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",node=~\"^$Node$\"}) / sum (container_fs_limit_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",node=~\"^$Node$\"}) * 100",
             "interval": "10s",
             "intervalFactor": 1,
             "legendFormat": "",
@@ -484,7 +484,7 @@
         "tableColumn": "",
         "targets": [
           {
-            "expr": "sum (container_memory_working_set_bytes{id=\"/\",kubernetes_io_hostname=~\"^$Node$\"})",
+            "expr": "sum (container_memory_working_set_bytes{id=\"/\",node=~\"^$Node$\"})",
             "format": "time_series",
             "interval": "10s",
             "intervalFactor": 1,
@@ -572,7 +572,7 @@
         "tableColumn": "",
         "targets": [
           {
-            "expr": "sum (machine_memory_bytes{kubernetes_io_hostname=~\"^$Node$\"})",
+            "expr": "sum (machine_memory_bytes{node=~\"^$Node$\"})",
             "interval": "10s",
             "intervalFactor": 1,
             "refId": "A",
@@ -659,7 +659,7 @@
         "tableColumn": "",
         "targets": [
           {
-            "expr": "sum (rate (container_cpu_usage_seconds_total{id=\"/\",kubernetes_io_hostname=~\"^$Node$\"}[1m]))",
+            "expr": "sum (rate (container_cpu_usage_seconds_total{id=\"/\",node=~\"^$Node$\"}[1m]))",
             "format": "time_series",
             "interval": "10s",
             "intervalFactor": 1,
@@ -747,7 +747,7 @@
         "tableColumn": "",
         "targets": [
           {
-            "expr": "sum (machine_cpu_cores{kubernetes_io_hostname=~\"^$Node$\"})",
+            "expr": "sum (machine_cpu_cores{node=~\"^$Node$\"})",
             "interval": "10s",
             "intervalFactor": 1,
             "refId": "A",
@@ -834,7 +834,7 @@
         "tableColumn": "",
         "targets": [
           {
-            "expr": "sum (container_fs_usage_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",kubernetes_io_hostname=~\"^$Node$\"})",
+            "expr": "sum (container_fs_usage_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",node=~\"^$Node$\"})",
             "interval": "10s",
             "intervalFactor": 1,
             "refId": "A",
@@ -921,7 +921,7 @@
         "tableColumn": "",
         "targets": [
           {
-            "expr": "sum (container_fs_limit_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",kubernetes_io_hostname=~\"^$Node$\"})",
+            "expr": "sum (container_fs_limit_bytes{device=~\"^/dev/[sv]d[a-z][1-9]$\",id=\"/\",node=~\"^$Node$\"})",
             "interval": "10s",
             "intervalFactor": 1,
             "refId": "A",
@@ -1002,7 +1002,7 @@
         "steppedLine": true,
         "targets": [
           {
-            "expr": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (pod_name)",
+            "expr": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (pod_name)",
             "format": "time_series",
             "interval": "10s",
             "intervalFactor": 1,
@@ -1112,7 +1112,7 @@
             "steppedLine": true,
             "targets": [
               {
-                "expr": "sum (rate (container_cpu_usage_seconds_total{systemd_service_name!=\"\",kubernetes_io_hostname=~\"^$Node$\"}[1m])) by (systemd_service_name)",
+                "expr": "sum (rate (container_cpu_usage_seconds_total{systemd_service_name!=\"\",node=~\"^$Node$\"}[1m])) by (systemd_service_name)",
                 "hide": false,
                 "interval": "10s",
                 "intervalFactor": 1,
@@ -1232,7 +1232,7 @@
         "steppedLine": true,
         "targets": [
           {
-            "expr": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",container_name!=\"POD\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (container_name, pod_name)",
+            "expr": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",container_name!=\"POD\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (container_name, pod_name)",
             "format": "time_series",
             "hide": false,
             "interval": "10s",
@@ -1243,22 +1243,22 @@
             "step": 10
           },
           {
-            "expr": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name!~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (kubernetes_io_hostname, name, image)",
+            "expr": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name!~\"^k8s_.*\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (node, name, image)",
             "format": "time_series",
             "hide": false,
             "interval": "10s",
             "intervalFactor": 1,
-            "legendFormat": "docker: {{ kubernetes_io_hostname }} | {{ image }} ({{ name }})",
+            "legendFormat": "docker: {{ node }} | {{ image }} ({{ name }})",
             "metric": "container_cpu",
             "refId": "B",
             "step": 10
           },
           {
-            "expr": "sum (rate (container_cpu_usage_seconds_total{rkt_container_name!=\"\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (kubernetes_io_hostname, rkt_container_name)",
+            "expr": "sum (rate (container_cpu_usage_seconds_total{rkt_container_name!=\"\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (node, rkt_container_name)",
             "format": "time_series",
             "interval": "10s",
             "intervalFactor": 1,
-            "legendFormat": "rkt: {{ kubernetes_io_hostname }} | {{ rkt_container_name }}",
+            "legendFormat": "rkt: {{ node }} | {{ rkt_container_name }}",
             "metric": "container_cpu",
             "refId": "C",
             "step": 10
@@ -1367,7 +1367,7 @@
         "steppedLine": true,
         "targets": [
           {
-            "expr": "sum (rate (container_cpu_usage_seconds_total{id!=\"/\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (id)",
+            "expr": "sum (rate (container_cpu_usage_seconds_total{id!=\"/\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (id)",
             "format": "time_series",
             "hide": false,
             "interval": "10s",
@@ -1481,7 +1481,7 @@
         "steppedLine": true,
         "targets": [
           {
-            "expr": "sum (container_memory_working_set_bytes{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}) by (pod_name)",
+            "expr": "sum (container_memory_working_set_bytes{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}) by (pod_name)",
             "format": "time_series",
             "interval": "10s",
             "intervalFactor": 1,
@@ -1591,7 +1591,7 @@
             "steppedLine": true,
             "targets": [
               {
-                "expr": "sum (container_memory_working_set_bytes{systemd_service_name!=\"\",kubernetes_io_hostname=~\"^$Node$\"}) by (systemd_service_name)",
+                "expr": "sum (container_memory_working_set_bytes{systemd_service_name!=\"\",node=~\"^$Node$\"}) by (systemd_service_name)",
                 "interval": "10s",
                 "intervalFactor": 1,
                 "legendFormat": "{{ systemd_service_name }}",
@@ -1707,7 +1707,7 @@
         "steppedLine": true,
         "targets": [
           {
-            "expr": "sum (container_memory_working_set_bytes{image!=\"\",name=~\"^k8s_.*\",container_name!=\"POD\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}) by (container_name, pod_name)",
+            "expr": "sum (container_memory_working_set_bytes{image!=\"\",name=~\"^k8s_.*\",container_name!=\"POD\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}) by (container_name, pod_name)",
             "format": "time_series",
             "interval": "10s",
             "intervalFactor": 1,
@@ -1717,21 +1717,21 @@
             "step": 10
           },
           {
-            "expr": "sum (container_memory_working_set_bytes{image!=\"\",name!~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}) by (kubernetes_io_hostname, name, image)",
+            "expr": "sum (container_memory_working_set_bytes{image!=\"\",name!~\"^k8s_.*\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}) by (node, name, image)",
             "format": "time_series",
             "interval": "10s",
             "intervalFactor": 1,
-            "legendFormat": "docker: {{ kubernetes_io_hostname }} | {{ image }} ({{ name }})",
+            "legendFormat": "docker: {{ node }} | {{ image }} ({{ name }})",
             "metric": "container_memory_usage:sort_desc",
             "refId": "B",
             "step": 10
           },
           {
-            "expr": "sum (container_memory_working_set_bytes{rkt_container_name!=\"\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}) by (kubernetes_io_hostname, rkt_container_name)",
+            "expr": "sum (container_memory_working_set_bytes{rkt_container_name!=\"\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}) by (node, rkt_container_name)",
             "format": "time_series",
             "interval": "10s",
             "intervalFactor": 1,
-            "legendFormat": "rkt: {{ kubernetes_io_hostname }} | {{ rkt_container_name }}",
+            "legendFormat": "rkt: {{ node }} | {{ rkt_container_name }}",
             "metric": "container_memory_usage:sort_desc",
             "refId": "C",
             "step": 10
@@ -1840,7 +1840,7 @@
         "steppedLine": true,
         "targets": [
           {
-            "expr": "sum (container_memory_working_set_bytes{id!=\"/\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}) by (id)",
+            "expr": "sum (container_memory_working_set_bytes{id!=\"/\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}) by (id)",
             "format": "time_series",
             "interval": "10s",
             "intervalFactor": 1,
@@ -1953,7 +1953,7 @@
         "steppedLine": false,
         "targets": [
           {
-            "expr": "sum (rate (container_network_receive_bytes_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (pod_name)",
+            "expr": "sum (rate (container_network_receive_bytes_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (pod_name)",
             "format": "time_series",
             "interval": "10s",
             "intervalFactor": 1,
@@ -1963,7 +1963,7 @@
             "step": 10
           },
           {
-            "expr": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (pod_name)",
+            "expr": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (pod_name)",
             "format": "time_series",
             "interval": "10s",
             "intervalFactor": 1,
@@ -2076,7 +2076,7 @@
         "steppedLine": false,
         "targets": [
           {
-            "expr": "sum (rate (container_network_receive_bytes_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (container_name, pod_name)",
+            "expr": "sum (rate (container_network_receive_bytes_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (container_name, pod_name)",
             "format": "time_series",
             "hide": false,
             "interval": "10s",
@@ -2087,7 +2087,7 @@
             "step": 10
           },
           {
-            "expr": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name=~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (container_name, pod_name)",
+            "expr": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (container_name, pod_name)",
             "format": "time_series",
             "hide": false,
             "interval": "10s",
@@ -2098,45 +2098,45 @@
             "step": 10
           },
           {
-            "expr": "sum (rate (container_network_receive_bytes_total{image!=\"\",name!~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (kubernetes_io_hostname, name, image)",
+            "expr": "sum (rate (container_network_receive_bytes_total{image!=\"\",name!~\"^k8s_.*\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (node, name, image)",
             "format": "time_series",
             "hide": false,
             "interval": "10s",
             "intervalFactor": 1,
-            "legendFormat": "-> docker: {{ kubernetes_io_hostname }} | {{ image }} ({{ name }})",
+            "legendFormat": "-> docker: {{ node }} | {{ image }} ({{ name }})",
             "metric": "network",
             "refId": "A",
             "step": 10
           },
           {
-            "expr": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name!~\"^k8s_.*\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (kubernetes_io_hostname, name, image)",
+            "expr": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name!~\"^k8s_.*\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (node, name, image)",
             "format": "time_series",
             "hide": false,
             "interval": "10s",
             "intervalFactor": 1,
-            "legendFormat": "<- docker: {{ kubernetes_io_hostname }} | {{ image }} ({{ name }})",
+            "legendFormat": "<- docker: {{ node }} | {{ image }} ({{ name }})",
             "metric": "network",
             "refId": "C",
             "step": 10
           },
           {
-            "expr": "sum (rate (container_network_transmit_bytes_total{rkt_container_name!=\"\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (kubernetes_io_hostname, rkt_container_name)",
+            "expr": "sum (rate (container_network_transmit_bytes_total{rkt_container_name!=\"\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (node, rkt_container_name)",
             "format": "time_series",
             "hide": false,
             "interval": "10s",
             "intervalFactor": 1,
-            "legendFormat": "-> rkt: {{ kubernetes_io_hostname }} | {{ rkt_container_name }}",
+            "legendFormat": "-> rkt: {{ node }} | {{ rkt_container_name }}",
             "metric": "network",
             "refId": "E",
             "step": 10
           },
           {
-            "expr": "- sum (rate (container_network_transmit_bytes_total{rkt_container_name!=\"\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (kubernetes_io_hostname, rkt_container_name)",
+            "expr": "- sum (rate (container_network_transmit_bytes_total{rkt_container_name!=\"\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (node, rkt_container_name)",
             "format": "time_series",
             "hide": false,
             "interval": "10s",
             "intervalFactor": 1,
-            "legendFormat": "<- rkt: {{ kubernetes_io_hostname }} | {{ rkt_container_name }}",
+            "legendFormat": "<- rkt: {{ node }} | {{ rkt_container_name }}",
             "metric": "network",
             "refId": "F",
             "step": 10
@@ -2245,7 +2245,7 @@
         "steppedLine": false,
         "targets": [
           {
-            "expr": "sum (rate (container_network_receive_bytes_total{id!=\"/\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (id)",
+            "expr": "sum (rate (container_network_receive_bytes_total{id!=\"/\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (id)",
             "format": "time_series",
             "interval": "10s",
             "intervalFactor": 1,
@@ -2255,7 +2255,7 @@
             "step": 10
           },
           {
-            "expr": "- sum (rate (container_network_transmit_bytes_total{id!=\"/\",kubernetes_io_hostname=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (id)",
+            "expr": "- sum (rate (container_network_transmit_bytes_total{id!=\"/\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\"}[1m])) by (id)",
             "format": "time_series",
             "interval": "10s",
             "intervalFactor": 1,
@@ -2330,7 +2330,7 @@
           "multi": false,
           "name": "Node",
           "options": [],
-          "query": "label_values(kubernetes_io_hostname)",
+          "query": "label_values(node)",
           "refresh": 1,
           "regex": "",
           "skipUrlSync": false,
@@ -2348,14 +2348,14 @@
             "value": "$__all"
           },
           "datasource": "Prometheus",
-          "definition": "label_values(container_cpu_usage_seconds_total{kubernetes_io_hostname=~\"$Node\"}, namespace)",
+          "definition": "label_values(container_cpu_usage_seconds_total{node=~\"$Node\"}, namespace)",
           "hide": 0,
           "includeAll": true,
           "label": "Namespace",
           "multi": false,
           "name": "namespace",
           "options": [],
-          "query": "label_values(container_cpu_usage_seconds_total{kubernetes_io_hostname=~\"$Node\"}, namespace)",
+          "query": "label_values(container_cpu_usage_seconds_total{node=~\"$Node\"}, namespace)",
           "refresh": 1,
           "regex": "",
           "skipUrlSync": false,
@@ -2391,14 +2391,14 @@
             "value": "$__all"
           },
           "datasource": "Prometheus",
-          "definition": "label_values(container_cpu_usage_seconds_total{kubernetes_io_hostname=~\"$Node\",namespace=~\"$namespace\", pod_name=~\".*$filter.*\"}, pod_name)",
+          "definition": "label_values(container_cpu_usage_seconds_total{node=~\"$Node\",namespace=~\"$namespace\", pod_name=~\".*$filter.*\"}, pod_name)",
           "hide": 0,
           "includeAll": true,
           "label": "Pod",
           "multi": true,
           "name": "pod",
           "options": [],
-          "query": "label_values(container_cpu_usage_seconds_total{kubernetes_io_hostname=~\"$Node\",namespace=~\"$namespace\", pod_name=~\".*$filter.*\"}, pod_name)",
+          "query": "label_values(container_cpu_usage_seconds_total{node=~\"$Node\",namespace=~\"$namespace\", pod_name=~\".*$filter.*\"}, pod_name)",
           "refresh": 1,
           "regex": "",
           "skipUrlSync": false,
