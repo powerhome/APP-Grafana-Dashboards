@@ -17,7 +17,7 @@
   "gnetId": 315,
   "graphTooltip": 0,
   "id": 360,
-  "iteration": 1586892762767,
+  "iteration": 1586902722439,
   "links": [],
   "panels": [
     {
@@ -212,91 +212,70 @@
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": true,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
       "datasource": "Prometheus",
-      "decimals": 2,
       "description": "The sum across all selected Instances (equivalent to nodes) of the total filesystem usage. Includes the per-pod ephemeral storage as reflected below, as well as any other disk usage on the node.",
-      "editable": true,
-      "error": false,
-      "format": "percent",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": true,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
       "gridPos": {
         "h": 4,
         "w": 6,
         "x": 10,
         "y": 1
       },
-      "height": "180px",
       "id": 47,
-      "interval": null,
-      "isNew": true,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
+      "options": {
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [
+              {
+                "id": 0,
+                "op": "=",
+                "text": "N/A",
+                "type": 1,
+                "value": "null"
+              }
+            ],
+            "max": 100,
+            "min": 0,
+            "nullValueMode": "connected",
+            "thresholds": [
+              {
+                "color": "rgba(50, 172, 45, 0.97)",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 65
+              },
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": 90
+              }
+            ],
+            "unit": "percent"
+          },
+          "override": {},
+          "values": false
         },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
+        "orientation": "horizontal",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
       },
-      "tableColumn": "",
+      "pluginVersion": "6.4.2",
       "targets": [
         {
-          "expr": "sum(node_filesystem_avail_bytes{fstype!=\"\",job=\"node-exporter\", instance=~\"$instance.+\"})\n  / sum(node_filesystem_size_bytes{fstype!=\"\",job=\"node-exporter\", instance=~\"$instance.+\"}) * 100",
+          "expr": "(sum(node_filesystem_size_bytes{fstype!=\"\",job=\"node-exporter\", instance=~\"$instance.+\"}) - sum(node_filesystem_avail_bytes{fstype!=\"\",job=\"node-exporter\", instance=~\"$instance.+\"}))\n  / sum(node_filesystem_size_bytes{fstype!=\"\",job=\"node-exporter\", instance=~\"$instance.+\"}) * 100",
           "interval": "10s",
           "intervalFactor": 1,
           "refId": "A",
           "step": 10
         }
       ],
-      "thresholds": "65, 90",
       "title": "Instance File System usage",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
+      "type": "gauge"
     },
     {
       "cacheTimeout": null,
@@ -365,7 +344,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(node_filesystem_avail_bytes{fstype!=\"\",job=\"node-exporter\", instance=~\"$instance.+\"})",
+          "expr": "sum(node_filesystem_size_bytes{fstype!=\"\",job=\"node-exporter\", instance=~\"$instance.+\"}) - sum(node_filesystem_avail_bytes{fstype!=\"\",job=\"node-exporter\", instance=~\"$instance.+\"})",
           "interval": "10s",
           "intervalFactor": 1,
           "refId": "A",
@@ -1191,5 +1170,5 @@
   "timezone": "browser",
   "title": "Ephemeral Storage",
   "uid": "aeCh9Kie5o",
-  "version": 7
+  "version": 9
 }
