@@ -15,11 +15,12 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 31,
-  "iteration": 1572619450439,
+  "id": 361,
+  "iteration": 1586898239537,
   "links": [],
   "panels": [
     {
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -31,9 +32,10 @@
       "type": "row"
     },
     {
+      "datasource": null,
       "gridPos": {
         "h": 5,
-        "w": 12,
+        "w": 8,
         "x": 0,
         "y": 1
       },
@@ -46,36 +48,33 @@
           ],
           "defaults": {
             "decimals": 2,
+            "mappings": [],
             "max": 100,
             "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ],
             "unit": "percent"
           },
-          "mappings": [],
           "override": {},
-          "thresholds": [
-            {
-              "color": "green",
-              "index": 0,
-              "value": null
-            },
-            {
-              "color": "#EAB839",
-              "index": 1,
-              "value": 75
-            },
-            {
-              "color": "red",
-              "index": 2,
-              "value": 90
-            }
-          ],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.2.4",
+      "pluginVersion": "6.4.2",
       "repeat": "typePhysical",
       "repeatDirection": "h",
       "scopedVars": {
@@ -100,13 +99,14 @@
       "type": "gauge"
     },
     {
+      "datasource": null,
       "gridPos": {
         "h": 5,
-        "w": 12,
-        "x": 12,
+        "w": 8,
+        "x": 8,
         "y": 1
       },
-      "id": 73,
+      "id": 86,
       "links": [],
       "options": {
         "fieldOptions": {
@@ -115,39 +115,36 @@
           ],
           "defaults": {
             "decimals": 2,
+            "mappings": [],
             "max": 100,
             "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ],
             "unit": "percent"
           },
-          "mappings": [],
           "override": {},
-          "thresholds": [
-            {
-              "color": "green",
-              "index": 0,
-              "value": null
-            },
-            {
-              "color": "#EAB839",
-              "index": 1,
-              "value": 75
-            },
-            {
-              "color": "red",
-              "index": 2,
-              "value": 90
-            }
-          ],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.2.4",
+      "pluginVersion": "6.4.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1572619450439,
+      "repeatIteration": 1586898239537,
       "repeatPanelId": 57,
       "scopedVars": {
         "typePhysical": {
@@ -171,9 +168,79 @@
       "type": "gauge"
     },
     {
+      "datasource": null,
       "gridPos": {
         "h": 5,
-        "w": 12,
+        "w": 8,
+        "x": 16,
+        "y": 1
+      },
+      "id": 87,
+      "links": [],
+      "options": {
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ],
+            "unit": "percent"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "6.4.2",
+      "repeat": null,
+      "repeatDirection": "h",
+      "repeatIteration": 1586898239537,
+      "repeatPanelId": 57,
+      "scopedVars": {
+        "typePhysical": {
+          "selected": false,
+          "text": "ephemeral-storage",
+          "value": "ephemeral-storage"
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"requests.$typePhysical\"}\n)\n/\nsum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"hard\",resource=\"requests.$typePhysical\"}\n)\n*100",
+          "format": "time_series",
+          "instant": true,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Quota: requests.$typePhysical",
+      "type": "gauge"
+    },
+    {
+      "datasource": null,
+      "gridPos": {
+        "h": 5,
+        "w": 8,
         "x": 0,
         "y": 6
       },
@@ -186,36 +253,33 @@
           ],
           "defaults": {
             "decimals": 2,
+            "mappings": [],
             "max": 100,
             "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ],
             "unit": "percent"
           },
-          "mappings": [],
           "override": {},
-          "thresholds": [
-            {
-              "color": "green",
-              "index": 0,
-              "value": null
-            },
-            {
-              "color": "#EAB839",
-              "index": 1,
-              "value": 75
-            },
-            {
-              "color": "red",
-              "index": 2,
-              "value": 90
-            }
-          ],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.2.4",
+      "pluginVersion": "6.4.2",
       "repeat": "typePhysical",
       "repeatDirection": "h",
       "repeatIteration": 1572588027609,
@@ -242,13 +306,14 @@
       "type": "gauge"
     },
     {
+      "datasource": null,
       "gridPos": {
         "h": 5,
-        "w": 12,
-        "x": 12,
+        "w": 8,
+        "x": 8,
         "y": 6
       },
-      "id": 74,
+      "id": 88,
       "links": [],
       "options": {
         "fieldOptions": {
@@ -257,39 +322,36 @@
           ],
           "defaults": {
             "decimals": 2,
+            "mappings": [],
             "max": 100,
             "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ],
             "unit": "percent"
           },
-          "mappings": [],
           "override": {},
-          "thresholds": [
-            {
-              "color": "green",
-              "index": 0,
-              "value": null
-            },
-            {
-              "color": "#EAB839",
-              "index": 1,
-              "value": 75
-            },
-            {
-              "color": "red",
-              "index": 2,
-              "value": 90
-            }
-          ],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.2.4",
+      "pluginVersion": "6.4.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1572619450439,
+      "repeatIteration": 1586898239537,
       "repeatPanelId": 72,
       "scopedVars": {
         "typePhysical": {
@@ -313,7 +375,77 @@
       "type": "gauge"
     },
     {
+      "datasource": null,
+      "gridPos": {
+        "h": 5,
+        "w": 8,
+        "x": 16,
+        "y": 6
+      },
+      "id": 89,
+      "links": [],
+      "options": {
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ],
+            "unit": "percent"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "auto",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "6.4.2",
+      "repeat": null,
+      "repeatDirection": "h",
+      "repeatIteration": 1586898239537,
+      "repeatPanelId": 72,
+      "scopedVars": {
+        "typePhysical": {
+          "selected": false,
+          "text": "ephemeral-storage",
+          "value": "ephemeral-storage"
+        }
+      },
+      "targets": [
+        {
+          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"limits.$typePhysical\"}\n)\n/\nsum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"hard\",resource=\"limits.$typePhysical\"}\n)\n*100",
+          "format": "time_series",
+          "instant": true,
+          "intervalFactor": 1,
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Quota: limits.$typePhysical",
+      "type": "gauge"
+    },
+    {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -330,11 +462,13 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "description": "Limits: straight lines\n\nRequests: dashed lines\n\nUsed: filled area",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 9,
-        "w": 12,
+        "w": 8,
         "x": 0,
         "y": 12
       },
@@ -355,7 +489,9 @@
       "links": [],
       "maxPerRow": 2,
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -415,7 +551,7 @@
           "refId": "D"
         },
         {
-          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"requests.memory\"}\n)",
+          "expr": "sum( \n    kube_pod_container_resource_requests{namespace=~\"$namespace\",resource=\"memory\"}\n)",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -424,14 +560,9 @@
           "refId": "B"
         },
         {
-          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"limits.memory\"}\n)",
-          "format": "time_series",
-          "hide": false,
-          "instant": false,
-          "interval": "",
-          "intervalFactor": 1,
+          "expr": "sum( \n    kube_pod_container_resource_limits{namespace=~\"$namespace\",resource=\"memory\"}\n)",
           "legendFormat": "pod limit sum",
-          "refId": "E"
+          "refId": "F"
         },
         {
           "expr": "sum(\n    container_memory_working_set_bytes{image!=\"\", namespace=~\"$namespace\", container_name!=\"POD\", pod_name=~\"$pod\"}\n)",
@@ -489,12 +620,14 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "description": "Limits: straight lines\n\nRequests: dashed lines\n\nUsed: filled area",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 9,
-        "w": 12,
-        "x": 12,
+        "w": 8,
+        "x": 8,
         "y": 12
       },
       "id": 11,
@@ -512,7 +645,9 @@
       "links": [],
       "maxPerRow": 2,
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 2,
       "points": false,
@@ -573,7 +708,7 @@
           "refId": "D"
         },
         {
-          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"requests.cpu\"}\n)",
+          "expr": "sum(\n    kube_pod_container_resource_requests{namespace=~\"$namespace\",resource=\"cpu\"}\n)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -581,12 +716,9 @@
           "refId": "B"
         },
         {
-          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"limits.cpu\"}\n)",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 1,
+          "expr": "sum(\n    kube_pod_container_resource_limits{namespace=~\"$namespace\",resource=\"cpu\"}\n)",
           "legendFormat": "pod limit sum",
-          "refId": "E"
+          "refId": "F"
         },
         {
           "expr": "sum(\n  rate(\n    container_cpu_usage_seconds_total{image!=\"\", namespace=~\"$namespace\", pod=~\"$pod\"}[1m]\n  )\n)",
@@ -639,7 +771,160 @@
       }
     },
     {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": null,
+      "description": "Limits: straight lines\n\nRequests: dashed lines\n\nUsed: filled area",
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 8,
+        "x": 16,
+        "y": 12
+      },
+      "id": 85,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "maxPerRow": 2,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeatDirection": "h",
+      "seriesOverrides": [
+        {
+          "alias": "namespace request quota",
+          "color": "#8AB8FF",
+          "dashes": true,
+          "fill": 0,
+          "linewidth": 2
+        },
+        {
+          "alias": "namespace limit quota",
+          "color": "#1F60C4",
+          "fill": 0,
+          "linewidth": 2
+        },
+        {
+          "alias": "pod request sum",
+          "color": "#FFA6B0",
+          "dashes": true,
+          "fill": 0,
+          "linewidth": 2
+        },
+        {
+          "alias": "pod limit sum",
+          "color": "#E02F44",
+          "fill": 0,
+          "linewidth": 2
+        },
+        {
+          "alias": "actually used",
+          "color": "#56A64B",
+          "linewidth": 3
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"hard\",resource=\"requests.ephemeral-storage\"}\n)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "namespace request quota",
+          "refId": "A"
+        },
+        {
+          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"hard\",resource=\"limits.ephemeral-storage\"}\n)",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 1,
+          "legendFormat": "namespace limit quota",
+          "refId": "D"
+        },
+        {
+          "expr": "sum(\n   kube_pod_container_resource_requests{namespace=~\"$namespace\",pod=~\"$pod\",resource=\"ephemeral_storage\"}\n)",
+          "hide": false,
+          "legendFormat": "pod request sum",
+          "refId": "G"
+        },
+        {
+          "expr": "sum(\n   kube_pod_container_resource_limits{namespace=~\"$namespace\",pod=~\"$pod\",resource=\"ephemeral_storage\"}\n)",
+          "legendFormat": "pod limit sum",
+          "refId": "F"
+        },
+        {
+          "expr": "sum(\n  container_fs_usage_bytes{image!=\"\",name=~\"^k8s_.*\",namespace=~\"$namespace\",pod=~\"$pod\"}\n)",
+          "format": "time_series",
+          "intervalFactor": 1,
+          "legendFormat": "actually used",
+          "refId": "C"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Ephemeral Storage",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 2,
+          "format": "decbytes",
+          "label": "ephemeral storage/Δt",
+          "logBase": 1,
+          "max": null,
+          "min": "0",
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -652,6 +937,7 @@
       "type": "row"
     },
     {
+      "datasource": null,
       "description": "",
       "gridPos": {
         "h": 4,
@@ -668,36 +954,33 @@
           ],
           "defaults": {
             "decimals": 2,
+            "mappings": [],
             "max": 100,
             "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ],
             "unit": "percent"
           },
-          "mappings": [],
           "override": {},
-          "thresholds": [
-            {
-              "color": "green",
-              "index": 0,
-              "value": null
-            },
-            {
-              "color": "#EAB839",
-              "index": 1,
-              "value": 75
-            },
-            {
-              "color": "red",
-              "index": 2,
-              "value": 90
-            }
-          ],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.2.4",
+      "pluginVersion": "6.4.2",
       "repeat": "typeVirtual",
       "repeatDirection": "h",
       "scopedVars": {
@@ -721,6 +1004,7 @@
       "type": "gauge"
     },
     {
+      "datasource": null,
       "description": "",
       "gridPos": {
         "h": 4,
@@ -728,7 +1012,7 @@
         "x": 6,
         "y": 22
       },
-      "id": 75,
+      "id": 90,
       "links": [],
       "options": {
         "fieldOptions": {
@@ -737,39 +1021,36 @@
           ],
           "defaults": {
             "decimals": 2,
+            "mappings": [],
             "max": 100,
             "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ],
             "unit": "percent"
           },
-          "mappings": [],
           "override": {},
-          "thresholds": [
-            {
-              "color": "green",
-              "index": 0,
-              "value": null
-            },
-            {
-              "color": "#EAB839",
-              "index": 1,
-              "value": 75
-            },
-            {
-              "color": "red",
-              "index": 2,
-              "value": 90
-            }
-          ],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.2.4",
+      "pluginVersion": "6.4.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1572619450439,
+      "repeatIteration": 1586898239537,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -792,6 +1073,7 @@
       "type": "gauge"
     },
     {
+      "datasource": null,
       "description": "",
       "gridPos": {
         "h": 4,
@@ -799,7 +1081,7 @@
         "x": 12,
         "y": 22
       },
-      "id": 76,
+      "id": 91,
       "links": [],
       "options": {
         "fieldOptions": {
@@ -808,39 +1090,36 @@
           ],
           "defaults": {
             "decimals": 2,
+            "mappings": [],
             "max": 100,
             "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ],
             "unit": "percent"
           },
-          "mappings": [],
           "override": {},
-          "thresholds": [
-            {
-              "color": "green",
-              "index": 0,
-              "value": null
-            },
-            {
-              "color": "#EAB839",
-              "index": 1,
-              "value": 75
-            },
-            {
-              "color": "red",
-              "index": 2,
-              "value": 90
-            }
-          ],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.2.4",
+      "pluginVersion": "6.4.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1572619450439,
+      "repeatIteration": 1586898239537,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -863,6 +1142,7 @@
       "type": "gauge"
     },
     {
+      "datasource": null,
       "description": "",
       "gridPos": {
         "h": 4,
@@ -870,7 +1150,7 @@
         "x": 18,
         "y": 22
       },
-      "id": 77,
+      "id": 92,
       "links": [],
       "options": {
         "fieldOptions": {
@@ -879,39 +1159,36 @@
           ],
           "defaults": {
             "decimals": 2,
+            "mappings": [],
             "max": 100,
             "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ],
             "unit": "percent"
           },
-          "mappings": [],
           "override": {},
-          "thresholds": [
-            {
-              "color": "green",
-              "index": 0,
-              "value": null
-            },
-            {
-              "color": "#EAB839",
-              "index": 1,
-              "value": 75
-            },
-            {
-              "color": "red",
-              "index": 2,
-              "value": 90
-            }
-          ],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.2.4",
+      "pluginVersion": "6.4.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1572619450439,
+      "repeatIteration": 1586898239537,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -934,6 +1211,7 @@
       "type": "gauge"
     },
     {
+      "datasource": null,
       "description": "",
       "gridPos": {
         "h": 4,
@@ -941,7 +1219,7 @@
         "x": 0,
         "y": 26
       },
-      "id": 78,
+      "id": 93,
       "links": [],
       "options": {
         "fieldOptions": {
@@ -950,39 +1228,36 @@
           ],
           "defaults": {
             "decimals": 2,
+            "mappings": [],
             "max": 100,
             "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ],
             "unit": "percent"
           },
-          "mappings": [],
           "override": {},
-          "thresholds": [
-            {
-              "color": "green",
-              "index": 0,
-              "value": null
-            },
-            {
-              "color": "#EAB839",
-              "index": 1,
-              "value": 75
-            },
-            {
-              "color": "red",
-              "index": 2,
-              "value": 90
-            }
-          ],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.2.4",
+      "pluginVersion": "6.4.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1572619450439,
+      "repeatIteration": 1586898239537,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -1005,6 +1280,7 @@
       "type": "gauge"
     },
     {
+      "datasource": null,
       "description": "",
       "gridPos": {
         "h": 4,
@@ -1012,7 +1288,7 @@
         "x": 6,
         "y": 26
       },
-      "id": 79,
+      "id": 94,
       "links": [],
       "options": {
         "fieldOptions": {
@@ -1021,39 +1297,36 @@
           ],
           "defaults": {
             "decimals": 2,
+            "mappings": [],
             "max": 100,
             "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ],
             "unit": "percent"
           },
-          "mappings": [],
           "override": {},
-          "thresholds": [
-            {
-              "color": "green",
-              "index": 0,
-              "value": null
-            },
-            {
-              "color": "#EAB839",
-              "index": 1,
-              "value": 75
-            },
-            {
-              "color": "red",
-              "index": 2,
-              "value": 90
-            }
-          ],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.2.4",
+      "pluginVersion": "6.4.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1572619450439,
+      "repeatIteration": 1586898239537,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -1077,6 +1350,7 @@
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1097,6 +1371,7 @@
       "dashes": false,
       "datasource": "Prometheus",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 5,
         "w": 6,
@@ -1117,7 +1392,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pluginVersion": "6.2.4",
       "pointradius": 2,
@@ -1214,13 +1491,14 @@
       "dashes": false,
       "datasource": "Prometheus",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 5,
         "w": 6,
         "x": 6,
         "y": 31
       },
-      "id": 80,
+      "id": 95,
       "legend": {
         "avg": false,
         "current": false,
@@ -1234,7 +1512,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pluginVersion": "6.2.4",
       "pointradius": 2,
@@ -1242,7 +1522,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1572619450439,
+      "repeatIteration": 1586898239537,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -1333,13 +1613,14 @@
       "dashes": false,
       "datasource": "Prometheus",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 5,
         "w": 6,
         "x": 12,
         "y": 31
       },
-      "id": 81,
+      "id": 96,
       "legend": {
         "avg": false,
         "current": false,
@@ -1353,7 +1634,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pluginVersion": "6.2.4",
       "pointradius": 2,
@@ -1361,7 +1644,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1572619450439,
+      "repeatIteration": 1586898239537,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -1452,13 +1735,14 @@
       "dashes": false,
       "datasource": "Prometheus",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 5,
         "w": 6,
         "x": 18,
         "y": 31
       },
-      "id": 82,
+      "id": 97,
       "legend": {
         "avg": false,
         "current": false,
@@ -1472,7 +1756,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pluginVersion": "6.2.4",
       "pointradius": 2,
@@ -1480,7 +1766,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1572619450439,
+      "repeatIteration": 1586898239537,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -1571,13 +1857,14 @@
       "dashes": false,
       "datasource": "Prometheus",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 5,
         "w": 6,
         "x": 0,
         "y": 36
       },
-      "id": 83,
+      "id": 98,
       "legend": {
         "avg": false,
         "current": false,
@@ -1591,7 +1878,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pluginVersion": "6.2.4",
       "pointradius": 2,
@@ -1599,7 +1888,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1572619450439,
+      "repeatIteration": 1586898239537,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -1690,13 +1979,14 @@
       "dashes": false,
       "datasource": "Prometheus",
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 5,
         "w": 6,
         "x": 6,
         "y": 36
       },
-      "id": 84,
+      "id": 99,
       "legend": {
         "avg": false,
         "current": false,
@@ -1710,7 +2000,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
-      "options": {},
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pluginVersion": "6.2.4",
       "pointradius": 2,
@@ -1718,7 +2010,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1572619450439,
+      "repeatIteration": 1586898239537,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -1802,7 +2094,8 @@
       }
     }
   ],
-  "schemaVersion": 18,
+  "refresh": false,
+  "schemaVersion": 20,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1859,9 +2152,14 @@
             "selected": false,
             "text": "cpu",
             "value": "cpu"
+          },
+          {
+            "selected": false,
+            "text": "ephemeral-storage",
+            "value": "ephemeral-storage"
           }
         ],
-        "query": "memory, cpu",
+        "query": "memory, cpu,ephemeral-storage",
         "skipUrlSync": false,
         "type": "custom"
       },
@@ -1981,6 +2279,6 @@
   },
   "timezone": "",
   "title": "Kube Quotas (Namespace)",
-  "uid": "6MFyi50Zz",
-  "version": 55
+  "uid": "6MFyi50Zzw3",
+  "version": 7
 }
