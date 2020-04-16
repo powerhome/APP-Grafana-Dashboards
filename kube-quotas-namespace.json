@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 361,
-  "iteration": 1586898239537,
+  "iteration": 1587073689381,
   "links": [],
   "panels": [
     {
@@ -144,7 +144,7 @@
       "pluginVersion": "6.4.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586898239537,
+      "repeatIteration": 1587073689381,
       "repeatPanelId": 57,
       "scopedVars": {
         "typePhysical": {
@@ -213,7 +213,7 @@
       "pluginVersion": "6.4.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586898239537,
+      "repeatIteration": 1587073689381,
       "repeatPanelId": 57,
       "scopedVars": {
         "typePhysical": {
@@ -351,7 +351,7 @@
       "pluginVersion": "6.4.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586898239537,
+      "repeatIteration": 1587073689381,
       "repeatPanelId": 72,
       "scopedVars": {
         "typePhysical": {
@@ -420,7 +420,7 @@
       "pluginVersion": "6.4.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586898239537,
+      "repeatIteration": 1587073689381,
       "repeatPanelId": 72,
       "scopedVars": {
         "typePhysical": {
@@ -551,7 +551,7 @@
           "refId": "D"
         },
         {
-          "expr": "sum( \n    kube_pod_container_resource_requests{namespace=~\"$namespace\",resource=\"memory\"}\n)",
+          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"requests.memory\"}\n)",
           "format": "time_series",
           "hide": false,
           "interval": "",
@@ -560,7 +560,7 @@
           "refId": "B"
         },
         {
-          "expr": "sum( \n    kube_pod_container_resource_limits{namespace=~\"$namespace\",resource=\"memory\"}\n)",
+          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"limits.memory\"}\n)",
           "legendFormat": "pod limit sum",
           "refId": "F"
         },
@@ -708,7 +708,7 @@
           "refId": "D"
         },
         {
-          "expr": "sum(\n    kube_pod_container_resource_requests{namespace=~\"$namespace\",resource=\"cpu\"}\n)",
+          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"requests.cpu\"}\n)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -716,7 +716,7 @@
           "refId": "B"
         },
         {
-          "expr": "sum(\n    kube_pod_container_resource_limits{namespace=~\"$namespace\",resource=\"cpu\"}\n)",
+          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"limits.cpu\"}\n)",
           "legendFormat": "pod limit sum",
           "refId": "F"
         },
@@ -862,13 +862,13 @@
           "refId": "D"
         },
         {
-          "expr": "sum(\n   kube_pod_container_resource_requests{namespace=~\"$namespace\",pod=~\"$pod\",resource=\"ephemeral_storage\"}\n)",
+          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"requests.ephemeral-storage\"}\n)",
           "hide": false,
           "legendFormat": "pod request sum",
           "refId": "G"
         },
         {
-          "expr": "sum(\n   kube_pod_container_resource_limits{namespace=~\"$namespace\",pod=~\"$pod\",resource=\"ephemeral_storage\"}\n)",
+          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"limits.ephemeral-storage\"}\n)",
           "legendFormat": "pod limit sum",
           "refId": "F"
         },
@@ -1050,7 +1050,7 @@
       "pluginVersion": "6.4.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586898239537,
+      "repeatIteration": 1587073689381,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -1119,7 +1119,7 @@
       "pluginVersion": "6.4.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586898239537,
+      "repeatIteration": 1587073689381,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -1188,7 +1188,7 @@
       "pluginVersion": "6.4.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586898239537,
+      "repeatIteration": 1587073689381,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -1257,7 +1257,7 @@
       "pluginVersion": "6.4.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586898239537,
+      "repeatIteration": 1587073689381,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -1326,7 +1326,7 @@
       "pluginVersion": "6.4.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586898239537,
+      "repeatIteration": 1587073689381,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -1522,7 +1522,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586898239537,
+      "repeatIteration": 1587073689381,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -1644,7 +1644,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586898239537,
+      "repeatIteration": 1587073689381,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -1766,7 +1766,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586898239537,
+      "repeatIteration": 1587073689381,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -1888,7 +1888,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586898239537,
+      "repeatIteration": 1587073689381,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -2010,7 +2010,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1586898239537,
+      "repeatIteration": 1587073689381,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -2225,7 +2225,9 @@
         "allValue": ".+",
         "current": {
           "text": "All",
-          "value": "$__all"
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "Prometheus",
         "definition": "query_result(kube_pod_status_phase{phase=\"Running\",namespace=~\"$namespace\"}==1)",
@@ -2280,5 +2282,5 @@
   "timezone": "",
   "title": "Kube Quotas (Namespace)",
   "uid": "6MFyi50Zzw3",
-  "version": 7
+  "version": 8
 }
