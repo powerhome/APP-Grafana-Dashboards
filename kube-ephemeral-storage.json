@@ -16,8 +16,8 @@
   "editable": true,
   "gnetId": 315,
   "graphTooltip": 0,
-  "id": 63,
-  "iteration": 1585935664193,
+  "id": 360,
+  "iteration": 1586902722439,
   "links": [],
   "panels": [
     {
@@ -29,7 +29,7 @@
         "x": 0,
         "y": 0
       },
-      "id": 34,
+      "id": 41,
       "panels": [],
       "title": "Total usage",
       "type": "row"
@@ -45,6 +45,7 @@
       ],
       "datasource": "Prometheus",
       "decimals": 2,
+      "description": "The sum across all selected Nodes of the per-pod ephemeral storage usage reflected in the below graph. Does not include mounted volumes, even emptyDir and hostDirectory.",
       "editable": true,
       "error": false,
       "format": "percent",
@@ -109,7 +110,7 @@
         }
       ],
       "thresholds": "65, 90",
-      "title": "Cluster Ephemeral Storage usage",
+      "title": "Kube Ephemeral Storage usage",
       "type": "singlestat",
       "valueFontSize": "80%",
       "valueMaps": [
@@ -197,7 +198,161 @@
         }
       ],
       "thresholds": "",
-      "title": "Used",
+      "title": "Used by pods",
+      "type": "singlestat",
+      "valueFontSize": "50%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "Prometheus",
+      "description": "The sum across all selected Instances (equivalent to nodes) of the total filesystem usage. Includes the per-pod ephemeral storage as reflected below, as well as any other disk usage on the node.",
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 10,
+        "y": 1
+      },
+      "id": 47,
+      "links": [],
+      "options": {
+        "fieldOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [
+              {
+                "id": 0,
+                "op": "=",
+                "text": "N/A",
+                "type": 1,
+                "value": "null"
+              }
+            ],
+            "max": 100,
+            "min": 0,
+            "nullValueMode": "connected",
+            "thresholds": [
+              {
+                "color": "rgba(50, 172, 45, 0.97)",
+                "value": null
+              },
+              {
+                "color": "rgba(237, 129, 40, 0.89)",
+                "value": 65
+              },
+              {
+                "color": "rgba(245, 54, 54, 0.9)",
+                "value": 90
+              }
+            ],
+            "unit": "percent"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "horizontal",
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "6.4.2",
+      "targets": [
+        {
+          "expr": "(sum(node_filesystem_size_bytes{fstype!=\"\",job=\"node-exporter\", instance=~\"$instance.+\"}) - sum(node_filesystem_avail_bytes{fstype!=\"\",job=\"node-exporter\", instance=~\"$instance.+\"}))\n  / sum(node_filesystem_size_bytes{fstype!=\"\",job=\"node-exporter\", instance=~\"$instance.+\"}) * 100",
+          "interval": "10s",
+          "intervalFactor": 1,
+          "refId": "A",
+          "step": 10
+        }
+      ],
+      "title": "Instance File System usage",
+      "type": "gauge"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "rgba(50, 172, 45, 0.97)",
+        "rgba(237, 129, 40, 0.89)",
+        "rgba(245, 54, 54, 0.9)"
+      ],
+      "datasource": "Prometheus",
+      "decimals": 2,
+      "editable": true,
+      "error": false,
+      "format": "decbytes",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 4,
+        "x": 16,
+        "y": 1
+      },
+      "height": "1px",
+      "id": 45,
+      "interval": null,
+      "isNew": true,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "30%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "sum(node_filesystem_size_bytes{fstype!=\"\",job=\"node-exporter\", instance=~\"$instance.+\"}) - sum(node_filesystem_avail_bytes{fstype!=\"\",job=\"node-exporter\", instance=~\"$instance.+\"})",
+          "interval": "10s",
+          "intervalFactor": 1,
+          "refId": "A",
+          "step": 10
+        }
+      ],
+      "thresholds": "",
+      "title": "Instance usage",
       "type": "singlestat",
       "valueFontSize": "50%",
       "valueMaps": [
@@ -284,7 +439,94 @@
         }
       ],
       "thresholds": "",
-      "title": "Total",
+      "title": "Kube Total",
+      "type": "singlestat",
+      "valueFontSize": "50%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "rgba(50, 172, 45, 0.97)",
+        "rgba(237, 129, 40, 0.89)",
+        "rgba(245, 54, 54, 0.9)"
+      ],
+      "datasource": "Prometheus",
+      "decimals": 2,
+      "editable": true,
+      "error": false,
+      "format": "decbytes",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 4,
+        "x": 16,
+        "y": 3
+      },
+      "height": "1px",
+      "id": 46,
+      "interval": null,
+      "isNew": true,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "30%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "sum(node_filesystem_size_bytes{fstype!=\"\",job=\"node-exporter\", instance=~\"$instance.+\"})",
+          "interval": "10s",
+          "intervalFactor": 1,
+          "refId": "A",
+          "step": 10
+        }
+      ],
+      "thresholds": "",
+      "title": "Instance Total",
       "type": "singlestat",
       "valueFontSize": "50%",
       "valueMaps": [
@@ -305,7 +547,7 @@
         "x": 0,
         "y": 5
       },
-      "id": 35,
+      "id": 34,
       "panels": [],
       "title": "Pods Ephemeral Storage usage",
       "type": "row"
@@ -421,6 +663,7 @@
       "dashes": false,
       "datasource": "Prometheus",
       "decimals": 3,
+      "description": "",
       "editable": true,
       "error": false,
       "fill": 0,
@@ -476,7 +719,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Pods Ephemeral Storage % usage ",
+      "title": "Pods Ephemeral Storage % of limit ",
       "tooltip": {
         "msResolution": true,
         "shared": true,
@@ -513,6 +756,255 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 20
+      },
+      "id": 35,
+      "panels": [],
+      "title": "Detailed Pods Ephemeral Storage usage",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "decimals": 3,
+      "description": "Shows ephemeral storage write layer (wl) and log usage for pods.",
+      "editable": true,
+      "error": false,
+      "fill": 0,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 21
+      },
+      "height": "",
+      "id": 39,
+      "isNew": true,
+      "legend": {
+        "alignAsTable": true,
+        "avg": false,
+        "current": true,
+        "max": false,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "sort": "current",
+        "sortDesc": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": true,
+      "targets": [
+        {
+          "expr": "sum (kubelet_container_log_filesystem_used_bytes{container!=\"POD\",node=~\"^$Node$\",namespace=~\"$namespace\",pod=~\"$pod\",pod=~\".*$filter.*\"}) by (pod)",
+          "format": "time_series",
+          "hide": false,
+          "interval": "10s",
+          "intervalFactor": 1,
+          "legendFormat": "log {{ pod }}",
+          "metric": "container_cpu",
+          "refId": "A",
+          "step": 10
+        },
+        {
+          "expr": "sum (container_fs_usage_bytes{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\",namespace=~\"$namespace\",pod=~\"$pod\",pod=~\".*$filter.*\"}) by (pod) - sum (kubelet_container_log_filesystem_used_bytes{container!=\"POD\",node=~\"^$Node$\",namespace=~\"$namespace\",pod=~\"$pod\",pod=~\".*$filter.*\"}) by (pod)",
+          "legendFormat": "wl {{ pod }}",
+          "refId": "B"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Detailed Pod Ephemeral Storage usage",
+      "tooltip": {
+        "msResolution": true,
+        "shared": true,
+        "sort": 2,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "decbytes",
+          "label": "",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "collapsed": true,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 28
+      },
+      "id": 44,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "Prometheus",
+          "decimals": 3,
+          "description": "Shows ephemeral storage write layer (wl)  and log usage for containers.",
+          "editable": true,
+          "error": false,
+          "fill": 0,
+          "fillGradient": 0,
+          "grid": {},
+          "gridPos": {
+            "h": 7,
+            "w": 24,
+            "x": 0,
+            "y": 22
+          },
+          "height": "",
+          "id": 42,
+          "isNew": true,
+          "legend": {
+            "alignAsTable": true,
+            "avg": false,
+            "current": true,
+            "max": false,
+            "min": false,
+            "rightSide": true,
+            "show": true,
+            "sort": "current",
+            "sortDesc": true,
+            "total": false,
+            "values": true
+          },
+          "lines": true,
+          "linewidth": 2,
+          "links": [],
+          "nullPointMode": "connected",
+          "options": {
+            "dataLinks": []
+          },
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": true,
+          "targets": [
+            {
+              "expr": "sum (kubelet_container_log_filesystem_used_bytes{container!=\"POD\",node=~\"^$Node$\",namespace=~\"$namespace\",pod=~\"$pod\",pod=~\".*$filter.*\"}) by (pod,container)",
+              "format": "time_series",
+              "hide": false,
+              "interval": "10s",
+              "intervalFactor": 1,
+              "legendFormat": "log {{ container }} | {{ pod }}",
+              "metric": "container_cpu",
+              "refId": "A",
+              "step": 10
+            },
+            {
+              "expr": "sum(container_fs_usage_bytes{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\",namespace=~\"$namespace\",pod=~\"$pod\",pod=~\".*$filter.*\"}) by (pod,container) - sum(kubelet_container_log_filesystem_used_bytes{container!=\"POD\",node=~\"^$Node$\",namespace=~\"$namespace\",pod=~\"$pod\",pod=~\".*$filter.*\"}) by (pod,container)",
+              "legendFormat": "wl {{ container }} | {{ pod }}",
+              "refId": "B"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "Detailed Container Ephemeral Storage usage",
+          "tooltip": {
+            "msResolution": true,
+            "shared": true,
+            "sort": 2,
+            "value_type": "cumulative"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decbytes",
+              "label": "",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": false
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        }
+      ],
+      "title": "Detailed Container Ephemeral Storage Usage",
+      "type": "row"
     }
   ],
   "refresh": "10s",
@@ -526,7 +1018,6 @@
       {
         "allValue": ".+",
         "current": {
-          "tags": [],
           "text": "All",
           "value": "$__all"
         },
@@ -554,6 +1045,31 @@
         "current": {
           "text": "All",
           "value": "$__all"
+        },
+        "datasource": "Prometheus",
+        "definition": "label_values(kubelet_node_name{node=~\"$Node\"}, instance)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Instance",
+        "multi": false,
+        "name": "instance",
+        "options": [],
+        "query": "label_values(kubelet_node_name{node=~\"$Node\"}, instance)",
+        "refresh": 1,
+        "regex": "^(.*):.*",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".+",
+        "current": {
+          "text": "nitro-demos",
+          "value": "nitro-demos"
         },
         "datasource": "Prometheus",
         "definition": "label_values(container_fs_usage_bytes{node=~\"$Node\"}, namespace)",
@@ -584,6 +1100,7 @@
         "name": "filter",
         "options": [
           {
+            "selected": true,
             "text": "",
             "value": ""
           }
@@ -596,7 +1113,9 @@
         "allValue": ".+",
         "current": {
           "text": "All",
-          "value": "$__all"
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "Prometheus",
         "definition": "label_values(container_fs_usage_bytes{node=~\"$Node\",namespace=~\"$namespace\", pod_name=~\".*$filter.*\"}, pod_name)",
@@ -620,7 +1139,7 @@
     ]
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -650,6 +1169,6 @@
   },
   "timezone": "browser",
   "title": "Ephemeral Storage",
-  "uid": "mG-D07Nmh2",
-  "version": 3
+  "uid": "aeCh9Kie5o",
+  "version": 9
 }
