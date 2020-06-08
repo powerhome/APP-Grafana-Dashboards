@@ -141,7 +141,7 @@
             "refId": "F"
           },
           {
-            "expr": "sum(\n    container_memory_working_set_bytes{image!=\"\", namespace=~\"$namespace\", container_name!=\"POD\"}\n)",
+            "expr": "sum(\n    container_memory_working_set_bytes{image!=\"\", namespace=~\"$namespace\", container!=\"POD\"}\n)",
             "format": "time_series",
             "interval": "1m",
             "intervalFactor": 1,
@@ -309,7 +309,7 @@
             "refId": "E"
           },
           {
-            "expr": "sum(\n  rate(\n    container_cpu_usage_seconds_total{image!=\"\", namespace=~\"$namespace\", container_name!=\"POD\"}[1m]\n  )\n)",
+            "expr": "sum(\n  rate(\n    container_cpu_usage_seconds_total{image!=\"\", namespace=~\"$namespace\", container!=\"POD\"}[1m]\n  )\n)",
             "format": "time_series",
             "interval": "",
             "intervalFactor": 1,
@@ -490,5 +490,5 @@
     "timezone": "",
     "title": "Kube Quotas (Cluster)",
     "uid": "XN5am50Zz",
-    "version": 16
+    "version": 17
 }

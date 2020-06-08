@@ -603,12 +603,12 @@
       "steppedLine": true,
       "targets": [
         {
-          "expr": "sum (container_fs_usage_bytes{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\",namespace=~\"$namespace\",pod_name=~\"$pod\",pod_name=~\".*$filter.*\"}) by (pod_name)",
+          "expr": "sum (container_fs_usage_bytes{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\",namespace=~\"$namespace\",pod=~\"$pod\",pod=~\".*$filter.*\"}) by (pod)",
           "format": "time_series",
           "hide": false,
           "interval": "10s",
           "intervalFactor": 1,
-          "legendFormat": "{{ pod_name }}",
+          "legendFormat": "{{ pod }}",
           "metric": "container_cpu",
           "refId": "A",
           "step": 10
@@ -1118,14 +1118,14 @@
           ]
         },
         "datasource": "Prometheus",
-        "definition": "label_values(container_fs_usage_bytes{node=~\"$Node\",namespace=~\"$namespace\", pod_name=~\".*$filter.*\"}, pod_name)",
+        "definition": "label_values(container_fs_usage_bytes{node=~\"$Node\",namespace=~\"$namespace\", pod=~\".*$filter.*\"}, pod)",
         "hide": 0,
         "includeAll": true,
         "label": "Pod",
         "multi": true,
         "name": "pod",
         "options": [],
-        "query": "label_values(container_fs_usage_bytes{node=~\"$Node\",namespace=~\"$namespace\", pod_name=~\".*$filter.*\"}, pod_name)",
+        "query": "label_values(container_fs_usage_bytes{node=~\"$Node\",namespace=~\"$namespace\", pod=~\".*$filter.*\"}, pod)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1170,5 +1170,5 @@
   "timezone": "browser",
   "title": "Ephemeral Storage",
   "uid": "aeCh9Kie5o",
-  "version": 9
+  "version": 10
 }

@@ -1007,7 +1007,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count (container_last_seen{container_name=\"POD\", node=~\"^$Node$\"}) / sum (kube_node_status_capacity_pods{node=~\"^$Node$\"}) * 100",
+          "expr": "count (container_last_seen{container=\"POD\", node=~\"^$Node$\"}) / sum (kube_node_status_capacity_pods{node=~\"^$Node$\"}) * 100",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -1463,7 +1463,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count (container_last_seen{container_name=\"POD\", node=~\"^$Node$\"})",
+          "expr": "count (container_last_seen{container=\"POD\", node=~\"^$Node$\"})",
           "format": "time_series",
           "instant": true,
           "interval": "10s",
@@ -1848,7 +1848,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "count (container_last_seen{container_name=\"POD\", node=~\"^$Node$\"})",
+          "expr": "count (container_last_seen{container=\"POD\", node=~\"^$Node$\"})",
           "format": "time_series",
           "interval": "10s",
           "intervalFactor": 1,
@@ -2199,10 +2199,10 @@
           "steppedLine": true,
           "targets": [
             {
-              "expr": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\"}[1m])) by (pod_name)",
+              "expr": "sum (rate (container_cpu_usage_seconds_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\"}[1m])) by (pod)",
               "interval": "10s",
               "intervalFactor": 1,
-              "legendFormat": "{{ pod_name }}",
+              "legendFormat": "{{ pod }}",
               "metric": "container_cpu",
               "refId": "A",
               "step": 10
@@ -2316,10 +2316,10 @@
           "steppedLine": true,
           "targets": [
             {
-              "expr": "sum (container_memory_working_set_bytes{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\"}) by (pod_name)",
+              "expr": "sum (container_memory_working_set_bytes{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\"}) by (pod)",
               "interval": "10s",
               "intervalFactor": 1,
-              "legendFormat": "{{ pod_name }}",
+              "legendFormat": "{{ pod }}",
               "metric": "container_memory_usage:sort_desc",
               "refId": "A",
               "step": 10
@@ -2433,19 +2433,19 @@
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum (rate (container_network_receive_bytes_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\"}[1m])) by (pod_name)",
+              "expr": "sum (rate (container_network_receive_bytes_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\"}[1m])) by (pod)",
               "interval": "10s",
               "intervalFactor": 1,
-              "legendFormat": "-> {{ pod_name }}",
+              "legendFormat": "-> {{ pod }}",
               "metric": "network",
               "refId": "A",
               "step": 10
             },
             {
-              "expr": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\"}[1m])) by (pod_name)",
+              "expr": "- sum (rate (container_network_transmit_bytes_total{image!=\"\",name=~\"^k8s_.*\",node=~\"^$Node$\"}[1m])) by (pod)",
               "interval": "10s",
               "intervalFactor": 1,
-              "legendFormat": "<- {{ pod_name }}",
+              "legendFormat": "<- {{ pod }}",
               "metric": "network",
               "refId": "B",
               "step": 10
@@ -2621,5 +2621,5 @@
   "timezone": "browser",
   "title": "Kube at a Glance",
   "uid": "kube-at-a-glance",
-  "version": 1
+  "version": 2
 }

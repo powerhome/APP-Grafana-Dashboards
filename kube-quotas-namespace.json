@@ -565,7 +565,7 @@
           "refId": "F"
         },
         {
-          "expr": "sum(\n    container_memory_working_set_bytes{image!=\"\", namespace=~\"$namespace\", container_name!=\"POD\", pod_name=~\"$pod\"}\n)",
+          "expr": "sum(\n    container_memory_working_set_bytes{image!=\"\", namespace=~\"$namespace\", container!=\"POD\", pod=~\"$pod\"}\n)",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 1,
@@ -2282,5 +2282,5 @@
   "timezone": "",
   "title": "Kube Quotas (Namespace)",
   "uid": "6MFyi50Zzw3",
-  "version": 8
+  "version": 9
 }
