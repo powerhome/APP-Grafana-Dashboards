@@ -16,8 +16,8 @@
   "editable": true,
   "gnetId": 6483,
   "graphTooltip": 1,
-  "id": 691,
-  "iteration": 1594233032968,
+  "id": 692,
+  "iteration": 1594343485614,
   "links": [],
   "panels": [
     {
@@ -37,196 +37,84 @@
     },
     {
       "cacheTimeout": null,
-      "colorBackground": false,
-      "colorPostfix": false,
-      "colorValue": false,
-      "colors": [
-        "#d44a3a",
-        "#F2CC0C",
-        "#299c46"
-      ],
+      "columns": [],
       "datasource": "Prometheus",
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
+      "fontSize": "100%",
       "gridPos": {
         "h": 3,
-        "w": 4,
+        "w": 12,
         "x": 0,
         "y": 1
       },
-      "height": "50",
       "id": 53,
-      "interval": null,
       "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
+      "options": {},
+      "pageSize": null,
+      "pluginVersion": "6.4.2",
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
         {
-          "name": "value to text",
-          "value": 1
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "hidden"
         },
         {
-          "name": "range to text",
-          "value": 2
+          "alias": "",
+          "colorMode": "value",
+          "colors": [
+            "rgba(50, 172, 45, 0.97)",
+            "#F2CC0C",
+            "rgba(245, 54, 54, 0.9)"
+          ],
+          "decimals": 2,
+          "link": false,
+          "mappingType": 1,
+          "pattern": "/.*/",
+          "thresholds": [
+            "1"
+          ],
+          "type": "string",
+          "unit": "short",
+          "valueMaps": [
+            {
+              "text": "N/A",
+              "value": "null"
+            },
+            {
+              "text": "Green",
+              "value": "0"
+            },
+            {
+              "text": "Yellow",
+              "value": "1"
+            },
+            {
+              "text": "Red",
+              "value": "2"
+            }
+          ]
         }
       ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": true,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
       "targets": [
         {
-          "expr": "es_cluster_status{namespace=\"$namespace\", cluster=\"$cluster\"} == 0 or (es_cluster_status{namespace=\"$namespace\", cluster=\"$cluster\"} == 1) or (es_cluster_status{namespace=\"$namespace\", cluster=\"$cluster\", color=\"yellow\"} == 1) + 22",
+          "expr": "es_cluster_status{namespace=\"$namespace\", cluster=\"$cluster\"}",
           "format": "time_series",
           "hide": false,
+          "instant": true,
+          "legendFormat": "{{pod}}",
           "refId": "B"
         }
       ],
-      "thresholds": "2,4",
+      "timeFrom": null,
+      "timeShift": null,
       "title": "Cluster health",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        },
-        {
-          "op": "=",
-          "text": "Green",
-          "value": "0"
-        },
-        {
-          "op": "=",
-          "text": "Yellow",
-          "value": "1"
-        },
-        {
-          "op": "=",
-          "text": "Red",
-          "value": "2"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": true,
-      "colors": [
-        "#299c46",
-        "rgba(237, 129, 40, 0.89)",
-        "#d44a3a"
-      ],
-      "datasource": "Prometheus",
-      "decimals": null,
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 3,
-        "x": 4,
-        "y": 1
-      },
-      "height": "50",
-      "id": 81,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": true,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "count(es_circuitbreaker_tripped_count{cluster=\"$cluster\",namespace=\"$namespace\"})",
-          "format": "time_series",
-          "instant": true,
-          "intervalFactor": 2,
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "thresholds": "1,2",
-      "title": "Tripped for breakers",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "0",
-          "value": "N/A"
-        },
-        {
-          "op": "=",
-          "text": "0",
-          "value": "no value"
-        },
-        {
-          "op": "=",
-          "text": "0",
-          "value": "null"
-        }
-      ],
-      "valueName": "avg"
+      "transform": "timeseries_to_columns",
+      "type": "table"
     },
     {
       "cacheTimeout": null,
@@ -250,8 +138,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 3,
-        "x": 7,
+        "w": 4,
+        "x": 12,
         "y": 1
       },
       "height": "50",
@@ -340,7 +228,7 @@
       "gridPos": {
         "h": 3,
         "w": 4,
-        "x": 10,
+        "x": 16,
         "y": 1
       },
       "height": "50",
@@ -409,6 +297,251 @@
     {
       "cacheTimeout": null,
       "colorBackground": false,
+      "colorValue": true,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "Prometheus",
+      "decimals": null,
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 20,
+        "y": 1
+      },
+      "height": "50",
+      "id": 81,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": true,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": true
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "expr": "count(es_circuitbreaker_tripped_count{cluster=\"$cluster\",namespace=\"$namespace\"})",
+          "format": "time_series",
+          "instant": true,
+          "intervalFactor": 2,
+          "legendFormat": "",
+          "refId": "A"
+        }
+      ],
+      "thresholds": "1,2",
+      "title": "Tripped for breakers",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "0",
+          "value": "N/A"
+        },
+        {
+          "op": "=",
+          "text": "0",
+          "value": "no value"
+        },
+        {
+          "op": "=",
+          "text": "0",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "columns": [],
+      "datasource": "Prometheus",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 3,
+        "w": 12,
+        "x": 0,
+        "y": 4
+      },
+      "id": 89,
+      "links": [],
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Time",
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "pattern": "Time",
+          "type": "hidden"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "decimals": 2,
+          "pattern": "/.*/",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "expr": "es_process_file_descriptors_open_number{cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "format": "time_series",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{node}}",
+          "metric": "",
+          "refId": "A",
+          "step": 60
+        }
+      ],
+      "title": "Open file descriptors",
+      "transform": "timeseries_to_columns",
+      "type": "table"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "rgba(50, 172, 45, 0.97)",
+        "rgba(237, 129, 40, 0.89)",
+        "rgba(245, 54, 54, 0.9)"
+      ],
+      "datasource": "Prometheus",
+      "description": "Cluster level changes which have not yet been executed",
+      "editable": true,
+      "error": false,
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 4,
+        "x": 12,
+        "y": 4
+      },
+      "height": "50",
+      "hideTimeOverride": true,
+      "id": 16,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": true
+      },
+      "tableColumn": "Value",
+      "targets": [
+        {
+          "expr": "es_cluster_pending_tasks_number{cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "format": "table",
+          "instant": true,
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "",
+          "metric": "",
+          "refId": "A",
+          "step": 60
+        }
+      ],
+      "thresholds": "1,5",
+      "title": "Pending tasks",
+      "type": "singlestat",
+      "valueFontSize": "80%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
       "colorValue": false,
       "colors": [
         "rgba(245, 54, 54, 0.9)",
@@ -429,9 +562,9 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 2,
-        "x": 14,
-        "y": 1
+        "w": 4,
+        "x": 16,
+        "y": 4
       },
       "height": "50",
       "id": 10,
@@ -469,11 +602,11 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "",
+      "tableColumn": "Value",
       "targets": [
         {
           "expr": "es_cluster_nodes_number{cluster=\"$cluster\", namespace=\"$namespace\"}",
-          "format": "time_series",
+          "format": "table",
           "instant": true,
           "interval": "",
           "intervalFactor": 2,
@@ -519,9 +652,9 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 2,
-        "x": 16,
-        "y": 1
+        "w": 4,
+        "x": 20,
+        "y": 4
       },
       "height": "50",
       "id": 9,
@@ -559,11 +692,11 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
-      "tableColumn": "",
+      "tableColumn": "Value",
       "targets": [
         {
           "expr": "es_cluster_datanodes_number{cluster=\"$cluster\", namespace=\"$namespace\"}",
-          "format": "time_series",
+          "format": "table",
           "instant": true,
           "interval": "",
           "intervalFactor": 2,
@@ -587,187 +720,13 @@
       "valueName": "current"
     },
     {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
-      "datasource": "Prometheus",
-      "description": "Cluster level changes which have not yet been executed",
-      "editable": true,
-      "error": false,
-      "format": "none",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 18,
-        "y": 1
-      },
-      "height": "50",
-      "hideTimeOverride": true,
-      "id": 16,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": false,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": true
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "es_cluster_pending_tasks_number{cluster=\"$cluster\", namespace=\"$namespace\"}",
-          "format": "time_series",
-          "instant": true,
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "",
-          "metric": "",
-          "refId": "A",
-          "step": 60
-        }
-      ],
-      "thresholds": "1,5",
-      "title": "Pending tasks",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [
-        {
-          "op": "=",
-          "text": "N/A",
-          "value": "null"
-        }
-      ],
-      "valueName": "current"
-    },
-    {
-      "cacheTimeout": null,
-      "colorBackground": false,
-      "colorValue": false,
-      "colors": [
-        "rgba(50, 172, 45, 0.97)",
-        "rgba(237, 129, 40, 0.89)",
-        "rgba(245, 54, 54, 0.9)"
-      ],
-      "datasource": "Prometheus",
-      "editable": true,
-      "error": false,
-      "format": "short",
-      "gauge": {
-        "maxValue": 100,
-        "minValue": 0,
-        "show": false,
-        "thresholdLabels": false,
-        "thresholdMarkers": true
-      },
-      "gridPos": {
-        "h": 3,
-        "w": 4,
-        "x": 20,
-        "y": 1
-      },
-      "height": "50",
-      "id": 89,
-      "interval": null,
-      "links": [],
-      "mappingType": 1,
-      "mappingTypes": [
-        {
-          "name": "value to text",
-          "value": 1
-        },
-        {
-          "name": "range to text",
-          "value": 2
-        }
-      ],
-      "maxDataPoints": 100,
-      "nullPointMode": "connected",
-      "nullText": null,
-      "options": {},
-      "postfix": "",
-      "postfixFontSize": "50%",
-      "prefix": "",
-      "prefixFontSize": "50%",
-      "rangeMaps": [
-        {
-          "from": "null",
-          "text": "N/A",
-          "to": "null"
-        }
-      ],
-      "sparkline": {
-        "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": true,
-        "lineColor": "rgb(31, 120, 193)",
-        "show": false
-      },
-      "tableColumn": "",
-      "targets": [
-        {
-          "expr": "es_process_file_descriptors_open_number{cluster=\"$cluster\", namespace=\"$namespace\"}",
-          "format": "time_series",
-          "instant": true,
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "",
-          "metric": "",
-          "refId": "A",
-          "step": 60
-        }
-      ],
-      "thresholds": "",
-      "title": "Open file descriptors per cluster",
-      "type": "singlestat",
-      "valueFontSize": "80%",
-      "valueMaps": [],
-      "valueName": "current"
-    },
-    {
       "collapsed": false,
       "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 4
+        "y": 7
       },
       "id": 91,
       "panels": [],
@@ -800,7 +759,7 @@
         "h": 3,
         "w": 4,
         "x": 0,
-        "y": 5
+        "y": 8
       },
       "height": "50",
       "id": 11,
@@ -840,11 +799,11 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "",
+      "tableColumn": "Value",
       "targets": [
         {
           "expr": "es_cluster_shards_number{type=\"active_primary\", cluster=\"$cluster\", namespace=\"$namespace\"}",
-          "format": "time_series",
+          "format": "table",
           "instant": true,
           "intervalFactor": 2,
           "legendFormat": "",
@@ -890,7 +849,7 @@
         "h": 3,
         "w": 4,
         "x": 4,
-        "y": 5
+        "y": 8
       },
       "height": "50",
       "id": 39,
@@ -929,11 +888,11 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "",
+      "tableColumn": "Value",
       "targets": [
         {
           "expr": "es_cluster_shards_number{type=\"active\", cluster=\"$cluster\", namespace=\"$namespace\"}",
-          "format": "time_series",
+          "format": "table",
           "instant": true,
           "intervalFactor": 2,
           "legendFormat": "",
@@ -979,7 +938,7 @@
         "h": 3,
         "w": 4,
         "x": 8,
-        "y": 5
+        "y": 8
       },
       "height": "50",
       "id": 40,
@@ -1018,11 +977,11 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "",
+      "tableColumn": "Value",
       "targets": [
         {
           "expr": "es_cluster_shards_number{type=\"initializing\", cluster=\"$cluster\", namespace=\"$namespace\"}",
-          "format": "time_series",
+          "format": "table",
           "instant": true,
           "intervalFactor": 2,
           "legendFormat": "",
@@ -1068,7 +1027,7 @@
         "h": 3,
         "w": 4,
         "x": 12,
-        "y": 5
+        "y": 8
       },
       "height": "50",
       "id": 41,
@@ -1107,11 +1066,11 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "",
+      "tableColumn": "Value",
       "targets": [
         {
           "expr": "es_cluster_shards_number{type=\"relocating\", cluster=\"$cluster\", namespace=\"$namespace\"}",
-          "format": "time_series",
+          "format": "table",
           "instant": true,
           "intervalFactor": 2,
           "legendFormat": "",
@@ -1157,7 +1116,7 @@
         "h": 3,
         "w": 4,
         "x": 16,
-        "y": 5
+        "y": 8
       },
       "height": "50",
       "id": 82,
@@ -1196,11 +1155,11 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "",
+      "tableColumn": "Value",
       "targets": [
         {
           "expr": "es_cluster_shards_number{type=\"unassigned\", cluster=\"$cluster\", namespace=\"$namespace\"}",
-          "format": "time_series",
+          "format": "table",
           "instant": true,
           "intervalFactor": 2,
           "legendFormat": "",
@@ -1246,7 +1205,7 @@
         "h": 3,
         "w": 4,
         "x": 20,
-        "y": 5
+        "y": 8
       },
       "height": "50",
       "id": 113,
@@ -1285,11 +1244,11 @@
         "lineColor": "rgb(31, 120, 193)",
         "show": true
       },
-      "tableColumn": "",
+      "tableColumn": "Value",
       "targets": [
         {
           "expr": "es_cluster_shards_active_percent{cluster=\"$cluster\", namespace=\"$namespace\"}",
-          "format": "time_series",
+          "format": "table",
           "instant": true,
           "intervalFactor": 2,
           "legendFormat": "",
@@ -1317,7 +1276,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 11
       },
       "id": 92,
       "panels": [],
@@ -1340,7 +1299,7 @@
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 9
+        "y": 12
       },
       "height": "400",
       "id": 7,
@@ -1443,7 +1402,7 @@
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 9
+        "y": 12
       },
       "height": "400",
       "id": 27,
@@ -1538,7 +1497,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 19
+        "y": 22
       },
       "id": 93,
       "panels": [],
@@ -1555,10 +1514,10 @@
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
-        "w": 12,
+        "h": 6,
+        "w": 24,
         "x": 0,
-        "y": 20
+        "y": 23
       },
       "id": 77,
       "legend": {
@@ -1592,7 +1551,7 @@
           "expr": "irate(es_index_translog_operations_number{cluster=\"$cluster\",namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
-          "legendFormat": "{{index}}",
+          "legendFormat": "{{index}} - {{pod}}",
           "refId": "A"
         }
       ],
@@ -1647,9 +1606,9 @@
       "fillGradient": 0,
       "gridPos": {
         "h": 7,
-        "w": 12,
-        "x": 12,
-        "y": 20
+        "w": 24,
+        "x": 0,
+        "y": 29
       },
       "id": 78,
       "legend": {
@@ -1683,7 +1642,7 @@
           "expr": "irate(es_index_translog_size_bytes{cluster=\"$cluster\",namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
-          "legendFormat": "{{index}}",
+          "legendFormat": "{{index}} - {{pod}}",
           "refId": "A"
         }
       ],
@@ -1735,7 +1694,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 27
+        "y": 36
       },
       "id": 94,
       "panels": [],
@@ -1755,7 +1714,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 28
+        "y": 37
       },
       "id": 79,
       "legend": {
@@ -1791,7 +1750,7 @@
           "expr": "es_circuitbreaker_tripped_count{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 2,
-          "legendFormat": "{{name}}",
+          "legendFormat": "{{name}} - {{node}}",
           "refId": "A"
         }
       ],
@@ -1848,7 +1807,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 35
+        "y": 44
       },
       "id": 80,
       "legend": {
@@ -1884,14 +1843,14 @@
           "expr": "es_circuitbreaker_estimated_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 2,
-          "legendFormat": "{{name}}",
+          "legendFormat": "{{name}} - {{node}}",
           "refId": "A"
         },
         {
           "expr": "es_circuitbreaker_limit_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 2,
-          "legendFormat": "{{name}} limit",
+          "legendFormat": "LIMIT {{name}} - {{node}}",
           "refId": "B"
         }
       ],
@@ -1943,7 +1902,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 42
+        "y": 51
       },
       "id": 95,
       "panels": [],
@@ -1966,7 +1925,7 @@
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 43
+        "y": 52
       },
       "height": "400",
       "id": 30,
@@ -2008,7 +1967,7 @@
           "instant": false,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "One Minute",
+          "legendFormat": "One Minute - {{node}}",
           "metric": "",
           "refId": "A",
           "step": 20
@@ -2019,7 +1978,7 @@
           "instant": false,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "Five Minute",
+          "legendFormat": "Five Minute - {{node}}",
           "metric": "",
           "refId": "B",
           "step": 20
@@ -2030,7 +1989,7 @@
           "instant": false,
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "Fifteen Minute",
+          "legendFormat": "Fifteen Minute - {{node}}",
           "metric": "",
           "refId": "C",
           "step": 20
@@ -2093,7 +2052,7 @@
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 43
+        "y": 52
       },
       "height": "400",
       "id": 88,
@@ -2197,7 +2156,7 @@
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 53
+        "y": 62
       },
       "height": "400",
       "id": 31,
@@ -2316,7 +2275,7 @@
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 53
+        "y": 62
       },
       "height": "400",
       "id": 54,
@@ -2417,7 +2376,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 63
+        "y": 72
       },
       "id": 96,
       "panels": [],
@@ -2440,7 +2399,7 @@
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 64
+        "y": 73
       },
       "height": "400",
       "id": 32,
@@ -2560,7 +2519,7 @@
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 64
+        "y": 73
       },
       "height": "400",
       "id": 47,
@@ -2666,7 +2625,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 74
+        "y": 83
       },
       "id": 97,
       "panels": [],
@@ -2690,7 +2649,7 @@
         "h": 10,
         "w": 12,
         "x": 0,
-        "y": 75
+        "y": 84
       },
       "height": "400",
       "id": 1,
@@ -2794,7 +2753,7 @@
         "h": 10,
         "w": 12,
         "x": 12,
-        "y": 75
+        "y": 84
       },
       "height": "400",
       "id": 24,
@@ -2832,7 +2791,7 @@
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{index}}",
+          "legendFormat": "{{index}} - {{pod}}",
           "metric": "",
           "refId": "A",
           "step": 20
@@ -2896,7 +2855,7 @@
         "h": 10,
         "w": 8,
         "x": 0,
-        "y": 85
+        "y": 94
       },
       "height": "400",
       "id": 25,
@@ -3000,7 +2959,7 @@
         "h": 10,
         "w": 8,
         "x": 8,
-        "y": 85
+        "y": 94
       },
       "height": "400",
       "id": 26,
@@ -3102,7 +3061,7 @@
         "h": 10,
         "w": 8,
         "x": 16,
-        "y": 85
+        "y": 94
       },
       "height": "400",
       "id": 52,
@@ -3196,7 +3155,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 95
+        "y": 104
       },
       "id": 98,
       "panels": [],
@@ -3216,10 +3175,10 @@
       "fillGradient": 0,
       "grid": {},
       "gridPos": {
-        "h": 10,
-        "w": 12,
+        "h": 7,
+        "w": 24,
         "x": 0,
-        "y": 96
+        "y": 105
       },
       "height": "400",
       "id": 33,
@@ -3257,7 +3216,7 @@
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{index}}",
+          "legendFormat": "{{index}} - {{pod}}",
           "metric": "",
           "refId": "A",
           "step": 10
@@ -3317,111 +3276,10 @@
       "fillGradient": 0,
       "grid": {},
       "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 12,
-        "y": 96
-      },
-      "height": "400",
-      "id": 5,
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "hideEmpty": false,
-        "hideZero": false,
-        "max": true,
-        "min": true,
-        "rightSide": true,
-        "show": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "nullPointMode": "connected",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "irate(es_index_indexing_index_time_seconds{context=\"primaries\", cluster=\"$cluster\",namespace=\"$namespace\"}[$interval])",
-          "format": "time_series",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "{{index}}",
-          "metric": "",
-          "refId": "A",
-          "step": 10
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Indexing time",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "s",
-          "label": "Time",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": false
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
-      "grid": {},
-      "gridPos": {
-        "h": 10,
-        "w": 12,
+        "h": 7,
+        "w": 24,
         "x": 0,
-        "y": 106
+        "y": 112
       },
       "height": "400",
       "id": 3,
@@ -3461,7 +3319,7 @@
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{index}}",
+          "legendFormat": "{{index}} - {{pod}}",
           "metric": "",
           "refId": "A",
           "step": 10
@@ -3521,10 +3379,111 @@
       "fillGradient": 0,
       "grid": {},
       "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 12,
-        "y": 106
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 119
+      },
+      "height": "400",
+      "id": 5,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": false,
+        "hideZero": false,
+        "max": true,
+        "min": true,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "irate(es_index_indexing_index_time_seconds{context=\"primaries\", cluster=\"$cluster\",namespace=\"$namespace\"}[$interval])",
+          "format": "time_series",
+          "interval": "",
+          "intervalFactor": 2,
+          "legendFormat": "{{index}} - {{pod}}",
+          "metric": "",
+          "refId": "A",
+          "step": 10
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Indexing time",
+      "tooltip": {
+        "msResolution": false,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "s",
+          "label": "Time",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "Prometheus",
+      "editable": true,
+      "error": false,
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 7,
+        "w": 24,
+        "x": 0,
+        "y": 126
       },
       "height": "400",
       "id": 87,
@@ -3564,7 +3523,7 @@
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
-          "legendFormat": "{{node}}",
+          "legendFormat": "{{index}} - {{pod}}",
           "metric": "",
           "refId": "A",
           "step": 10
@@ -3619,7 +3578,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 116
+        "y": 133
       },
       "id": 99,
       "panels": [],
@@ -3642,7 +3601,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 117
+        "y": 134
       },
       "height": "400",
       "id": 48,
@@ -3819,7 +3778,7 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 127
+        "y": 144
       },
       "height": "400",
       "id": 49,
@@ -3986,7 +3945,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 137
+        "y": 154
       },
       "id": 103,
       "panels": [],
@@ -4006,7 +3965,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 138
+        "y": 155
       },
       "id": 75,
       "legend": {
@@ -4042,7 +4001,7 @@
           "expr": "es_index_doc_number{context=\"primaries\", cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 2,
-          "legendFormat": "{{index}}",
+          "legendFormat": "{{index}} - {{pod}}",
           "refId": "A"
         }
       ],
@@ -4099,7 +4058,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 145
+        "y": 162
       },
       "id": 83,
       "legend": {
@@ -4135,7 +4094,7 @@
           "expr": "es_index_store_size_bytes{context=\"primaries\", cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 2,
-          "legendFormat": "{{index}}",
+          "legendFormat": "{{index}} - {{pod}}",
           "refId": "A"
         }
       ],
@@ -4192,7 +4151,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 152
+        "y": 169
       },
       "id": 76,
       "legend": {
@@ -4228,7 +4187,7 @@
           "expr": "es_index_store_size_bytes{context=\"total\", cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 2,
-          "legendFormat": "{{index}}",
+          "legendFormat": "{{index}} - {{pod}}",
           "refId": "A"
         }
       ],
@@ -4309,9 +4268,9 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
-          "text": "nitro-web-pr15781",
-          "value": "nitro-web-pr15781"
+          "selected": false,
+          "text": "nitro-web-production",
+          "value": "nitro-web-production"
         },
         "datasource": "Prometheus",
         "definition": "label_values(kube_pod_info, namespace)",
@@ -4337,7 +4296,7 @@
         "auto_count": 30,
         "auto_min": "10s",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "1d",
           "value": "1d"
         },
@@ -4438,7 +4397,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "ElasticSearch 7",
-  "uid": "JmlF4YMGk",
-  "version": 21
+  "title": "ElasticSearch 7 Backup",
+  "uid": "6YWce_MGk",
+  "version": 12
 }
