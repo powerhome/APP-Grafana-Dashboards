@@ -43,7 +43,7 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "decimals": 2,
       "description": "The sum across all selected Nodes of the per-pod ephemeral storage usage reflected in the below graph. Does not include mounted volumes, even emptyDir and hostDirectory.",
       "editable": true,
@@ -131,7 +131,7 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "decimals": 2,
       "editable": true,
       "error": false,
@@ -212,7 +212,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "description": "The sum across all selected Instances (equivalent to nodes) of the total filesystem usage. Includes the per-pod ephemeral storage as reflected below, as well as any other disk usage on the node.",
       "gridPos": {
         "h": 4,
@@ -286,7 +286,7 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "decimals": 2,
       "editable": true,
       "error": false,
@@ -373,7 +373,7 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "decimals": 2,
       "editable": true,
       "error": false,
@@ -460,7 +460,7 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(245, 54, 54, 0.9)"
       ],
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "decimals": 2,
       "editable": true,
       "error": false,
@@ -557,7 +557,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "decimals": 3,
       "editable": true,
       "error": false,
@@ -661,7 +661,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "decimals": 3,
       "description": "",
       "editable": true,
@@ -776,7 +776,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "Prometheus",
+      "datasource": "$datasource",
       "decimals": 3,
       "description": "Shows ephemeral storage write layer (wl) and log usage for pods.",
       "editable": true,
@@ -897,7 +897,7 @@
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
+          "datasource": "$datasource",
           "decimals": 3,
           "description": "Shows ephemeral storage write layer (wl)  and log usage for containers.",
           "editable": true,
@@ -1016,12 +1016,29 @@
   "templating": {
     "list": [
       {
+        "current": {
+          "text": "prometheus-app-alpha-gm",
+          "value": "prometheus-app-alpha-gm"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
         "allValue": ".+",
         "current": {
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "Prometheus",
+        "datasource": "$datasource",
         "definition": "label_values(node)",
         "hide": 0,
         "includeAll": true,
@@ -1046,7 +1063,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "Prometheus",
+        "datasource": "$datasource",
         "definition": "label_values(kubelet_node_name{node=~\"$Node\"}, instance)",
         "hide": 0,
         "includeAll": true,
@@ -1071,7 +1088,7 @@
           "text": "nitro-demos",
           "value": "nitro-demos"
         },
-        "datasource": "Prometheus",
+        "datasource": "$datasource",
         "definition": "label_values(container_fs_usage_bytes{node=~\"$Node\"}, namespace)",
         "hide": 0,
         "includeAll": true,
@@ -1117,7 +1134,7 @@
             "$__all"
           ]
         },
-        "datasource": "Prometheus",
+        "datasource": "$datasource",
         "definition": "label_values(container_fs_usage_bytes{node=~\"$Node\",namespace=~\"$namespace\", pod=~\".*$filter.*\"}, pod)",
         "hide": 0,
         "includeAll": true,

@@ -1150,6 +1150,23 @@
   "templating": {
     "list": [
       {
+        "current": {
+          "text": "prometheus-app-alpha-gm",
+          "value": "prometheus-app-alpha-gm"
+        },
+        "hide": 0,
+        "includeAll": false,
+        "label": null,
+        "multi": false,
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
         "allValue": ".+",
         "current": {
           "text": "All",
@@ -1157,7 +1174,7 @@
             "$__all"
           ]
         },
-        "datasource": "Prometheus",
+        "datasource": "$datasource",
         "definition": "",
         "hide": 0,
         "includeAll": true,
@@ -1203,7 +1220,7 @@
             "$__all"
           ]
         },
-        "datasource": "Prometheus",
+        "datasource": "$datasource",
         "definition": "label_values(redis_instance_info{namespace=~\"$namespace\", pod=~\".*$filter.*\"}, pod)",
         "hide": 0,
         "includeAll": true,
