@@ -373,12 +373,29 @@
     "templating": {
       "list": [
         {
+          "current": {
+            "text": "prometheus-app-alpha-gm",
+            "value": "prometheus-app-alpha-gm"
+          },
+          "hide": 0,
+          "includeAll": false,
+          "label": null,
+          "multi": false,
+          "name": "datasource",
+          "options": [],
+          "query": "prometheus",
+          "refresh": 1,
+          "regex": "",
+          "skipUrlSync": false,
+          "type": "datasource"
+        },
+        {
           "allValue": null,
           "current": {
             "text": "All",
             "value": "$__all"
           },
-          "datasource": "Prometheus",
+          "datasource": "$datasource",
           "definition": "label_values(kube_resourcequota, resource)",
           "hide": 2,
           "includeAll": true,
@@ -437,7 +454,7 @@
               "$__all"
             ]
           },
-          "datasource": "Prometheus",
+          "datasource": "$datasource",
           "definition": "label_values(kube_pod_info, namespace)",
           "hide": 2,
           "includeAll": true,
