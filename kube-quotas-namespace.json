@@ -15,8 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 361,
-  "iteration": 1587073689381,
+  "iteration": 1599762437525,
   "links": [],
   "panels": [
     {
@@ -32,7 +31,7 @@
       "type": "row"
     },
     {
-      "datasource": null,
+      "datasource": "$datasource",
       "gridPos": {
         "h": 5,
         "w": 8,
@@ -47,34 +46,40 @@
             "last"
           ],
           "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
             "decimals": 2,
             "mappings": [],
             "max": 100,
             "min": 0,
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 75
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ]
+            },
             "unit": "percent"
           },
-          "override": {},
+          "overrides": [],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.4.2",
+      "pluginVersion": "6.6.2",
       "repeat": "typePhysical",
       "repeatDirection": "h",
       "scopedVars": {
@@ -114,37 +119,43 @@
             "last"
           ],
           "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
             "decimals": 2,
             "mappings": [],
             "max": 100,
             "min": 0,
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 75
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ]
+            },
             "unit": "percent"
           },
-          "override": {},
+          "overrides": [],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.4.2",
+      "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1587073689381,
+      "repeatIteration": 1599762437525,
       "repeatPanelId": 57,
       "scopedVars": {
         "typePhysical": {
@@ -183,37 +194,43 @@
             "last"
           ],
           "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
             "decimals": 2,
             "mappings": [],
             "max": 100,
             "min": 0,
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 75
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ]
+            },
             "unit": "percent"
           },
-          "override": {},
+          "overrides": [],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.4.2",
+      "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1587073689381,
+      "repeatIteration": 1599762437525,
       "repeatPanelId": 57,
       "scopedVars": {
         "typePhysical": {
@@ -252,34 +269,40 @@
             "last"
           ],
           "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
             "decimals": 2,
             "mappings": [],
             "max": 100,
             "min": 0,
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 75
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ]
+            },
             "unit": "percent"
           },
-          "override": {},
+          "overrides": [],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.4.2",
+      "pluginVersion": "6.6.2",
       "repeat": "typePhysical",
       "repeatDirection": "h",
       "repeatIteration": 1572588027609,
@@ -321,37 +344,43 @@
             "last"
           ],
           "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
             "decimals": 2,
             "mappings": [],
             "max": 100,
             "min": 0,
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 75
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ]
+            },
             "unit": "percent"
           },
-          "override": {},
+          "overrides": [],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.4.2",
+      "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1587073689381,
+      "repeatIteration": 1599762437525,
       "repeatPanelId": 72,
       "scopedVars": {
         "typePhysical": {
@@ -390,37 +419,43 @@
             "last"
           ],
           "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
             "decimals": 2,
             "mappings": [],
             "max": 100,
             "min": 0,
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 75
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ]
+            },
             "unit": "percent"
           },
-          "override": {},
+          "overrides": [],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.4.2",
+      "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1587073689381,
+      "repeatIteration": 1599762437525,
       "repeatPanelId": 72,
       "scopedVars": {
         "typePhysical": {
@@ -462,7 +497,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "Limits: straight lines\n\nRequests: dashed lines\n\nUsed: filled area",
       "fill": 1,
       "fillGradient": 0,
@@ -472,6 +507,7 @@
         "x": 0,
         "y": 12
       },
+      "hiddenSeries": false,
       "id": 2,
       "legend": {
         "alignAsTable": false,
@@ -620,7 +656,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "Limits: straight lines\n\nRequests: dashed lines\n\nUsed: filled area",
       "fill": 1,
       "fillGradient": 0,
@@ -630,6 +666,7 @@
         "x": 8,
         "y": 12
       },
+      "hiddenSeries": false,
       "id": 11,
       "legend": {
         "avg": false,
@@ -775,7 +812,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "Limits: straight lines\n\nRequests: dashed lines\n\nUsed: filled area",
       "fill": 1,
       "fillGradient": 0,
@@ -785,6 +822,7 @@
         "x": 16,
         "y": 12
       },
+      "hiddenSeries": false,
       "id": 85,
       "legend": {
         "avg": false,
@@ -937,7 +975,7 @@
       "type": "row"
     },
     {
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "",
       "gridPos": {
         "h": 4,
@@ -953,34 +991,40 @@
             "last"
           ],
           "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
             "decimals": 2,
             "mappings": [],
             "max": 100,
             "min": 0,
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 75
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ]
+            },
             "unit": "percent"
           },
-          "override": {},
+          "overrides": [],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.4.2",
+      "pluginVersion": "6.6.2",
       "repeat": "typeVirtual",
       "repeatDirection": "h",
       "scopedVars": {
@@ -1020,37 +1064,43 @@
             "last"
           ],
           "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
             "decimals": 2,
             "mappings": [],
             "max": 100,
             "min": 0,
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 75
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ]
+            },
             "unit": "percent"
           },
-          "override": {},
+          "overrides": [],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.4.2",
+      "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1587073689381,
+      "repeatIteration": 1599762437525,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -1089,37 +1139,43 @@
             "last"
           ],
           "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
             "decimals": 2,
             "mappings": [],
             "max": 100,
             "min": 0,
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 75
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ]
+            },
             "unit": "percent"
           },
-          "override": {},
+          "overrides": [],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.4.2",
+      "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1587073689381,
+      "repeatIteration": 1599762437525,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -1158,37 +1214,43 @@
             "last"
           ],
           "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
             "decimals": 2,
             "mappings": [],
             "max": 100,
             "min": 0,
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 75
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ]
+            },
             "unit": "percent"
           },
-          "override": {},
+          "overrides": [],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.4.2",
+      "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1587073689381,
+      "repeatIteration": 1599762437525,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -1227,37 +1289,43 @@
             "last"
           ],
           "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
             "decimals": 2,
             "mappings": [],
             "max": 100,
             "min": 0,
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 75
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ]
+            },
             "unit": "percent"
           },
-          "override": {},
+          "overrides": [],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.4.2",
+      "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1587073689381,
+      "repeatIteration": 1599762437525,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -1296,37 +1364,43 @@
             "last"
           ],
           "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
             "decimals": 2,
             "mappings": [],
             "max": 100,
             "min": 0,
-            "thresholds": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "#EAB839",
-                "value": 75
-              },
-              {
-                "color": "red",
-                "value": 90
-              }
-            ],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 75
+                },
+                {
+                  "color": "red",
+                  "value": 90
+                }
+              ]
+            },
             "unit": "percent"
           },
-          "override": {},
+          "overrides": [],
           "values": false
         },
         "orientation": "auto",
         "showThresholdLabels": false,
         "showThresholdMarkers": true
       },
-      "pluginVersion": "6.4.2",
+      "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1587073689381,
+      "repeatIteration": 1599762437525,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -1378,6 +1452,7 @@
         "x": 0,
         "y": 31
       },
+      "hiddenSeries": false,
       "id": 19,
       "legend": {
         "avg": false,
@@ -1498,6 +1573,7 @@
         "x": 6,
         "y": 31
       },
+      "hiddenSeries": false,
       "id": 95,
       "legend": {
         "avg": false,
@@ -1522,7 +1598,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1587073689381,
+      "repeatIteration": 1599762437525,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -1620,6 +1696,7 @@
         "x": 12,
         "y": 31
       },
+      "hiddenSeries": false,
       "id": 96,
       "legend": {
         "avg": false,
@@ -1644,7 +1721,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1587073689381,
+      "repeatIteration": 1599762437525,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -1742,6 +1819,7 @@
         "x": 18,
         "y": 31
       },
+      "hiddenSeries": false,
       "id": 97,
       "legend": {
         "avg": false,
@@ -1766,7 +1844,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1587073689381,
+      "repeatIteration": 1599762437525,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -1864,6 +1942,7 @@
         "x": 0,
         "y": 36
       },
+      "hiddenSeries": false,
       "id": 98,
       "legend": {
         "avg": false,
@@ -1888,7 +1967,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1587073689381,
+      "repeatIteration": 1599762437525,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -1986,6 +2065,7 @@
         "x": 6,
         "y": 36
       },
+      "hiddenSeries": false,
       "id": 99,
       "legend": {
         "avg": false,
@@ -2010,7 +2090,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1587073689381,
+      "repeatIteration": 1599762437525,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -2095,7 +2175,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 20,
+  "schemaVersion": 22,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -2120,6 +2200,7 @@
       {
         "allValue": null,
         "current": {
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -2216,8 +2297,9 @@
       {
         "allValue": null,
         "current": {
-          "text": "nitro-demos",
-          "value": "nitro-demos"
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": "$datasource",
         "definition": "label_values(kube_pod_info, namespace)",
@@ -2299,5 +2381,5 @@
   "timezone": "",
   "title": "Kube Quotas (Namespace)",
   "uid": "6MFyi50Zzw3",
-  "version": 9
+  "version": 2
 }
