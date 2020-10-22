@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1599594072236,
+  "iteration": 1603401750714,
   "links": [],
   "panels": [
     {
@@ -360,8 +360,8 @@
       {
         "current": {
           "selected": true,
-          "text": "prometheus-app-alpha-gm",
-          "value": "prometheus-app-alpha-gm"
+          "text": "prometheus-app-prod-hq",
+          "value": "prometheus-app-prod-hq"
         },
         "hide": 0,
         "includeAll": false,
@@ -443,14 +443,14 @@
           ]
         },
         "datasource": "$datasource",
-        "definition": "label_values(kube_pod_info, namespace)",
+        "definition": "label_values({__name__=~\"kube_pod_info|kube_resourcequota\"}, namespace)",
         "hide": 2,
         "includeAll": true,
         "label": "Namespace",
         "multi": true,
         "name": "namespace",
         "options": [],
-        "query": "label_values(kube_pod_info, namespace)",
+        "query": "label_values({__name__=~\"kube_pod_info|kube_resourcequota\"}, namespace)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -495,5 +495,5 @@
   "timezone": "",
   "title": "Kube Quotas (Cluster)",
   "uid": "XN5am50Zz",
-  "version": 1
+  "version": 2
 }

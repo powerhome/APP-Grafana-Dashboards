@@ -15,7 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1599762437525,
+  "id": 2,
+  "iteration": 1603401254350,
   "links": [],
   "panels": [
     {
@@ -104,7 +105,7 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": "$datasource",
       "gridPos": {
         "h": 5,
         "w": 8,
@@ -155,7 +156,7 @@
       "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1599762437525,
+      "repeatIteration": 1603401254350,
       "repeatPanelId": 57,
       "scopedVars": {
         "typePhysical": {
@@ -179,7 +180,7 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": "$datasource",
       "gridPos": {
         "h": 5,
         "w": 8,
@@ -230,7 +231,7 @@
       "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1599762437525,
+      "repeatIteration": 1603401254350,
       "repeatPanelId": 57,
       "scopedVars": {
         "typePhysical": {
@@ -380,7 +381,7 @@
       "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1599762437525,
+      "repeatIteration": 1603401254350,
       "repeatPanelId": 72,
       "scopedVars": {
         "typePhysical": {
@@ -455,7 +456,7 @@
       "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1599762437525,
+      "repeatIteration": 1603401254350,
       "repeatPanelId": 72,
       "scopedVars": {
         "typePhysical": {
@@ -1048,7 +1049,7 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "",
       "gridPos": {
         "h": 4,
@@ -1100,7 +1101,7 @@
       "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1599762437525,
+      "repeatIteration": 1603401254350,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -1123,7 +1124,7 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "",
       "gridPos": {
         "h": 4,
@@ -1175,7 +1176,7 @@
       "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1599762437525,
+      "repeatIteration": 1603401254350,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -1198,7 +1199,7 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "",
       "gridPos": {
         "h": 4,
@@ -1250,7 +1251,7 @@
       "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1599762437525,
+      "repeatIteration": 1603401254350,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -1273,7 +1274,7 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "",
       "gridPos": {
         "h": 4,
@@ -1325,7 +1326,7 @@
       "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1599762437525,
+      "repeatIteration": 1603401254350,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -1348,7 +1349,7 @@
       "type": "gauge"
     },
     {
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "",
       "gridPos": {
         "h": 4,
@@ -1400,7 +1401,7 @@
       "pluginVersion": "6.6.2",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1599762437525,
+      "repeatIteration": 1603401254350,
       "repeatPanelId": 33,
       "scopedVars": {
         "typeVirtual": {
@@ -1598,7 +1599,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1599762437525,
+      "repeatIteration": 1603401254350,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -1721,7 +1722,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1599762437525,
+      "repeatIteration": 1603401254350,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -1844,7 +1845,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1599762437525,
+      "repeatIteration": 1603401254350,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -1967,7 +1968,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1599762437525,
+      "repeatIteration": 1603401254350,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -2090,7 +2091,7 @@
       "renderer": "flot",
       "repeat": null,
       "repeatDirection": "h",
-      "repeatIteration": 1599762437525,
+      "repeatIteration": 1603401254350,
       "repeatPanelId": 19,
       "scopedVars": {
         "typeVirtual": {
@@ -2182,8 +2183,9 @@
     "list": [
       {
         "current": {
-          "text": "prometheus-app-alpha-gm",
-          "value": "prometheus-app-alpha-gm"
+          "selected": false,
+          "text": "prometheus-app-prod-hq",
+          "value": "prometheus-app-prod-hq"
         },
         "hide": 0,
         "includeAll": false,
@@ -2297,19 +2299,20 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
           "text": "All",
-          "value": "$__all"
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "$datasource",
-        "definition": "label_values(kube_pod_info, namespace)",
+        "definition": "label_values({__name__=~\"kube_pod_info|kube_resourcequota\"}, namespace)",
         "hide": 0,
         "includeAll": true,
         "label": "Namespace",
         "multi": true,
         "name": "namespace",
         "options": [],
-        "query": "label_values(kube_pod_info, namespace)",
+        "query": "label_values({__name__=~\"kube_pod_info|kube_resourcequota\"}, namespace)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -2381,5 +2384,5 @@
   "timezone": "",
   "title": "Kube Quotas (Namespace)",
   "uid": "6MFyi50Zzw3",
-  "version": 2
+  "version": 3
 }
