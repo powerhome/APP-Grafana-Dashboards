@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
-  "iteration": 1604659270598,
+  "id": 148,
+  "iteration": 1604702926250,
   "links": [],
   "panels": [
     {
@@ -126,17 +126,14 @@
       {
         "allValue": ".+",
         "current": {
-          "selected": true,
-          "tags": [],
-          "text": "prometheus-app-beta-gm",
-          "value": [
-            "prometheus-app-beta-gm"
-          ]
+          "selected": false,
+          "text": "prometheus-app-prod-gm",
+          "value": "prometheus-app-prod-gm"
         },
         "hide": 0,
-        "includeAll": true,
+        "includeAll": false,
         "label": null,
-        "multi": true,
+        "multi": false,
         "name": "datasource",
         "options": [],
         "query": "prometheus",
@@ -149,18 +146,16 @@
       {
         "allValue": ".+",
         "current": {
-          "selected": true,
-          "text": "nitro-web-pr17655",
-          "value": [
-            "nitro-web-pr17655"
-          ]
+          "selected": false,
+          "text": "nitro-web-production",
+          "value": "nitro-web-production"
         },
         "datasource": "$datasource",
         "definition": "label_values(passenger_wait_list_size, namespace)",
         "hide": 0,
-        "includeAll": true,
+        "includeAll": false,
         "label": "Namespace",
-        "multi": true,
+        "multi": false,
         "name": "namespace",
         "options": [],
         "query": "label_values(passenger_wait_list_size, namespace)",
@@ -176,7 +171,7 @@
       },
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": ".+",
           "value": ".+"
         },
@@ -197,9 +192,11 @@
       {
         "allValue": ".+",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "All",
-          "value": "$__all"
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "$datasource",
         "definition": "label_values(passenger_wait_list_size{namespace=~\"$namespace\", pod=~\".*$filter.*\"}, pod)",
@@ -241,6 +238,6 @@
   },
   "timezone": "browser",
   "title": "Passenger",
-  "uid": null,
-  "version": 0
+  "uid": "OGqaA12Mk",
+  "version": 1
 }
