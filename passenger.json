@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 148,
-  "iteration": 1604763226890,
+  "iteration": 1604763226918,
   "links": [],
   "panels": [
     {
@@ -68,7 +68,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "passenger_wait_list_size{namespace=~\"$namespace\",pod=~\"$pod\"}",
+          "expr": "passenger_wait_list_size{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}",
           "interval": "",
           "legendFormat": "{{ pod }}",
           "refId": "A"
@@ -182,7 +182,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "increase(passenger_cumulative_requests_processed{namespace=~\"$namespace\",pod=~\"$pod\"}[1m])",
+          "expr": "increase(passenger_cumulative_requests_processed{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}[1m])",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{ pod }}",
@@ -271,7 +271,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "increase(passenger_cumulative_requests_processed[$__range])",
+          "expr": "increase(passenger_cumulative_requests_processed{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}[$__range])",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{ pod }}",
@@ -294,8 +294,8 @@
         "allValue": ".+",
         "current": {
           "selected": true,
-          "text": "prometheus-app-prod-gm",
-          "value": "prometheus-app-prod-gm"
+          "text": "prometheus-app-prod-hq",
+          "value": "prometheus-app-prod-hq"
         },
         "hide": 0,
         "includeAll": false,
@@ -313,7 +313,7 @@
       {
         "allValue": ".+",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "nitro-web-production",
           "value": "nitro-web-production"
         },
@@ -337,10 +337,38 @@
         "useTags": false
       },
       {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "$datasource",
+        "definition": "label_values(passenger_wait_list_size{namespace=~\"$namespace\"}, job)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Job",
+        "multi": true,
+        "name": "job",
+        "options": [],
+        "query": "label_values(passenger_wait_list_size{namespace=~\"$namespace\"}, job)",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
         "current": {
           "selected": false,
-          "text": ".+",
-          "value": ".+"
+          "text": "",
+          "value": ""
         },
         "hide": 0,
         "label": "Filter",
@@ -348,11 +376,11 @@
         "options": [
           {
             "selected": true,
-            "text": ".+",
-            "value": ".+"
+            "text": "",
+            "value": ""
           }
         ],
-        "query": ".+",
+        "query": "",
         "skipUrlSync": false,
         "type": "textbox"
       },
@@ -387,7 +415,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
