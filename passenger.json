@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 148,
-  "iteration": 1604702926250,
+  "iteration": 1604763226918,
   "links": [],
   "panels": [
     {
@@ -68,7 +68,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "passenger_wait_list_size{namespace=~\"$namespace\",pod=~\"$pod\"}",
+          "expr": "passenger_wait_list_size{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}",
           "interval": "",
           "legendFormat": "{{ pod }}",
           "refId": "A"
@@ -115,9 +115,176 @@
         "align": false,
         "alignLevel": null
       }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$datasource",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "hiddenSeries": false,
+      "id": 4,
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideZero": false,
+        "max": true,
+        "min": false,
+        "rightSide": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 1,
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": true,
+      "pluginVersion": "7.0.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "expr": "increase(passenger_cumulative_requests_processed{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}[1m])",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "{{ pod }}",
+          "refId": "A"
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Request rate",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": "Requests per minute",
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "datasource": "$datasource",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 24,
+        "x": 0,
+        "y": 18
+      },
+      "id": 5,
+      "options": {
+        "displayMode": "gradient",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "mean"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showUnfilled": true
+      },
+      "pluginVersion": "7.0.3",
+      "targets": [
+        {
+          "expr": "increase(passenger_cumulative_requests_processed{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}[$__range])",
+          "format": "time_series",
+          "interval": "",
+          "legendFormat": "{{ pod }}",
+          "refId": "A"
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Cumulative Requests Processed",
+      "type": "bargauge"
     }
   ],
-  "refresh": "5s",
+  "refresh": "30s",
   "schemaVersion": 25,
   "style": "dark",
   "tags": [],
@@ -126,9 +293,9 @@
       {
         "allValue": ".+",
         "current": {
-          "selected": false,
-          "text": "prometheus-app-prod-gm",
-          "value": "prometheus-app-prod-gm"
+          "selected": true,
+          "text": "prometheus-app-prod-hq",
+          "value": "prometheus-app-prod-hq"
         },
         "hide": 0,
         "includeAll": false,
@@ -170,10 +337,38 @@
         "useTags": false
       },
       {
+        "allValue": null,
         "current": {
           "selected": true,
-          "text": ".+",
-          "value": ".+"
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "$datasource",
+        "definition": "label_values(passenger_wait_list_size{namespace=~\"$namespace\"}, job)",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Job",
+        "multi": true,
+        "name": "job",
+        "options": [],
+        "query": "label_values(passenger_wait_list_size{namespace=~\"$namespace\"}, job)",
+        "refresh": 2,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "",
+          "value": ""
         },
         "hide": 0,
         "label": "Filter",
@@ -181,11 +376,11 @@
         "options": [
           {
             "selected": true,
-            "text": ".+",
-            "value": ".+"
+            "text": "",
+            "value": ""
           }
         ],
-        "query": ".+",
+        "query": "",
         "skipUrlSync": false,
         "type": "textbox"
       },
@@ -220,7 +415,7 @@
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-24h",
     "to": "now"
   },
   "timepicker": {
@@ -239,5 +434,5 @@
   "timezone": "browser",
   "title": "Passenger",
   "uid": "OGqaA12Mk",
-  "version": 1
+  "version": 2
 }
