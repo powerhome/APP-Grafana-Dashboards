@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 148,
-  "iteration": 1604763226886,
+  "iteration": 1604763226890,
   "links": [],
   "panels": [
     {
@@ -257,6 +257,7 @@
       },
       "id": 5,
       "options": {
+        "displayMode": "gradient",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -265,8 +266,7 @@
           "fields": "",
           "values": false
         },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showUnfilled": true
       },
       "pluginVersion": "7.0.3",
       "targets": [
@@ -281,7 +281,7 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "Cumulative Requests Processed",
-      "type": "gauge"
+      "type": "bargauge"
     }
   ],
   "refresh": "30s",
@@ -294,8 +294,8 @@
         "allValue": ".+",
         "current": {
           "selected": true,
-          "text": "prometheus-app-beta-hq",
-          "value": "prometheus-app-beta-hq"
+          "text": "prometheus-app-prod-gm",
+          "value": "prometheus-app-prod-gm"
         },
         "hide": 0,
         "includeAll": false,
@@ -314,8 +314,8 @@
         "allValue": ".+",
         "current": {
           "selected": true,
-          "text": "nitro-web-pr17762",
-          "value": "nitro-web-pr17762"
+          "text": "nitro-web-production",
+          "value": "nitro-web-production"
         },
         "datasource": "$datasource",
         "definition": "label_values(passenger_wait_list_size, namespace)",
@@ -339,8 +339,8 @@
       {
         "current": {
           "selected": false,
-          "text": "",
-          "value": ""
+          "text": ".+",
+          "value": ".+"
         },
         "hide": 0,
         "label": "Filter",
@@ -348,11 +348,11 @@
         "options": [
           {
             "selected": true,
-            "text": "",
-            "value": ""
+            "text": ".+",
+            "value": ".+"
           }
         ],
-        "query": "",
+        "query": ".+",
         "skipUrlSync": false,
         "type": "textbox"
       },
@@ -387,8 +387,8 @@
     ]
   },
   "time": {
-    "from": "now-3h",
-    "to": "now-2h"
+    "from": "now-1h",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
