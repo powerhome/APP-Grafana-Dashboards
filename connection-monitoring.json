@@ -30,7 +30,7 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(50, 172, 45, 0.97)"
       ],
-      "datasource": null,
+      "datasource": "$datasource",
       "decimals": null,
       "description": "This panel shows the rate in which UDP tests are being performed",
       "fieldConfig": {
@@ -114,7 +114,7 @@
       "valueName": "current"
     },
     {
-      "datasource": null,
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -187,7 +187,7 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(50, 172, 45, 0.97)"
       ],
-      "datasource": null,
+      "datasource": "$datasource",
       "decimals": null,
       "description": "This panel shows the rate in which TCP tests are being performed",
       "fieldConfig": {
@@ -271,7 +271,7 @@
       "valueName": "current"
     },
     {
-      "datasource": null,
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -344,7 +344,7 @@
         "rgba(237, 129, 40, 0.89)",
         "rgba(50, 172, 45, 0.97)"
       ],
-      "datasource": null,
+      "datasource": "$datasource",
       "decimals": null,
       "description": "This panel shows the rate in which DNS tests are being performed",
       "fieldConfig": {
@@ -428,7 +428,7 @@
       "valueName": "current"
     },
     {
-      "datasource": null,
+      "datasource": "$datasource",
       "fieldConfig": {
         "defaults": {
           "custom": {
@@ -494,7 +494,7 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -511,7 +511,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "Each UDP test sends 10 UDP packets every 5 seconds to a remote host, and that remote host replies with another packet.  This graph plots the average round-trip duration.",
       "fieldConfig": {
         "defaults": {
@@ -616,7 +616,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "Each UDP test sends 10 UDP packets every 5 seconds to a remote host, and that remote host replies with another packet.  This graph plots the variance between the faster and the slowest response.",
       "fieldConfig": {
         "defaults": {
@@ -721,7 +721,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "Each UDP test sends 10 UDP packets every 5 seconds to a remote host, and that remote host replies with another packet.  We wait a maximum of 250ms for a response packet, before considering it lost.",
       "fieldConfig": {
         "defaults": {
@@ -826,7 +826,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "Each UDP test sends 10 UDP packets every 5 seconds to a remote host, and that remote host replies with another packet.  We wait a maximum of 250ms for a response packet, before considering it lost.",
       "fieldConfig": {
         "defaults": {
@@ -931,7 +931,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "Each UDP test sends 10 UDP packets every 5 seconds to a remote host, and that remote host replies with another packet.  We wait a maximum of 250ms for a response packet, before considering it lost.",
       "fieldConfig": {
         "defaults": {
@@ -1036,7 +1036,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "Each UDP test sends 10 UDP packets every 5 seconds to a remote host, and that remote host replies with another packet.  We wait a maximum of 250ms for a response packet, before considering it lost.",
       "fieldConfig": {
         "defaults": {
@@ -1138,7 +1138,7 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1155,7 +1155,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "Shows DNS Tests by their destination",
       "fieldConfig": {
         "defaults": {
@@ -1260,7 +1260,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "Shows DNS Tests by their destination",
       "fieldConfig": {
         "defaults": {
@@ -1365,7 +1365,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "This shows DNS test failures by source zone",
       "fieldConfig": {
         "defaults": {
@@ -1470,7 +1470,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "This shows DNS test failures by source node",
       "fieldConfig": {
         "defaults": {
@@ -1572,7 +1572,7 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1589,7 +1589,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "This panel shows the average time it takes to perform a full TCP handshake and establish a connection",
       "fieldConfig": {
         "defaults": {
@@ -1694,7 +1694,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "This panel shows the average total TCP request duration, measured from the point the socket has been allocated on the local host, to the socket being closed following a response from the destination. ",
       "fieldConfig": {
         "defaults": {
@@ -1799,7 +1799,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "This test shows failures grouped by their source zone",
       "fieldConfig": {
         "defaults": {
@@ -1904,7 +1904,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "This test shows failures grouped by their source zone",
       "fieldConfig": {
         "defaults": {
@@ -2009,7 +2009,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "This test shows failures grouped by their source node",
       "fieldConfig": {
         "defaults": {
@@ -2114,7 +2114,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "$datasource",
       "description": "This test shows failures grouped by their destination node",
       "fieldConfig": {
         "defaults": {
