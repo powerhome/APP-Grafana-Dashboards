@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 148,
-  "iteration": 1604763226918,
+  "id": 245,
+  "iteration": 1614197412707,
   "links": [],
   "panels": [
     {
@@ -68,7 +68,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "passenger_wait_list_size{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}",
+          "expr": "puma_backlog{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}",
           "interval": "",
           "legendFormat": "{{ pod }}",
           "refId": "A"
@@ -182,7 +182,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "increase(passenger_cumulative_requests_processed{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}[1m])",
+          "expr": "increase(puma_requests_count{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}[1m])",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{ pod }}",
@@ -271,7 +271,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "increase(passenger_cumulative_requests_processed{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}[$__range])",
+          "expr": "increase(puma_requests_count{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}[$__range])",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{ pod }}",
@@ -318,14 +318,14 @@
           "value": "nitro-web-production"
         },
         "datasource": "$datasource",
-        "definition": "label_values(passenger_wait_list_size, namespace)",
+        "definition": "label_values(puma_backlog, namespace)",
         "hide": 0,
         "includeAll": false,
         "label": "Namespace",
         "multi": false,
         "name": "namespace",
         "options": [],
-        "query": "label_values(passenger_wait_list_size, namespace)",
+        "query": "label_values(puma_backlog, namespace)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -346,14 +346,14 @@
           ]
         },
         "datasource": "$datasource",
-        "definition": "label_values(passenger_wait_list_size{namespace=~\"$namespace\"}, job)",
+        "definition": "label_values(puma_backlog{namespace=~\"$namespace\"}, job)",
         "hide": 0,
         "includeAll": true,
         "label": "Job",
         "multi": true,
         "name": "job",
         "options": [],
-        "query": "label_values(passenger_wait_list_size{namespace=~\"$namespace\"}, job)",
+        "query": "label_values(puma_backlog{namespace=~\"$namespace\"}, job)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -394,14 +394,14 @@
           ]
         },
         "datasource": "$datasource",
-        "definition": "label_values(passenger_wait_list_size{namespace=~\"$namespace\", pod=~\".*$filter.*\"}, pod)",
+        "definition": "label_values(puma_backlog{namespace=~\"$namespace\", pod=~\".*$filter.*\"}, pod)",
         "hide": 0,
         "includeAll": true,
         "label": "Pod",
         "multi": true,
         "name": "pod",
         "options": [],
-        "query": "label_values(passenger_wait_list_size{namespace=~\"$namespace\", pod=~\".*$filter.*\"}, pod)",
+        "query": "label_values(puma_backlog{namespace=~\"$namespace\", pod=~\".*$filter.*\"}, pod)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -432,7 +432,7 @@
     ]
   },
   "timezone": "browser",
-  "title": "Passenger",
-  "uid": "OGqaA12Mk",
-  "version": 2
+  "title": "Puma",
+  "uid": "73RZ0psGz",
+  "version": 3
 }
