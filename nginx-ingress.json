@@ -531,7 +531,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "round(sum(irate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\"}[2m])) by (namespace,ingress), 0.001)",
+          "expr": "round(sum(irate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\",service=~\"$service\"}[2m])) by (namespace,ingress), 0.001)",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -649,7 +649,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\",status!~\"[4-5].*\"}[2m])) by (namespace,ingress) / sum(rate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\"}[2m])) by (namespace,ingress)",
+          "expr": "sum(rate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\",service=~\"$service\",status!~\"[4-5].*\"}[2m])) by (namespace,ingress) / sum(rate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\",service=~\"$service\"}[2m])) by (namespace,ingress)",
           "format": "time_series",
           "instant": false,
           "interval": "10s",
@@ -766,7 +766,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\",status=~\"[5].*\"}[2m])) by (namespace,ingress) / sum(rate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\"}[2m])) by (namespace,ingress)",
+          "expr": "sum(rate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\",service=~\"$service\",status=~\"[5].*\"}[2m])) by (namespace,ingress) / sum(rate(nginx_ingress_controller_requests{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\",service=~\"$service\"}[2m])) by (namespace,ingress)",
           "format": "time_series",
           "instant": false,
           "interval": "10s",
@@ -878,7 +878,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum (irate (nginx_ingress_controller_request_size_sum{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\"}[2m]))",
+          "expr": "sum (irate (nginx_ingress_controller_request_size_sum{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\",service=~\"$service\"}[2m]))",
           "format": "time_series",
           "instant": false,
           "interval": "10s",
@@ -889,7 +889,7 @@
           "step": 10
         },
         {
-          "expr": "- sum (irate (nginx_ingress_controller_response_size_sum{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\"}[2m]))",
+          "expr": "- sum (irate (nginx_ingress_controller_response_size_sum{controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\",service=~\"$service\"}[2m]))",
           "format": "time_series",
           "hide": false,
           "interval": "10s",
@@ -1378,7 +1378,7 @@
       ],
       "targets": [
         {
-          "expr": "histogram_quantile(0.50, sum(rate(nginx_ingress_controller_request_duration_seconds_bucket{ingress!=\"\",controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\"}[2m])) by (namespace, le, ingress))",
+          "expr": "histogram_quantile(0.50, sum(rate(nginx_ingress_controller_request_duration_seconds_bucket{ingress!=\"\",controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\",service=~\"$service\"}[2m])) by (namespace, le, ingress))",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -1388,7 +1388,7 @@
           "refId": "C"
         },
         {
-          "expr": "histogram_quantile(0.90, sum(rate(nginx_ingress_controller_request_duration_seconds_bucket{ingress!=\"\",controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\"}[2m])) by (namespace, le, ingress))",
+          "expr": "histogram_quantile(0.90, sum(rate(nginx_ingress_controller_request_duration_seconds_bucket{ingress!=\"\",controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\",service=~\"$service\"}[2m])) by (namespace, le, ingress))",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -1398,7 +1398,7 @@
           "refId": "D"
         },
         {
-          "expr": "histogram_quantile(0.99, sum(rate(nginx_ingress_controller_request_duration_seconds_bucket{ingress!=\"\",controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\"}[2m])) by (namespace, le, ingress))",
+          "expr": "histogram_quantile(0.99, sum(rate(nginx_ingress_controller_request_duration_seconds_bucket{ingress!=\"\",controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\",service=~\"$service\"}[2m])) by (namespace, le, ingress))",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -1408,7 +1408,7 @@
           "refId": "E"
         },
         {
-          "expr": "sum(irate(nginx_ingress_controller_request_size_sum{ingress!=\"\",controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\"}[2m])) by (namespace, ingress)",
+          "expr": "sum(irate(nginx_ingress_controller_request_size_sum{ingress!=\"\",controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\",service=~\"$service\"}[2m])) by (namespace, ingress)",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -1418,7 +1418,7 @@
           "refId": "F"
         },
         {
-          "expr": "sum(irate(nginx_ingress_controller_response_size_sum{ingress!=\"\",controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\"}[2m])) by (namespace, ingress)",
+          "expr": "sum(irate(nginx_ingress_controller_response_size_sum{ingress!=\"\",controller_pod=~\"$controller\",controller_class=~\"$controller_class\",controller_namespace=~\"$namespace\",namespace=~\"$ingress_namespace\",ingress=~\"$ingress\",service=~\"$service\"}[2m])) by (namespace, ingress)",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -1508,7 +1508,7 @@
       ],
       "targets": [
         {
-          "expr": "avg(nginx_ingress_controller_ssl_expire_time_seconds{kubernetes_pod_name=~\"$controller\",ingress=~\"$ingress\"}) by (host) - time()",
+          "expr": "avg(nginx_ingress_controller_ssl_expire_time_seconds{kubernetes_pod_name=~\"$controller\",ingress=~\"$ingress\",service=~\"$service\"}) by (host) - time()",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -1672,6 +1672,32 @@
         "name": "ingress",
         "options": [],
         "query": "label_values(nginx_ingress_controller_requests{controller_namespace=~\"$namespace\",controller_class=~\"$controller_class\",controller=~\"$controller\", namespace=~\"$ingress_namespace\"}, ingress) ",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 2,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": false,
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "$datasource",
+        "definition": "label_values(nginx_ingress_controller_requests{controller_namespace=~\"$namespace\",controller_class=~\"$controller_class\",controller=~\"$controller\", namespace=~\"$ingress_namespace\", ingress=~\"$ingress\"}, service) ",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Service",
+        "multi": false,
+        "name": "service",
+        "options": [],
+        "query": "label_values(nginx_ingress_controller_requests{controller_namespace=~\"$namespace\",controller_class=~\"$controller_class\",controller=~\"$controller\", namespace=~\"$ingress_namespace\", ingress=~\"$ingress\"}, service) ",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
