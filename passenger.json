@@ -137,7 +137,7 @@
         "y": 0
       },
       "hiddenSeries": false,
-      "id": 2,
+      "id": 3,
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -531,5 +531,5 @@
   "timezone": "browser",
   "title": "Passenger",
   "uid": "OGqaA12Mk",
-  "version": 3
+  "version": 4
 }
