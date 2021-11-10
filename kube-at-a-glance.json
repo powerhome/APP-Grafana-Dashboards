@@ -553,7 +553,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (kube_pod_container_resource_requests_memory_bytes{node=~\"^$Node$\"})",
+          "expr": "sum (kube_pod_container_resource_requests{resource=\"memory\",node=~\"^$Node$\"})",
           "format": "time_series",
           "interval": "10s",
           "intervalFactor": 1,
@@ -734,7 +734,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (kube_pod_container_resource_requests_cpu_cores{node=~\"^$Node$\"})",
+          "expr": "sum (kube_pod_container_resource_requests{resource=\"cpu\",node=~\"^$Node$\"})",
           "format": "time_series",
           "instant": true,
           "interval": "10s",
@@ -1007,7 +1007,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count (container_last_seen{container=\"POD\", node=~\"^$Node$\"}) / sum (kube_node_status_capacity_pods{node=~\"^$Node$\"}) * 100",
+          "expr": "count (container_last_seen{container=\"POD\", node=~\"^$Node$\"}) / sum (kube_node_status_capacity{resource=\"pods\",node=~\"^$Node$\"}) * 100",
           "format": "time_series",
           "hide": false,
           "instant": true,
@@ -1554,7 +1554,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (kube_node_status_capacity_pods{node=~\"^$Node$\"})",
+          "expr": "sum (kube_node_status_capacity{resource=\"pods\",node=~\"^$Node$\"})",
           "format": "time_series",
           "instant": true,
           "interval": "10s",
@@ -1645,7 +1645,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum(rate(kubelet_docker_operations_errors[1m]))",
+          "expr": "sum(rate(kubelet_docker_operations_errors_total[1m]))",
           "format": "time_series",
           "instant": true,
           "interval": "10s",
@@ -1858,7 +1858,7 @@
           "step": 10
         },
         {
-          "expr": "sum (kube_node_status_capacity_pods{node=~\"^$Node$\"})",
+          "expr": "sum (kube_node_status_capacity{resource=\"pods\",node=~\"^$Node$\"})",
           "format": "time_series",
           "intervalFactor": 1,
           "legendFormat": "Pod capacity",
@@ -1966,7 +1966,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(kubelet_docker_operations_errors{node=~\"^$Node$\"}[1m])) by (operation_type)",
+          "expr": "sum(rate(kubelet_docker_operations_errors_total{node=~\"^$Node$\"}[1m])) by (operation_type)",
           "format": "time_series",
           "interval": "10s",
           "intervalFactor": 1,
@@ -2085,7 +2085,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "sum(rate(kubelet_docker_operations_errors{node=~\"^$Node$\"}[1m])) by (node)",
+          "expr": "sum(rate(kubelet_docker_operations_errors_total{node=~\"^$Node$\"}[1m])) by (node)",
           "format": "time_series",
           "interval": "10s",
           "intervalFactor": 1,
@@ -2541,7 +2541,7 @@
         "options": [],
         "query": "label_values(node)",
         "refresh": 1,
-        "regex": "(app-.*)-.*",
+        "regex": "(.*app-[^0-9]*).*",
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
@@ -2568,7 +2568,7 @@
         "options": [],
         "query": "label_values(node)",
         "refresh": 2,
-        "regex": "$Class-(.*)",
+        "regex": "$Class(.*)",
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
@@ -2595,7 +2595,7 @@
         "options": [],
         "query": "label_values(node)",
         "refresh": 2,
-        "regex": "($Class-$ID)",
+        "regex": "($Class$ID)",
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
@@ -2638,5 +2638,5 @@
   "timezone": "browser",
   "title": "Kube at a Glance",
   "uid": "kube-at-a-glance",
-  "version": 2
+  "version": 3
 }
