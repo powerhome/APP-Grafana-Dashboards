@@ -1,0 +1,456 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 1061,
+  "iteration": 1652995939965,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "panels": [],
+      "repeat": "datasource",
+      "title": "$datasource",
+      "type": "row"
+    },
+    {
+      "datasource": "${datasource}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "fixedColor": "light-green",
+            "mode": "palette-classic"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 30
+              },
+              {
+                "color": "green",
+                "value": 50
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sum of pods memory request on workers"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Avg Memory per pod"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Ideal Memory per worker"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Overhead"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "percentunit"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "none",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "max"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "titleSize": 16
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.2.3",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(kube_pod_container_resource_requests{resource=\"cpu\",node=~\".*app-worker.*\"})",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "legendFormat": "sum of pods CPU request on workers",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(kube_pod_container_resource_requests{resource=\"memory\",node=~\".*app-worker.*\"})",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "legendFormat": "sum of pods memory request on workers",
+          "refId": "C"
+        },
+        {
+          "exemplar": true,
+          "expr": "count (container_last_seen{container=\"POD\", node=~\".*app-worker.*\"})",
+          "hide": true,
+          "instant": false,
+          "interval": "",
+          "legendFormat": "number of pods on workers with a container running",
+          "refId": "D"
+        },
+        {
+          "exemplar": true,
+          "expr": "count(max(kube_pod_container_resource_requests{node=~\".*app-worker.*\"}) by (pod))",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "number of pods on workers with a request defined",
+          "refId": "E"
+        },
+        {
+          "exemplar": true,
+          "expr": "$overhead + 1",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "overhead capacity",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "$max_pods",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "max pods",
+          "refId": "F"
+        },
+        {
+          "exemplar": true,
+          "expr": "$overhead",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "Overhead",
+          "refId": "G"
+        }
+      ],
+      "title": "Density",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Avg CPU per pod",
+            "binary": {
+              "left": "sum of pods CPU request on workers",
+              "operator": "/",
+              "reducer": "sum",
+              "right": "number of pods on workers with a request defined"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Avg Memory per pod",
+            "binary": {
+              "left": "sum of pods memory request on workers",
+              "operator": "/",
+              "reducer": "sum",
+              "right": "number of pods on workers with a request defined"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "aux Ideal CPU per worker",
+            "binary": {
+              "left": "Avg CPU per pod",
+              "operator": "*",
+              "reducer": "sum",
+              "right": "max pods"
+            },
+            "mode": "binary",
+            "reduce": {
+              "include": [
+                "Avg CPU per pod"
+              ],
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "aux Ideal Memory per worker",
+            "binary": {
+              "left": "Avg Memory per pod",
+              "operator": "*",
+              "reducer": "sum",
+              "right": "max pods"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Ideal CPU per worker",
+            "binary": {
+              "left": "aux Ideal CPU per worker",
+              "operator": "*",
+              "reducer": "sum",
+              "right": "overhead capacity"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Ideal Memory per worker",
+            "binary": {
+              "left": "aux Ideal Memory per worker",
+              "operator": "+",
+              "reducer": "sum",
+              "right": "overhead capacity"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "aux Ideal CPU per worker": true,
+              "aux Ideal Memory per worker": true,
+              "overhead capacity": true
+            },
+            "indexByName": {
+              "Avg CPU per pod": 5,
+              "Avg Memory per pod": 6,
+              "Ideal CPU per worker": 11,
+              "Ideal Memory per worker": 12,
+              "Overhead": 8,
+              "Time": 0,
+              "aux Ideal CPU per worker": 9,
+              "aux Ideal Memory per worker": 10,
+              "max pods": 7,
+              "number of pods on workers with a request defined": 3,
+              "overhead capacity": 4,
+              "sum of pods CPU request on workers": 1,
+              "sum of pods memory request on workers": 2
+            },
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "stat"
+    }
+  ],
+  "schemaVersion": 31,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "prometheus-(app.*)",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "100",
+          "value": "100"
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Max pods per worker",
+        "multi": false,
+        "name": "max_pods",
+        "options": [
+          {
+            "selected": false,
+            "text": "90",
+            "value": "90"
+          },
+          {
+            "selected": true,
+            "text": "100",
+            "value": "100"
+          },
+          {
+            "selected": false,
+            "text": "110",
+            "value": "110"
+          }
+        ],
+        "query": "90,100,110",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": false,
+          "text": "10%",
+          "value": "0.1"
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "System Overhead",
+        "multi": false,
+        "name": "overhead",
+        "options": [
+          {
+            "selected": true,
+            "text": "10%",
+            "value": "0.1"
+          },
+          {
+            "selected": false,
+            "text": "15%",
+            "value": "0.15"
+          },
+          {
+            "selected": false,
+            "text": "20%",
+            "value": "0.2"
+          }
+        ],
+        "query": "10% : 0.1,15% : 0.15,,20% : 0.2",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "APP Cluster Density",
+  "uid": "5g0bD1u7k2",
+  "version": 7
+}
