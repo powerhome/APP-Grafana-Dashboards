@@ -23,7 +23,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": 1060,
-  "iteration": 1653057561346,
+  "iteration": 1653057561374,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -36,6 +36,37 @@
         "x": 0,
         "y": 0
       },
+      "id": 30,
+      "panels": [],
+      "title": "How to use it",
+      "type": "row"
+    },
+    {
+      "datasource": null,
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 28,
+      "options": {
+        "content": "This Dashboard was created to consider the worst possible scenario, which means it uses the worst possible values. It will calculate `TotalWrks - (SumTopN + SumPods) = Remaining`, where:\n* `TotalWrks` - Total sum of workers resources\n* `SumTopN` - Sum of the top N workers with the most amount of resources (CPU or memory) in the loss scenario where N is the value of `Simulated work loss`\n* `SumPods` - The max value of sum of resource requested of pods during the time slot selected \n* `Remaining` - The remaining available resource for the scenario.\n\n## Time window\nSince it uses the worst value it is better to select a big enough range but not too big otherwise it may not load the metrics, during tests we found that **24h** is a good range you just need to pay attention to the day of the week, during weekends the load tends to be smaller.\n\n## Select the number of Simulated worker loss\nWe left that value flexible because we have heterogeneous clusters where `app-prod-*` are composed of baremetal workers and `app-beta-*` mostly virtualized workers with the exception of `app-beta-hq` which has a big baremetal dell. For the worker loss we need to consider the physical server and because of that on `app-beta-*` can be 1 or 2 workers per physical server.",
+        "mode": "markdown"
+      },
+      "pluginVersion": "8.2.3",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 11
+      },
       "id": 2,
       "panels": [],
       "repeat": "datasource",
@@ -44,7 +75,7 @@
     },
     {
       "datasource": "${datasource}",
-      "description": "Available Memory is \n- Total of memory in worker nodes\n- Minus top $spare_workers workers Memory (spare capacity for maintenance and possible issues)\n- Minus max of sum of pods requests in workers",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -125,7 +156,7 @@
         "h": 4,
         "w": 12,
         "x": 0,
-        "y": 1
+        "y": 12
       },
       "id": 14,
       "options": {
@@ -238,7 +269,7 @@
     },
     {
       "datasource": "${datasource}",
-      "description": "Available Memory is \n- Total of memory in worker nodes\n- Minus top $spare_workers workers Memory (spare capacity for maintenance and possible issues)\n- Minus max of sum of pods requests in workers",
+      "description": "",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -319,7 +350,7 @@
         "h": 4,
         "w": 12,
         "x": 12,
-        "y": 1
+        "y": 12
       },
       "id": 13,
       "options": {
@@ -429,6 +460,7 @@
       "type": "stat"
     }
   ],
+  "refresh": false,
   "schemaVersion": 31,
   "style": "dark",
   "tags": [],
@@ -509,12 +541,12 @@
     ]
   },
   "time": {
-    "from": "now-24h",
+    "from": "now-1h",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "APP Resource Loss Simulator",
   "uid": "5g0bD1u7k",
-  "version": 25
+  "version": 30
 }
