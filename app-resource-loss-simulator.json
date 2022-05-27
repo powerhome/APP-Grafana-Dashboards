@@ -1,0 +1,552 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [],
+          "type": "dashboard"
+        },
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "fiscalYearStartMonth": 0,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 1060,
+  "iteration": 1653057561374,
+  "links": [],
+  "liveNow": false,
+  "panels": [
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 30,
+      "panels": [],
+      "title": "How to use it",
+      "type": "row"
+    },
+    {
+      "datasource": null,
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 28,
+      "options": {
+        "content": "This Dashboard was created to consider the worst possible scenario, which means it uses the worst possible values. It will calculate `TotalWrks - (SumTopN + SumPods) = Remaining`, where:\n* `TotalWrks` - Total sum of workers resources\n* `SumTopN` - Sum of the top N workers with the most amount of resources (CPU or memory) in the loss scenario where N is the value of `Simulated work loss`\n* `SumPods` - The max value of sum of resource requested of pods during the time slot selected \n* `Remaining` - The remaining available resource for the scenario.\n\n## Time window\nSince it uses the worst value it is better to select a big enough range but not too big otherwise it may not load the metrics, during tests we found that **24h** is a good range you just need to pay attention to the day of the week, during weekends the load tends to be smaller.\n\n## Select the number of Simulated worker loss\nWe left that value flexible because we have heterogeneous clusters where `app-prod-*` are composed of baremetal workers and `app-beta-*` mostly virtualized workers with the exception of `app-beta-hq` which has a big baremetal dell. For the worker loss we need to consider the physical server and because of that on `app-beta-*` can be 1 or 2 workers per physical server.",
+        "mode": "markdown"
+      },
+      "pluginVersion": "8.2.3",
+      "transparent": true,
+      "type": "text"
+    },
+    {
+      "collapsed": false,
+      "datasource": null,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 11
+      },
+      "id": 2,
+      "panels": [],
+      "repeat": "datasource",
+      "title": "$datasource",
+      "type": "row"
+    },
+    {
+      "datasource": "${datasource}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 10
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Worst CPU loss in the scenario"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "CPUs requested by pods"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 12
+      },
+      "id": 14,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "valueSize": 40
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.2.3",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(max(machine_cpu_cores{node=~\".*app-worker.*\"}) by (node))",
+          "format": "time_series",
+          "instant": false,
+          "interval": "",
+          "legendFormat": "sum of workers CPU",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(topk($spare_workers, max(machine_cpu_cores{node=~\".*app-worker.*\"}) by (node))) or vector(0)",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "legendFormat": "sum of biggest spare workers CPU",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(kube_pod_container_resource_requests{resource=\"cpu\",node=~\".*app-worker.*\"})",
+          "hide": false,
+          "instant": false,
+          "interval": "",
+          "legendFormat": "sum of pods CPU request on workers",
+          "refId": "C"
+        }
+      ],
+      "title": "Workers CPU",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "aux1",
+            "binary": {
+              "left": "sum of workers CPU",
+              "operator": "-",
+              "reducer": "sum",
+              "right": "sum of biggest spare workers CPU"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "mode": "reduceFields",
+            "reducers": [
+              "max"
+            ]
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Available CPU",
+            "binary": {
+              "left": "aux1",
+              "operator": "-",
+              "reducer": "sum",
+              "right": "sum of pods CPU request on workers"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "aux1": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "Available CPU": "Remaining CPUs after loss",
+              "aux1": "",
+              "sum of biggest spare workers CPU": "Worst CPU loss in the scenario",
+              "sum of pods CPU request on workers": "CPUs requested by pods",
+              "sum of workers CPU": "Total CPU"
+            }
+          }
+        }
+      ],
+      "type": "stat"
+    },
+    {
+      "datasource": "${datasource}",
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 0
+              },
+              {
+                "color": "green",
+                "value": 21474836480
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Memory requested by pods"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 80
+                    }
+                  ]
+                }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Worst Memory loss in scenario"
+            },
+            "properties": [
+              {
+                "id": "thresholds",
+                "value": {
+                  "mode": "absolute",
+                  "steps": [
+                    {
+                      "color": "green",
+                      "value": null
+                    },
+                    {
+                      "color": "red",
+                      "value": 1
+                    }
+                  ]
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
+      "id": 13,
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "max"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {
+          "valueSize": 40
+        },
+        "textMode": "auto"
+      },
+      "pluginVersion": "8.2.3",
+      "targets": [
+        {
+          "exemplar": true,
+          "expr": "sum(max(machine_memory_bytes{node=~\".*app-worker.*\"}) by (node))",
+          "interval": "",
+          "legendFormat": "sum of workers memory",
+          "refId": "A"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(topk($spare_workers, max(machine_memory_bytes{node=~\".*app-worker.*\"}) by (node))) or vector(0)",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "sum of biggest spare workers memory",
+          "refId": "B"
+        },
+        {
+          "exemplar": true,
+          "expr": "sum(kube_pod_container_resource_requests{resource=\"memory\",node=~\".*app-worker.*\"})",
+          "hide": false,
+          "interval": "",
+          "legendFormat": "sum of pods memory request on workers",
+          "refId": "C"
+        }
+      ],
+      "title": "Workers Memory",
+      "transformations": [
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "aux1",
+            "binary": {
+              "left": "sum of workers memory",
+              "operator": "-",
+              "reducer": "sum",
+              "right": "sum of biggest spare workers memory"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "reduce",
+          "options": {
+            "includeTimeField": false,
+            "mode": "reduceFields",
+            "reducers": [
+              "max"
+            ]
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Available Memory",
+            "binary": {
+              "left": "aux1",
+              "operator": "-",
+              "reducer": "sum",
+              "right": "sum of pods memory request on workers"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "aux1": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "Available Memory": "Remaining Memory after loss",
+              "aux1": "",
+              "sum of biggest spare workers memory": "Worst Memory loss in scenario",
+              "sum of pods memory request on workers": "Memory requested by pods",
+              "sum of workers memory": "Total Memory"
+            }
+          }
+        }
+      ],
+      "type": "stat"
+    }
+  ],
+  "refresh": false,
+  "schemaVersion": 31,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "datasource",
+        "options": [],
+        "query": "prometheus",
+        "queryValue": "",
+        "refresh": 1,
+        "regex": "prometheus-(app.*)",
+        "skipUrlSync": false,
+        "type": "datasource"
+      },
+      {
+        "allValue": null,
+        "current": {
+          "selected": true,
+          "text": "2",
+          "value": "2"
+        },
+        "description": "Number of worker nodes that can fail without workload disruption",
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "Simulated worker loss",
+        "multi": false,
+        "name": "spare_workers",
+        "options": [
+          {
+            "selected": false,
+            "text": "0",
+            "value": "0"
+          },
+          {
+            "selected": false,
+            "text": "1",
+            "value": "1"
+          },
+          {
+            "selected": true,
+            "text": "2",
+            "value": "2"
+          },
+          {
+            "selected": false,
+            "text": "3",
+            "value": "3"
+          },
+          {
+            "selected": false,
+            "text": "4",
+            "value": "4"
+          }
+        ],
+        "query": "0,1,2,3,4",
+        "queryValue": "",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-1h",
+    "to": "now"
+  },
+  "timepicker": {},
+  "timezone": "",
+  "title": "APP Resource Loss Simulator",
+  "uid": "5g0bD1u7k",
+  "version": 30
+}
