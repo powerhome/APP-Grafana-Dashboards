@@ -181,7 +181,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (es_process_cpu_percent{cluster=\"$cluster\",namespace=\"$namespace\"} ) / count (es_process_cpu_percent{cluster=\"$cluster\",namespace=\"$namespace\"} )",
+          "expr": "sum (elasticsearch_os_cpu_percent{cluster=\"$cluster\",namespace=\"$namespace\"} ) / count (elasticsearch_os_cpu_percent{cluster=\"$cluster\",namespace=\"$namespace\"} )",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -270,7 +270,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "sum (es_jvm_mem_heap_used_bytes{cluster=\"$cluster\",namespace=\"$namespace\"}) / sum (es_jvm_mem_heap_max_bytes{cluster=\"$cluster\",namespace=\"$namespace\"}) * 100",
+          "expr": "sum (elasticsearch_jvm_memory_used_bytes{cluster=\"$cluster\",namespace=\"$namespace\"}) / sum (elasticsearch_jvm_memory_max_bytes{cluster=\"$cluster\",namespace=\"$namespace\"}) * 100",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -358,7 +358,7 @@
       "tableColumn": "",
       "targets": [
         {
-          "expr": "count(es_circuitbreaker_tripped_count{cluster=\"$cluster\",namespace=\"$namespace\"})",
+          "expr": "count(elasticsearch_breakers_tripped{cluster=\"$cluster\",namespace=\"$namespace\"})",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 2,
@@ -433,7 +433,7 @@
       ],
       "targets": [
         {
-          "expr": "es_process_file_descriptors_open_number{cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_process_open_files_count{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "time_series",
           "instant": true,
           "interval": "",
@@ -515,7 +515,7 @@
       "tableColumn": "Value",
       "targets": [
         {
-          "expr": "es_cluster_pending_tasks_number{cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_cluster_health_number_of_pending_tasks{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -605,7 +605,7 @@
       "tableColumn": "Value",
       "targets": [
         {
-          "expr": "es_cluster_nodes_number{cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_cluster_health_number_of_nodes{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -695,7 +695,7 @@
       "tableColumn": "Value",
       "targets": [
         {
-          "expr": "es_cluster_datanodes_number{cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_cluster_health_number_of_data_nodes{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -802,7 +802,7 @@
       "tableColumn": "Value",
       "targets": [
         {
-          "expr": "es_cluster_shards_number{type=\"active_primary\", cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_cluster_health_active_primary_shards{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "table",
           "instant": true,
           "intervalFactor": 2,
@@ -891,7 +891,7 @@
       "tableColumn": "Value",
       "targets": [
         {
-          "expr": "es_cluster_shards_number{type=\"active\", cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_cluster_health_active_shards{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "table",
           "instant": true,
           "intervalFactor": 2,
@@ -980,7 +980,7 @@
       "tableColumn": "Value",
       "targets": [
         {
-          "expr": "es_cluster_shards_number{type=\"initializing\", cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_cluster_health_initializing_shards{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "table",
           "instant": true,
           "intervalFactor": 2,
@@ -1069,7 +1069,7 @@
       "tableColumn": "Value",
       "targets": [
         {
-          "expr": "es_cluster_shards_number{type=\"relocating\", cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_cluster_health_relocating_shards{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "table",
           "instant": true,
           "intervalFactor": 2,
@@ -1158,7 +1158,7 @@
       "tableColumn": "Value",
       "targets": [
         {
-          "expr": "es_cluster_shards_number{type=\"unassigned\", cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_cluster_health_unassigned_shards{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "table",
           "instant": true,
           "intervalFactor": 2,
@@ -1335,7 +1335,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(es_jvm_gc_collection_count{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "irate(elasticsearch_jvm_gc_collection_seconds_count{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1438,7 +1438,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(es_jvm_gc_collection_time_seconds{cluster=\"$cluster\",namespace=\"$namespace\"}[$interval])",
+          "expr": "irate(elasticsearch_jvm_gc_collection_seconds_sum{cluster=\"$cluster\",namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -1747,7 +1747,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "es_circuitbreaker_tripped_count{cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_breakers_tripped{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}} - {{node}}",
@@ -1840,14 +1840,14 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "es_circuitbreaker_estimated_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_breakers_estimated_size_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{name}} - {{node}}",
           "refId": "A"
         },
         {
-          "expr": "es_circuitbreaker_limit_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_breakers_limit_size_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "LIMIT {{name}} - {{node}}",
@@ -1961,7 +1961,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "es_os_load_average_one_minute{cluster=\"$cluster\",namespace=\"$namespace\"}",
+          "expr": "elasticsearch_os_load1{cluster=\"$cluster\",namespace=\"$namespace\"}",
           "format": "time_series",
           "hide": false,
           "instant": false,
@@ -1973,7 +1973,7 @@
           "step": 20
         },
         {
-          "expr": "es_os_load_average_five_minutes{cluster=\"$cluster\",namespace=\"$namespace\"}",
+          "expr": "elasticsearch_os_load5{cluster=\"$cluster\",namespace=\"$namespace\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -1984,7 +1984,7 @@
           "step": 20
         },
         {
-          "expr": "es_os_load_average_fifteen_minutes{cluster=\"$cluster\",namespace=\"$namespace\"}",
+          "expr": "elasticsearch_os_load15{cluster=\"$cluster\",namespace=\"$namespace\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -2088,7 +2088,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "es_process_cpu_percent{cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_process_cpu_percent{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -2192,7 +2192,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "es_jvm_mem_heap_used_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_jvm_memory_used_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -2202,7 +2202,7 @@
           "step": 20
         },
         {
-          "expr": "es_jvm_mem_heap_max_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_jvm_memory_max_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}} max",
@@ -2210,7 +2210,7 @@
           "step": 20
         },
         {
-          "expr": "es_jvm_mem_pool_peak_used_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_jvm_memory_pool_peak_used_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}} peak used pool: {{pool}}",
@@ -2311,7 +2311,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "es_jvm_mem_heap_committed_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_jvm_memory_committed_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}} committed",
@@ -2319,7 +2319,7 @@
           "step": 20
         },
         {
-          "expr": "es_jvm_mem_heap_max_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_jvm_memory_max_bytes{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}} max",
@@ -2435,7 +2435,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "1 - (es_fs_total_available_bytes{cluster=\"$cluster\", namespace=\"$namespace\"} / es_fs_total_total_bytes{cluster=\"$cluster\", namespace=\"$namespace\"})",
+          "expr": "1 - (elasticsearch_filesystem_data_available_bytes{cluster=\"$cluster\", namespace=\"$namespace\"} / elasticsearch_filesystem_data_size_bytes{cluster=\"$cluster\", namespace=\"$namespace\"})",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -2560,7 +2560,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(es_transport_tx_bytes_count{cluster=\"$cluster\",namespace=\"$namespace\"}[$interval])",
+          "expr": "irate(elasticsearch_transport_tx_packets_total{cluster=\"$cluster\",namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: sent ",
@@ -2568,7 +2568,7 @@
           "step": 20
         },
         {
-          "expr": "-irate(es_transport_rx_bytes_count{cluster=\"$cluster\",namespace=\"$namespace\"}[$interval])",
+          "expr": "-irate(elasticsearch_transport_rx_packets_total{cluster=\"$cluster\",namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: received",
@@ -2685,7 +2685,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "es_indices_doc_number{cluster=\"$cluster\", namespace=\"$namespace\"}",
+          "expr": "elasticsearch_indices_docs{cluster=\"$cluster\", namespace=\"$namespace\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -2891,7 +2891,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(es_indices_doc_deleted_number{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "irate(elasticsearch_indices_docs_deleted{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -2993,7 +2993,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(es_indices_merges_total_docs_count{cluster=\"$cluster\",namespace=\"$namespace\"}[$interval])",
+          "expr": "rate(elasticsearch_indices_merges_docs_total{cluster=\"$cluster\",namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -3095,7 +3095,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(es_indices_merges_total_size_bytes{cluster=\"$cluster\",namespace=\"$namespace\"}[$interval])",
+          "expr": "irate(elasticsearch_indices_merges_total_size_bytes_total{cluster=\"$cluster\",namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -3637,7 +3637,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "rate(es_indices_indexing_index_count{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "rate(elasticsearch_indices_indexing_index_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -3647,7 +3647,7 @@
           "step": 10
         },
         {
-          "expr": "rate(es_indices_search_query_count{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "rate(elasticsearch_indices_search_query_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -3656,7 +3656,7 @@
           "step": 10
         },
         {
-          "expr": "rate(es_indices_search_fetch_count{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "rate(elasticsearch_indices_search_fetch_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "hide": false,
           "intervalFactor": 2,
@@ -3665,7 +3665,7 @@
           "step": 10
         },
         {
-          "expr": "rate(es_indices_merges_total_number{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "rate(elasticsearch_indices_merges_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: merges",
@@ -3673,7 +3673,7 @@
           "step": 10
         },
         {
-          "expr": "rate(es_indices_refresh_total_count{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "rate(elasticsearch_indices_refresh_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: refresh",
@@ -3681,7 +3681,7 @@
           "step": 10
         },
         {
-          "expr": "rate(es_indices_flush_total_count{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "rate(elasticsearch_indices_flush_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: flush",
@@ -3689,7 +3689,7 @@
           "step": 10
         },
         {
-          "expr": "rate(es_indices_get_exists_count{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "rate(elasticsearch_indices_get_exists_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: get_exists",
@@ -3697,7 +3697,7 @@
           "step": 10
         },
         {
-          "expr": "rate(es_indices_get_missing_count{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "rate(elasticsearch_indices_get_missing_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: get_missing",
@@ -3705,7 +3705,7 @@
           "step": 10
         },
         {
-          "expr": "rate(es_indices_get_count{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "rate(elasticsearch_indices_get_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: get",
@@ -3713,7 +3713,7 @@
           "step": 10
         },
         {
-          "expr": "rate(es_indices_indexing_delete_count{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "rate(elasticsearch_indices_indexing_delete_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: indexing_delete",
@@ -3814,7 +3814,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "irate(es_indices_indexing_index_time_seconds{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "irate(elasticsearch_indices_indexing_index_time_seconds_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 2,
@@ -3824,7 +3824,7 @@
           "step": 10
         },
         {
-          "expr": "irate(es_indices_search_query_time_seconds{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "irate(elasticsearch_indices_search_query_time_seconds{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: query",
@@ -3832,7 +3832,7 @@
           "step": 10
         },
         {
-          "expr": "irate(es_indices_search_fetch_time_seconds{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "irate(elasticsearch_indices_search_fetch_time_seconds{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: fetch",
@@ -3840,7 +3840,7 @@
           "step": 10
         },
         {
-          "expr": "irate(es_indices_merges_total_time_seconds{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "irate(elasticsearch_indices_merges_total_time_seconds_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: merges",
@@ -3848,7 +3848,7 @@
           "step": 10
         },
         {
-          "expr": "irate(es_indices_refresh_total_time_seconds{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "irate(elasticsearch_indices_refresh_time_seconds_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: refresh",
@@ -3856,7 +3856,7 @@
           "step": 10
         },
         {
-          "expr": "irate(es_indices_flush_total_time_seconds{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "irate(elasticsearch_indices_flush_time_seconds{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: flush",
@@ -3864,7 +3864,7 @@
           "step": 10
         },
         {
-          "expr": "irate(es_indices_get_exists_time_seconds{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "irate(elasticsearch_indices_get_exists_time_seconds{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: get_exists",
@@ -3872,7 +3872,7 @@
           "step": 10
         },
         {
-          "expr": "irate(es_indices_get_time_seconds{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "irate(elasticsearch_indices_get_time_seconds{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: get_time",
@@ -3880,7 +3880,7 @@
           "step": 10
         },
         {
-          "expr": "irate(es_indices_get_missing_time_seconds{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "irate(elasticsearch_indices_get_missing_time_seconds{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: get_missing",
@@ -3888,7 +3888,7 @@
           "step": 10
         },
         {
-          "expr": "irate(es_indices_indexing_delete_time_seconds{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
+          "expr": "irate(elasticsearch_indices_indexing_delete_time_seconds_total{cluster=\"$cluster\", namespace=\"$namespace\"}[$interval])",
           "format": "time_series",
           "intervalFactor": 2,
           "legendFormat": "{{node}}: indexing_delete",
@@ -4263,14 +4263,14 @@
           "value": "elasticsearch"
         },
         "datasource": "$datasource",
-        "definition": "label_values(es_indices_doc_number{namespace=\"$namespace\"}, cluster)",
+        "definition": "label_values(elasticsearch_indices_docs{namespace=\"$namespace\"}, cluster)",
         "hide": 0,
         "includeAll": false,
         "label": "Cluster",
         "multi": false,
         "name": "cluster",
         "options": [],
-        "query": "label_values(es_indices_doc_number{namespace=\"$namespace\"}, cluster)",
+        "query": "label_values(elasticsearch_indices_docs{namespace=\"$namespace\"}, cluster)",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
