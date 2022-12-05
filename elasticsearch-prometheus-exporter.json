@@ -23,7 +23,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": 1248,
-  "iteration": 1670279048941,
+  "iteration": 1670280132691,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -41,7 +41,7 @@
     },
     {
       "cacheTimeout": null,
-      "datasource": null,
+      "datasource": "${server}",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -95,7 +95,7 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 12,
+        "w": 6,
         "x": 0,
         "y": 1
       },
@@ -121,9 +121,11 @@
       "pluginVersion": "8.2.3",
       "targets": [
         {
-          "expr": "scalar(elasticsearch_cluster_health_status{color=\"green\",cluster=~\"$cluster\"}) + scalar(elasticsearch_cluster_health_status{color=\"yellow\",cluster=~\"$cluster\"}) * 2 + scalar(elasticsearch_cluster_health_status{color=\"red\",cluster=~\"$cluster\"}) * 3",
+          "exemplar": true,
+          "expr": "scalar(elasticsearch_cluster_health_status{color=\"green\",cluster=\"$cluster\",namespace=\"$namespace\"}) + scalar(elasticsearch_cluster_health_status{color=\"yellow\",cluster=\"$cluster\",namespace=\"$namespace\"}) * 2 + scalar(elasticsearch_cluster_health_status{color=\"red\",cluster=\"$cluster\",namespace=\"$namespace\"}) * 3",
           "format": "time_series",
-          "instant": false,
+          "instant": true,
+          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "",
           "refId": "A"
@@ -171,8 +173,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 12,
+        "w": 6,
+        "x": 6,
         "y": 1
       },
       "id": 8,
@@ -252,8 +254,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 16,
+        "w": 6,
+        "x": 12,
         "y": 1
       },
       "id": 94,
@@ -332,8 +334,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 20,
+        "w": 6,
+        "x": 18,
         "y": 1
       },
       "id": 96,
@@ -2233,7 +2235,7 @@
       }
     }
   ],
-  "refresh": "5m",
+  "refresh": "1m",
   "schemaVersion": 31,
   "style": "dark",
   "tags": [
@@ -2294,7 +2296,7 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "elasticsearch"
           ],
@@ -2359,5 +2361,5 @@
   "timezone": "utc",
   "title": "Elasticsearch - Prometheus Exporter",
   "uid": "n_nxrE_mk",
-  "version": 5
+  "version": 6
 }
