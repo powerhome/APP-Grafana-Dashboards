@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -20,16 +23,16 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "gnetId": null,
   "graphTooltip": 0,
-  "id": 1060,
-  "iteration": 1653057561374,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000006"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -38,11 +41,23 @@
       },
       "id": 30,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000006"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "How to use it",
       "type": "row"
     },
     {
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000006"
+      },
       "gridPos": {
         "h": 10,
         "w": 24,
@@ -51,16 +66,33 @@
       },
       "id": 28,
       "options": {
-        "content": "This Dashboard was created to consider the worst possible scenario, which means it uses the worst possible values. It will calculate `TotalWrks - (SumTopN + SumPods) = Remaining`, where:\n* `TotalWrks` - Total sum of workers resources\n* `SumTopN` - Sum of the top N workers with the most amount of resources (CPU or memory) in the loss scenario where N is the value of `Simulated work loss`\n* `SumPods` - The max value of sum of resource requested of pods during the time slot selected \n* `Remaining` - The remaining available resource for the scenario.\n\n## Time window\nSince it uses the worst value it is better to select a big enough range but not too big otherwise it may not load the metrics, during tests we found that **24h** is a good range you just need to pay attention to the day of the week, during weekends the load tends to be smaller.\n\n## Select the number of Simulated worker loss\nWe left that value flexible because we have heterogeneous clusters where `app-prod-*` are composed of baremetal workers and `app-beta-*` mostly virtualized workers with the exception of `app-beta-hq` which has a big baremetal dell. For the worker loss we need to consider the physical server and because of that on `app-beta-*` can be 1 or 2 workers per physical server.",
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "This Dashboard was created to consider the worst possible scenario, which means it uses the worst possible values. It will calculate `TotalWrks - (SumTopN + SumPods) = Remaining`, where:\n* `TotalWrks` - Total sum of workers resources\n* `SumTopN` - Sum of the top N workers with the most amount of resources (CPU or memory) in the loss scenario where N is the value of `Simulated work loss`\n* `SumPods` - The max value of sum of resource requested of pods during the time slot selected \n* `Remaining` - The remaining available resource for the scenario.\n\n## Time window\nIt's best to select a large enough range since it uses the worst value. During tests, we found that **7** days was a good range. Just be mindful of the `Min interval` that was added to reduce spikes.\n\n## Select the number of Simulated worker loss\nWe left that value flexible because we have heterogeneous clusters where `app-prod-*` are composed of baremetal workers and `app-beta-*` mostly virtualized workers with the exception of `app-beta-hq` which has a big baremetal dell. For the worker loss we need to consider the physical server and because of that on `app-beta-*` can be 1 or 2 workers per physical server.",
         "mode": "markdown"
       },
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000006"
+          },
+          "refId": "A"
+        }
+      ],
       "transparent": true,
       "type": "text"
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000006"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -70,11 +102,23 @@
       "id": 2,
       "panels": [],
       "repeat": "datasource",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000006"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "$datasource",
       "type": "row"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -159,6 +203,7 @@
         "y": 12
       },
       "id": 14,
+      "interval": "$min_interval",
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -174,9 +219,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.3.6",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "sum(max(machine_cpu_cores{node=~\".*app-worker.*\"}) by (node))",
           "format": "time_series",
@@ -186,6 +234,9 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "sum(topk($spare_workers, max(machine_cpu_cores{node=~\".*app-worker.*\"}) by (node))) or vector(0)",
           "hide": false,
@@ -195,6 +246,9 @@
           "refId": "B"
         },
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "sum(kube_pod_container_resource_requests{resource=\"cpu\",node=~\".*app-worker.*\"})",
           "hide": false,
@@ -268,7 +322,10 @@
       "type": "stat"
     },
     {
-      "datasource": "${datasource}",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -353,6 +410,7 @@
         "y": 12
       },
       "id": 13,
+      "interval": "$min_interval",
       "options": {
         "colorMode": "value",
         "graphMode": "area",
@@ -370,9 +428,12 @@
         },
         "textMode": "auto"
       },
-      "pluginVersion": "8.2.3",
+      "pluginVersion": "9.3.6",
       "targets": [
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "sum(max(machine_memory_bytes{node=~\".*app-worker.*\"}) by (node))",
           "interval": "",
@@ -380,6 +441,9 @@
           "refId": "A"
         },
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "sum(topk($spare_workers, max(machine_memory_bytes{node=~\".*app-worker.*\"}) by (node))) or vector(0)",
           "hide": false,
@@ -388,6 +452,9 @@
           "refId": "B"
         },
         {
+          "datasource": {
+            "uid": "${datasource}"
+          },
           "exemplar": true,
           "expr": "sum(kube_pod_container_resource_requests{resource=\"memory\",node=~\".*app-worker.*\"})",
           "hide": false,
@@ -461,7 +528,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 31,
+  "schemaVersion": 37,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -471,17 +538,16 @@
         "current": {
           "selected": true,
           "text": [
-            "All"
+            "prometheus-app-prod-hq",
+            "prometheus-app-prod-gm"
           ],
           "value": [
-            "$__all"
+            "prometheus-app-prod-hq",
+            "prometheus-app-prod-gm"
           ]
         },
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": true,
         "name": "datasource",
         "options": [],
@@ -493,14 +559,12 @@
         "type": "datasource"
       },
       {
-        "allValue": null,
         "current": {
           "selected": true,
-          "text": "2",
-          "value": "2"
+          "text": "1",
+          "value": "1"
         },
         "description": "Number of worker nodes that can fail without workload disruption",
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Simulated worker loss",
@@ -513,12 +577,12 @@
             "value": "0"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "1",
             "value": "1"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "2",
             "value": "2"
           },
@@ -537,16 +601,78 @@
         "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
+      },
+      {
+        "auto": true,
+        "auto_count": 10,
+        "auto_min": "10s",
+        "current": {
+          "selected": false,
+          "text": "1h",
+          "value": "1h"
+        },
+        "description": "The interval for metrics to exclude spikes",
+        "hide": 0,
+        "label": "Min Interval",
+        "name": "min_interval",
+        "options": [
+          {
+            "selected": false,
+            "text": "auto",
+            "value": "$__auto_interval_min_interval"
+          },
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": true,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": false,
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "selected": false,
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          }
+        ],
+        "query": "1m,10m,30m,1h,6h,12h,1d",
+        "queryValue": "",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "type": "interval"
       }
     ]
   },
   "time": {
-    "from": "now-1h",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
   "title": "APP Resource Loss Simulator",
   "uid": "5g0bD1u7k",
-  "version": 30
+  "version": 1,
+  "weekStart": ""
 }
