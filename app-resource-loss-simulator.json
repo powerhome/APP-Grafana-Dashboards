@@ -539,12 +539,12 @@
         "current": {
           "selected": true,
           "text": [
-            "prometheus-app-prod-gm",
-            "prometheus-app-prod-hq"
+            "prometheus-app-prod-hq",
+            "prometheus-app-prod-gm"
           ],
           "value": [
-            "prometheus-app-prod-gm",
-            "prometheus-app-prod-hq"
+            "prometheus-app-prod-hq",
+            "prometheus-app-prod-gm"
           ]
         },
         "hide": 0,
