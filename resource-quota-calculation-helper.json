@@ -24,7 +24,6 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 1545,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -34,7 +33,7 @@
         "uid": "000000006"
       },
       "gridPos": {
-        "h": 5,
+        "h": 4,
         "w": 12,
         "x": 0,
         "y": 0
@@ -59,7 +58,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 5
+        "y": 4
       },
       "id": 6,
       "panels": [],
@@ -87,12 +86,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "light-blue",
                 "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
               }
             ]
           }
@@ -101,43 +96,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Value #request_memory"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "bytes"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Value #limit_memory"
-            },
-            "properties": [
-              {
-                "id": "unit",
-                "value": "bytes"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Max Surge"
-            },
-            "properties": [
-              {
-                "id": "noValue",
-                "value": "0"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Request Storage"
+              "options": "Total Request Storage"
             },
             "properties": [
               {
@@ -149,6 +108,54 @@
                 "value": "0 GiB"
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": ".*[Mm]emory$"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "bytes"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Replicas"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 107
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Max Surge"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 87
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "^Max [^S]*"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background-solid"
+              }
+            ]
           }
         ]
       },
@@ -156,7 +163,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 6
+        "y": 5
       },
       "id": 2,
       "options": {
@@ -171,7 +178,8 @@
           "show": false
         },
         "frameIndex": 0,
-        "showHeader": true
+        "showHeader": true,
+        "sortBy": []
       },
       "pluginVersion": "9.3.6",
       "repeat": "type",
@@ -198,10 +206,11 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "max(label_replace(label_replace(\n      kube_deployment_spec_strategy_rollingupdate_max_surge{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\"}, \"workload\", \"$1\", \"deployment\", \"(.*)\"\n    ), \"workload_type\", \"deployment\", \"\", \"\")) by (workload, workload_type)",
+          "expr": "max(label_replace(label_replace(\n      kube_deployment_spec_strategy_rollingupdate_max_surge{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\"}, \"workload\", \"$1\", \"deployment\", \"(.*)\"\n    ), \"workload_type\", \"deployment\", \"\", \"\")) by (workload, workload_type) or max(namespace_workload_pod:kube_pod_owner:relabel -1) by (workload, workload_type)",
           "format": "table",
           "hide": false,
           "instant": true,
+          "interval": "",
           "legendFormat": "",
           "range": false,
           "refId": "Max surge"
@@ -213,7 +222,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(\n  kube_pod_container_resource_requests{job=\"kube-state-metrics\",cluster=\"$cluster\", namespace=\"$namespace\", resource=\"cpu\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)",
+          "expr": "sum(\n  kube_pod_container_resource_requests{job=\"kube-state-metrics\",cluster=\"$cluster\", namespace=\"$namespace\", resource=\"cpu\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n/\ncount(namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}) by (workload, workload_type)",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -228,7 +237,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(\n  kube_pod_container_resource_limits{job=\"kube-state-metrics\",cluster=\"$cluster\", namespace=\"$namespace\", resource=\"cpu\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)",
+          "expr": "sum(\n  kube_pod_container_resource_limits{job=\"kube-state-metrics\",cluster=\"$cluster\", namespace=\"$namespace\", resource=\"cpu\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n/\ncount(namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}) by (workload, workload_type)",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -243,7 +252,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(\n  kube_pod_container_resource_requests{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"memory\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
+          "expr": "sum(\n  kube_pod_container_resource_requests{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"memory\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n/\ncount(namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}) by (workload, workload_type)",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -258,7 +267,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum(\n  kube_pod_container_resource_limits{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"memory\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n",
+          "expr": "sum(\n  kube_pod_container_resource_limits{job=\"kube-state-metrics\", cluster=\"$cluster\", namespace=\"$namespace\", resource=\"memory\"}\n* on(namespace,pod)\n  group_left(workload, workload_type) namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}\n) by (workload, workload_type)\n/\ncount(namespace_workload_pod:kube_pod_owner:relabel{cluster=\"$cluster\", namespace=\"$namespace\", workload_type=\"$type\"}) by (workload, workload_type)",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -289,18 +298,131 @@
           "options": {}
         },
         {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "isNull",
+                  "options": {}
+                },
+                "fieldName": "Value #replicas"
+              }
+            ],
+            "match": "any",
+            "type": "exclude"
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Max instances",
+            "binary": {
+              "left": "Value #replicas",
+              "reducer": "sum",
+              "right": "Value #Max surge"
+            },
+            "mode": "binary",
+            "reduce": {
+              "include": [],
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Max Request CPU",
+            "binary": {
+              "left": "Max instances",
+              "operator": "*",
+              "reducer": "sum",
+              "right": "Value #request_cpu"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Max Limit CPU",
+            "binary": {
+              "left": "Max instances",
+              "operator": "*",
+              "reducer": "sum",
+              "right": "Value #limit_cpu"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Max Request Memory",
+            "binary": {
+              "left": "Max instances",
+              "operator": "*",
+              "reducer": "sum",
+              "right": "Value #request_memory"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "Max Limit Memory",
+            "binary": {
+              "left": "Max instances",
+              "operator": "*",
+              "reducer": "sum",
+              "right": "Value #limit_memory"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
           "id": "organize",
           "options": {
             "excludeByName": {
               "Time": true,
               "workload_type": true
             },
-            "indexByName": {},
+            "indexByName": {
+              "Max Limit CPU": 9,
+              "Max Limit Memory": 13,
+              "Max Request CPU": 7,
+              "Max Request Memory": 11,
+              "Max instances": 5,
+              "Time": 0,
+              "Value #Max surge": 4,
+              "Value #Request Storage": 14,
+              "Value #limit_cpu": 8,
+              "Value #limit_memory": 12,
+              "Value #replicas": 3,
+              "Value #request_cpu": 6,
+              "Value #request_memory": 10,
+              "workload": 1,
+              "workload_type": 2
+            },
             "renameByName": {
+              "Max instances": "",
               "Time": "",
               "Value #A": "Limit CPU",
               "Value #Max surge": "Max Surge",
-              "Value #Request Storage": "Request Storage",
+              "Value #Request Storage": "Total Request Storage",
               "Value #cpu_request": "Request CPU",
               "Value #limit_cpu": "Limit CPU",
               "Value #limit_memory": "Limit Memory",
@@ -310,22 +432,6 @@
               "workload": "Name",
               "workload_type": "Type"
             }
-          }
-        },
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "isNull",
-                  "options": {}
-                },
-                "fieldName": "Replicas"
-              }
-            ],
-            "match": "any",
-            "type": "exclude"
           }
         }
       ],
@@ -339,7 +445,7 @@
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "prometheus-app-prod-hq",
           "value": "prometheus-app-prod-hq"
         },
@@ -358,7 +464,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "streamfinancial-cloud-production",
           "value": "streamfinancial-cloud-production"
         },
@@ -451,6 +557,6 @@
   "timezone": "",
   "title": "Resource Quota Calculation",
   "uid": "jgcCMu84k",
-  "version": 7,
+  "version": 8,
   "weekStart": ""
 }
