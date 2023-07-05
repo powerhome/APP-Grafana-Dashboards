@@ -1,0 +1,1252 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
+          "type": "dashboard"
+        }
+      ]
+    },
+    "description": "View of Jenkins Spans and Operations.",
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "gnetId": 18264,
+    "graphTooltip": 0,
+    "id": 1655,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 33,
+        "title": "General Build Info",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "description": "Average build duration, filterable by build name and number.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "left",
+              "displayMode": "auto",
+              "filterable": true,
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "ms"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 11,
+          "w": 12,
+          "x": 0,
+          "y": 1
+        },
+        "id": 31,
+        "options": {
+          "footer": {
+            "fields": "",
+            "reducer": [
+              "mean"
+            ],
+            "show": true
+          },
+          "showHeader": true
+        },
+        "pluginVersion": "9.3.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
+            "editorMode": "code",
+            "expr": "duration_milliseconds_sum{span_name=~\"Agent\",build_name=~\"$build_name\",build_number=~\"$build_number\"}",
+            "hide": false,
+            "legendFormat": "{{build_name}}: {{build_number}}",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "Average Build Duration",
+        "transformations": [
+          {
+            "id": "seriesToRows",
+            "options": {}
+          },
+          {
+            "id": "groupBy",
+            "options": {
+              "fields": {
+                "Metric": {
+                  "aggregations": [],
+                  "operation": "groupby"
+                },
+                "Value": {
+                  "aggregations": [
+                    "mean"
+                  ],
+                  "operation": "aggregate"
+                }
+              }
+            }
+          },
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {},
+              "indexByName": {},
+              "renameByName": {
+                "Metric": "Build",
+                "Value (mean)": "Build Time"
+              }
+            }
+          }
+        ],
+        "type": "table"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "description": "The 10 longest averaging build operations.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "left",
+              "displayMode": "auto",
+              "filterable": true,
+              "inspect": false
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "ms"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 11,
+          "w": 12,
+          "x": 12,
+          "y": 1
+        },
+        "id": 34,
+        "options": {
+          "footer": {
+            "fields": "",
+            "reducer": [
+              "mean"
+            ],
+            "show": true
+          },
+          "showHeader": true
+        },
+        "pluginVersion": "9.3.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "topk(10, avg by (build_name, span_name) (duration_milliseconds_sum{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name!=\"Agent\", span_name!~\".*Parallel branch:.*\", span_name!~\".*bin/cobra.*\",span_name=~\"$operation\"} / duration_milliseconds_count{build_name=~\"$build_name\", build_number=~\"$build_number\",service_name=~\"jenkins\", span_name!=\"Agent\", span_name!~\".*Parallel branch:.*\", span_name!~\".*bin/cobra.*\",span_name=~\"$operation\"}))",
+            "hide": false,
+            "instant": true,
+            "legendFormat": "{{span_name}}",
+            "range": false,
+            "refId": "A"
+          }
+        ],
+        "title": "Top 10 Longest Operations",
+        "transformations": [
+          {
+            "id": "seriesToRows",
+            "options": {}
+          },
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Time": true
+              },
+              "indexByName": {},
+              "renameByName": {
+                "Metric": "Build",
+                "Value (mean)": "Build Time"
+              }
+            }
+          }
+        ],
+        "type": "table"
+      },
+      {
+        "collapsed": false,
+        "datasource": {
+          "type": "prometheus",
+          "uid": "webstore-metrics"
+        },
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 12
+        },
+        "id": 20,
+        "panels": [],
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "webstore-metrics"
+            },
+            "refId": "A"
+          }
+        ],
+        "title": "Operation Durations",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "description": "Shows the top 50 latencies by operation/span name. ",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 15,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": true,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "ms"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 24,
+          "x": 0,
+          "y": 13
+        },
+        "id": 26,
+        "interval": "5m",
+        "options": {
+          "legend": {
+            "calcs": [
+              "mean"
+            ],
+            "displayMode": "table",
+            "placement": "bottom",
+            "showLegend": true,
+            "sortBy": "Mean",
+            "sortDesc": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.3.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "topk(50, avg by (build_name, span_name) (duration_milliseconds_sum{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name!=\"Agent\", span_name!~\".*Parallel branch:.*\", span_name!~\".*bin/cobra.*\",span_name=~\"$operation\"} / duration_milliseconds_count{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name!=\"Agent\", span_name!~\".*Parallel branch:.*\", span_name!~\".*bin/cobra.*\",span_name=~\"$operation\"}))",
+            "format": "time_series",
+            "instant": false,
+            "interval": "",
+            "legendFormat": "{{build_name}} {{build_number}}: {{span_name}}",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "All Operation Durations",
+        "transformations": [
+          {
+            "id": "renameByRegex",
+            "options": {
+              "regex": "(.{200}).*",
+              "renamePattern": "$1..."
+            }
+          },
+          {
+            "id": "sortBy",
+            "options": {
+              "fields": {},
+              "sort": [
+                {
+                  "field": "Time"
+                }
+              ]
+            }
+          }
+        ],
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "description": "Top 50 Git operations, sorted by highest.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 15,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": true,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "ms"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 0,
+          "y": 25
+        },
+        "id": 28,
+        "interval": "5m",
+        "options": {
+          "legend": {
+            "calcs": [
+              "mean"
+            ],
+            "displayMode": "table",
+            "placement": "bottom",
+            "showLegend": true,
+            "sortBy": "Mean",
+            "sortDesc": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.3.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "topk(50, avg by (build_name, span_name) (duration_milliseconds_sum{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name=~\".*git.*\"} / duration_milliseconds_count{build_name=~\"$build_name\", build_number=~\"$build_number\",service_name=~\"jenkins\", span_name=~\".*git.*\"}))",
+            "format": "time_series",
+            "instant": false,
+            "interval": "",
+            "legendFormat": "{{build_name}} {{build_number}}: {{span_name}}",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "Git Operation Durations",
+        "transformations": [
+          {
+            "id": "renameByRegex",
+            "options": {
+              "regex": "(.{150}).*",
+              "renamePattern": "$1..."
+            }
+          },
+          {
+            "id": "sortBy",
+            "options": {
+              "fields": {},
+              "sort": [
+                {
+                  "field": "Time"
+                }
+              ]
+            }
+          }
+        ],
+        "type": "timeseries"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "description": "Top 50 Stage operations, sorted by highest.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 15,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": true,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "ms"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 12,
+          "y": 25
+        },
+        "id": 29,
+        "interval": "5m",
+        "options": {
+          "legend": {
+            "calcs": [
+              "mean"
+            ],
+            "displayMode": "table",
+            "placement": "bottom",
+            "showLegend": true,
+            "sortBy": "Mean",
+            "sortDesc": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "9.3.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "topk(50, avg by (build_name, span_name) (duration_milliseconds_sum{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name=~\".*Stage.*\"} / duration_milliseconds_count{build_name=~\"$build_name\", build_number=~\"$build_number\",service_name=~\"jenkins\", span_name=~\".*Stage.*\"}))",
+            "format": "time_series",
+            "instant": false,
+            "interval": "",
+            "legendFormat": "{{build_name}} {{build_number}}: {{span_name}}",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "Stage Durations",
+        "transformations": [
+          {
+            "id": "renameByRegex",
+            "options": {
+              "regex": "(.{150}).*",
+              "renamePattern": "$1..."
+            }
+          },
+          {
+            "id": "sortBy",
+            "options": {
+              "fields": {},
+              "sort": [
+                {
+                  "field": "Time"
+                }
+              ]
+            }
+          }
+        ],
+        "type": "timeseries"
+      },
+      {
+        "collapsed": false,
+        "datasource": {
+          "type": "prometheus",
+          "uid": "webstore-metrics"
+        },
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 34
+        },
+        "id": 14,
+        "panels": [],
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "webstore-metrics"
+            },
+            "refId": "A"
+          }
+        ],
+        "title": "Span Counts",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "description": "Shows the top 25 non-failing spans.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "displayMode": "auto",
+              "inspect": false
+            },
+            "decimals": 2,
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "bRate"
+              },
+              "properties": [
+                {
+                  "id": "custom.displayMode",
+                  "value": "lcd-gauge"
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "continuous-BlYlRd"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "eRate"
+              },
+              "properties": [
+                {
+                  "id": "custom.displayMode",
+                  "value": "lcd-gauge"
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "continuous-RdYlGr"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Error Span Count"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 663
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Span Count"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 667
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 0,
+          "y": 35
+        },
+        "id": 22,
+        "interval": "5m",
+        "options": {
+          "footer": {
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true,
+          "sortBy": []
+        },
+        "pluginVersion": "9.3.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "topk(25, sum(calls_total{service_name=~\"jenkins\", span_name=~\"$operation\",build_name=~\"$build_name\",build_number=~\"$build_number\"}) by (span_name,build_name)) ",
+            "format": "table",
+            "hide": false,
+            "instant": true,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "Rate"
+          }
+        ],
+        "title": "Top 25 Span Count By Operation",
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Time 1": true,
+                "Time 2": true,
+                "Value #Rate": false,
+                "build_name 1": false
+              },
+              "indexByName": {
+                "Time 1": 1,
+                "Time 2": 4,
+                "Value #Error Rate": 6,
+                "Value #Rate": 3,
+                "build_name 1": 7,
+                "build_name 2": 9,
+                "build_number 1": 8,
+                "build_number 2": 10,
+                "service_name 1": 2,
+                "service_name 2": 5,
+                "span_name": 0
+              },
+              "renameByName": {
+                "Time 1": "",
+                "Time 2": "",
+                "Value #Error Rate": "",
+                "Value #Rate": "",
+                "build_name 1": "",
+                "build_name 2": "",
+                "build_number 2": "",
+                "service_name 1": "Service",
+                "service_name 2": "Error Service"
+              }
+            }
+          },
+          {
+            "id": "calculateField",
+            "options": {
+              "alias": "bRate",
+              "mode": "reduceRow",
+              "reduce": {
+                "include": [
+                  "Value"
+                ],
+                "reducer": "sum"
+              }
+            }
+          },
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Error Rate": true,
+                "Error Span Count": true,
+                "Rate": true,
+                "Value": true,
+                "bRate": false,
+                "build_name 1": false,
+                "build_name 2": false,
+                "build_number 1": true,
+                "build_number 2": true
+              },
+              "indexByName": {
+                "Error Service": 5,
+                "Error Span Count": 6,
+                "Service": 4,
+                "Span Count": 3,
+                "bRate": 0,
+                "build_name 1": 7,
+                "build_name 2": 8,
+                "eRate": 1,
+                "span_name": 2
+              },
+              "renameByName": {
+                "Error Span Count": "",
+                "Rate in Service": "Service",
+                "Service": "",
+                "bRate": "Span Count",
+                "build_name 1": "Build Name",
+                "build_name 2": "Error Build Name",
+                "eRate": "Error Span Count",
+                "operation": "Operation Name"
+              }
+            }
+          },
+          {
+            "id": "sortBy",
+            "options": {
+              "fields": {},
+              "sort": [
+                {
+                  "desc": true,
+                  "field": "Span Count"
+                }
+              ]
+            }
+          }
+        ],
+        "type": "table"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "description": "Shows the top 25 errors spans.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "displayMode": "auto",
+              "inspect": false
+            },
+            "decimals": 2,
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "bRate"
+              },
+              "properties": [
+                {
+                  "id": "custom.displayMode",
+                  "value": "lcd-gauge"
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "continuous-BlYlRd"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "eRate"
+              },
+              "properties": [
+                {
+                  "id": "custom.displayMode",
+                  "value": "lcd-gauge"
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "continuous-GrYlRd"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Error Span Count"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 663
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Span Count"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 667
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 12,
+          "y": 35
+        },
+        "id": 27,
+        "interval": "5m",
+        "options": {
+          "footer": {
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true,
+          "sortBy": []
+        },
+        "pluginVersion": "9.3.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "topk(25, sum(calls_total{status_code=\"STATUS_CODE_ERROR\",service_name=~\"jenkins\", span_name=~\"$operation\",build_name=~\"$build_name\",build_number=~\"$build_number\"}) by (span_name,build_name))",
+            "format": "table",
+            "hide": false,
+            "instant": true,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "Rate"
+          }
+        ],
+        "title": "Top 25 Error Span Count by Operation",
+        "transformations": [
+          {
+            "id": "calculateField",
+            "options": {
+              "alias": "eRate",
+              "mode": "reduceRow",
+              "reduce": {
+                "include": [
+                  "Value"
+                ],
+                "reducer": "sum"
+              }
+            }
+          },
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Error Rate": true,
+                "Error Span Count": true,
+                "Rate": true,
+                "Value": true,
+                "bRate": false,
+                "build_name 1": false,
+                "build_name 2": false,
+                "build_number 1": true,
+                "build_number 2": true
+              },
+              "indexByName": {
+                "Error Service": 5,
+                "Error Span Count": 6,
+                "Service": 4,
+                "Span Count": 3,
+                "bRate": 0,
+                "build_name 1": 7,
+                "build_name 2": 8,
+                "eRate": 1,
+                "span_name": 2
+              },
+              "renameByName": {
+                "Error Span Count": "",
+                "Rate in Service": "Service",
+                "Service": "",
+                "bRate": "Span Count",
+                "build_name 1": "Build Name",
+                "build_name 2": "Error Build Name",
+                "eRate": "Error Span Count",
+                "operation": "Operation Name"
+              }
+            }
+          },
+          {
+            "id": "sortBy",
+            "options": {
+              "fields": {},
+              "sort": [
+                {
+                  "desc": true,
+                  "field": "Span Count"
+                }
+              ]
+            }
+          }
+        ],
+        "type": "table"
+      }
+    ],
+    "refresh": false,
+    "schemaVersion": 37,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "current": {
+            "selected": false,
+            "text": "prometheus-app-prod-hq",
+            "value": "prometheus-app-prod-hq"
+          },
+          "hide": 0,
+          "includeAll": false,
+          "multi": false,
+          "name": "datasource",
+          "options": [],
+          "query": "prometheus",
+          "queryValue": "",
+          "refresh": 1,
+          "regex": "/default|prometheus-/",
+          "skipUrlSync": false,
+          "type": "datasource"
+        },
+        {
+          "allValue": ".+",
+          "current": {
+            "selected": true,
+            "text": [
+              "nitro-web-master"
+            ],
+            "value": [
+              "nitro-web-master"
+            ]
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "definition": "label_values(calls_total{service_name=~\"jenkins\"}, build_name)",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Build Name",
+          "multi": true,
+          "name": "build_name",
+          "options": [],
+          "query": {
+            "query": "label_values(calls_total{service_name=~\"jenkins\"}, build_name)",
+            "refId": "StandardVariableQuery"
+          },
+          "refresh": 2,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "type": "query"
+        },
+        {
+          "allValue": ".+",
+          "current": {
+            "selected": true,
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "definition": "label_values(calls_total{service_name=~\"jenkins\", build_name=~\"$build_name\"}, build_number)",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Build Number",
+          "multi": true,
+          "name": "build_number",
+          "options": [],
+          "query": {
+            "query": "label_values(calls_total{service_name=~\"jenkins\", build_name=~\"$build_name\"}, build_number)",
+            "refId": "StandardVariableQuery"
+          },
+          "refresh": 2,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": true,
+            "text": "",
+            "value": ""
+          },
+          "hide": 0,
+          "label": "Regex Filter",
+          "name": "filter",
+          "options": [
+            {
+              "selected": true,
+              "text": "",
+              "value": ""
+            }
+          ],
+          "query": "",
+          "skipUrlSync": false,
+          "type": "textbox"
+        },
+        {
+          "allValue": ".*${filter}.*",
+          "current": {
+            "selected": true,
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "definition": "label_values(calls_total{service_name=~\"jenkins\",span_name=~\".*$filter.*\", build_name=~\"$build_name\", build_number=~\"$build_number\"}, span_name)",
+          "description": "Span name of a trace.",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Operation",
+          "multi": true,
+          "name": "operation",
+          "options": [],
+          "query": {
+            "query": "label_values(calls_total{service_name=~\"jenkins\",span_name=~\".*$filter.*\", build_name=~\"$build_name\", build_number=~\"$build_number\"}, span_name)",
+            "refId": "StandardVariableQuery"
+          },
+          "refresh": 2,
+          "regex": "^(?!^Parallel branch|Agent$|.* bin\\/cobra)(.*)$",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-3h",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Jenkins Span Build Dashboard",
+    "uid": "lUhxZIrVk",
+    "version": 6,
+    "weekStart": ""
+  }

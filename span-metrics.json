@@ -1,0 +1,1163 @@
+{
+    "annotations": {
+      "list": [
+        {
+          "builtIn": 1,
+          "datasource": {
+            "type": "grafana",
+            "uid": "-- Grafana --"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
+          "type": "dashboard"
+        }
+      ]
+    },
+    "description": "Spanmetrics way of application view.",
+    "editable": true,
+    "fiscalYearStartMonth": 0,
+    "gnetId": 18264,
+    "graphTooltip": 0,
+    "id": 1576,
+    "links": [],
+    "liveNow": false,
+    "panels": [
+      {
+        "collapsed": false,
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 24,
+        "panels": [],
+        "title": "Build Level - Spans",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "description": "Shows the span count by build name.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-BlYlRd"
+            },
+            "decimals": 2,
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "super-light-blue",
+                  "value": 1
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 2
+                },
+                {
+                  "color": "red",
+                  "value": 10
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 10,
+          "w": 12,
+          "x": 0,
+          "y": 1
+        },
+        "id": 4,
+        "interval": "5m",
+        "options": {
+          "displayMode": "lcd",
+          "minVizHeight": 10,
+          "minVizWidth": 0,
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showUnfilled": true,
+          "text": {}
+        },
+        "pluginVersion": "9.3.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "topk(7,sum(calls_total{service_name=~\"$service\", span_name=~\"$operation\",build_name=~\"$build_name\", build_number=~\"$build_number\"}) by (service_name, build_name))",
+            "format": "time_series",
+            "instant": true,
+            "interval": "",
+            "legendFormat": "{{build_name}}",
+            "range": false,
+            "refId": "A"
+          }
+        ],
+        "title": "Top 7 Spans by Build Name",
+        "transformations": [],
+        "type": "bargauge"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "description": "Shows the error span count by build name.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-reds"
+            },
+            "decimals": 4,
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 1
+                },
+                {
+                  "color": "red",
+                  "value": 15
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 10,
+          "w": 12,
+          "x": 12,
+          "y": 1
+        },
+        "id": 15,
+        "interval": "5m",
+        "options": {
+          "displayMode": "lcd",
+          "minVizHeight": 10,
+          "minVizWidth": 0,
+          "orientation": "vertical",
+          "reduceOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showUnfilled": true,
+          "text": {}
+        },
+        "pluginVersion": "9.3.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "topk(7,sum(calls_total{status_code=\"STATUS_CODE_ERROR\",service_name=~\"$service\", span_name=~\"$operation\",build_name=~\"$build_name\", build_number=~\"$build_number\"}) by (service_name, build_name))",
+            "instant": true,
+            "interval": "",
+            "legendFormat": "{{build_name}}",
+            "range": false,
+            "refId": "A"
+          }
+        ],
+        "title": "Top 7 Error Spans By Build Names",
+        "transformations": [],
+        "type": "bargauge"
+      },
+      {
+        "collapsed": false,
+        "datasource": {
+          "type": "prometheus",
+          "uid": "webstore-metrics"
+        },
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 11
+        },
+        "id": 14,
+        "panels": [],
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "webstore-metrics"
+            },
+            "refId": "A"
+          }
+        ],
+        "title": "Operations Level - Spans",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "description": "Shows the top 25 non-failing spans.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "displayMode": "auto",
+              "inspect": false
+            },
+            "decimals": 2,
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "bRate"
+              },
+              "properties": [
+                {
+                  "id": "custom.displayMode",
+                  "value": "lcd-gauge"
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "continuous-BlYlRd"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "eRate"
+              },
+              "properties": [
+                {
+                  "id": "custom.displayMode",
+                  "value": "lcd-gauge"
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "continuous-RdYlGr"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Error Span Count"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 663
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Span Count"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 667
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 0,
+          "y": 12
+        },
+        "id": 22,
+        "interval": "5m",
+        "options": {
+          "footer": {
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true,
+          "sortBy": []
+        },
+        "pluginVersion": "9.3.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "topk(25, sum(calls_total{service_name=~\"$service\", span_name=~\"$operation\",build_name=~\"$build_name\",build_number=~\"$build_number\"}) by (span_name,service_name,build_name)) ",
+            "format": "table",
+            "hide": false,
+            "instant": true,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "Rate"
+          }
+        ],
+        "title": "Top 25 Span Count By Operation",
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Time 1": true,
+                "Time 2": true,
+                "Value #Rate": false,
+                "build_name 1": false
+              },
+              "indexByName": {
+                "Time 1": 1,
+                "Time 2": 4,
+                "Value #Error Rate": 6,
+                "Value #Rate": 3,
+                "build_name 1": 7,
+                "build_name 2": 9,
+                "build_number 1": 8,
+                "build_number 2": 10,
+                "service_name 1": 2,
+                "service_name 2": 5,
+                "span_name": 0
+              },
+              "renameByName": {
+                "Time 1": "",
+                "Time 2": "",
+                "Value #Error Rate": "",
+                "Value #Rate": "",
+                "build_name 1": "",
+                "build_name 2": "",
+                "build_number 2": "",
+                "service_name 1": "Service",
+                "service_name 2": "Error Service"
+              }
+            }
+          },
+          {
+            "id": "calculateField",
+            "options": {
+              "alias": "bRate",
+              "mode": "reduceRow",
+              "reduce": {
+                "include": [
+                  "Value"
+                ],
+                "reducer": "sum"
+              }
+            }
+          },
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Error Rate": true,
+                "Error Span Count": true,
+                "Rate": true,
+                "Value": true,
+                "bRate": false,
+                "build_name 1": false,
+                "build_name 2": false,
+                "build_number 1": true,
+                "build_number 2": true
+              },
+              "indexByName": {
+                "Error Service": 5,
+                "Error Span Count": 6,
+                "Service": 4,
+                "Span Count": 3,
+                "bRate": 0,
+                "build_name 1": 7,
+                "build_name 2": 8,
+                "eRate": 1,
+                "span_name": 2
+              },
+              "renameByName": {
+                "Error Span Count": "",
+                "Rate in Service": "Service",
+                "Service": "",
+                "bRate": "Span Count",
+                "build_name 1": "Build Name",
+                "build_name 2": "Error Build Name",
+                "eRate": "Error Span Count",
+                "operation": "Operation Name"
+              }
+            }
+          },
+          {
+            "id": "sortBy",
+            "options": {
+              "fields": {},
+              "sort": [
+                {
+                  "desc": true,
+                  "field": "Span Count"
+                }
+              ]
+            }
+          }
+        ],
+        "type": "table"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "description": "Shows the top 25 errors spans.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "thresholds"
+            },
+            "custom": {
+              "align": "auto",
+              "displayMode": "auto",
+              "inspect": false
+            },
+            "decimals": 2,
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "none"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "bRate"
+              },
+              "properties": [
+                {
+                  "id": "custom.displayMode",
+                  "value": "lcd-gauge"
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "continuous-BlYlRd"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "eRate"
+              },
+              "properties": [
+                {
+                  "id": "custom.displayMode",
+                  "value": "lcd-gauge"
+                },
+                {
+                  "id": "color",
+                  "value": {
+                    "mode": "continuous-GrYlRd"
+                  }
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Error Span Count"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 663
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Span Count"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 667
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 9,
+          "w": 12,
+          "x": 12,
+          "y": 12
+        },
+        "id": 27,
+        "interval": "5m",
+        "options": {
+          "footer": {
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "showHeader": true,
+          "sortBy": []
+        },
+        "pluginVersion": "9.3.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "topk(25, sum(calls_total{status_code=\"STATUS_CODE_ERROR\",service_name=~\"$service\", span_name=~\"$operation\",build_name=~\"$build_name\",build_number=~\"$build_number\"}) by (span_name,service_name,build_name))",
+            "format": "table",
+            "hide": false,
+            "instant": true,
+            "interval": "",
+            "legendFormat": "",
+            "refId": "Rate"
+          }
+        ],
+        "title": "Top 25 Error Span Count by Operation",
+        "transformations": [
+          {
+            "id": "calculateField",
+            "options": {
+              "alias": "eRate",
+              "mode": "reduceRow",
+              "reduce": {
+                "include": [
+                  "Value"
+                ],
+                "reducer": "sum"
+              }
+            }
+          },
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Error Rate": true,
+                "Error Span Count": true,
+                "Rate": true,
+                "Value": true,
+                "bRate": false,
+                "build_name 1": false,
+                "build_name 2": false,
+                "build_number 1": true,
+                "build_number 2": true
+              },
+              "indexByName": {
+                "Error Service": 5,
+                "Error Span Count": 6,
+                "Service": 4,
+                "Span Count": 3,
+                "bRate": 0,
+                "build_name 1": 7,
+                "build_name 2": 8,
+                "eRate": 1,
+                "span_name": 2
+              },
+              "renameByName": {
+                "Error Span Count": "",
+                "Rate in Service": "Service",
+                "Service": "",
+                "bRate": "Span Count",
+                "build_name 1": "Build Name",
+                "build_name 2": "Error Build Name",
+                "eRate": "Error Span Count",
+                "operation": "Operation Name"
+              }
+            }
+          },
+          {
+            "id": "sortBy",
+            "options": {
+              "fields": {},
+              "sort": [
+                {
+                  "desc": true,
+                  "field": "Span Count"
+                }
+              ]
+            }
+          }
+        ],
+        "type": "table"
+      },
+      {
+        "collapsed": false,
+        "datasource": {
+          "type": "prometheus",
+          "uid": "webstore-metrics"
+        },
+        "gridPos": {
+          "h": 1,
+          "w": 24,
+          "x": 0,
+          "y": 21
+        },
+        "id": 20,
+        "panels": [],
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "webstore-metrics"
+            },
+            "refId": "A"
+          }
+        ],
+        "title": "Operation Level - Latencies/Durations",
+        "type": "row"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "description": "Shows the top 7 operation latencies rate of change, in the form of histogram buckets.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-BlYlRd"
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "blue",
+                  "value": null
+                },
+                {
+                  "color": "green",
+                  "value": 2
+                },
+                {
+                  "color": "#EAB839",
+                  "value": 64
+                },
+                {
+                  "color": "orange",
+                  "value": 128
+                },
+                {
+                  "color": "red",
+                  "value": 256
+                }
+              ]
+            },
+            "unit": "ms"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 13,
+          "w": 12,
+          "x": 0,
+          "y": 22
+        },
+        "id": 25,
+        "interval": "5m",
+        "options": {
+          "orientation": "auto",
+          "reduceOptions": {
+            "calcs": [
+              "lastNotNull"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showThresholdLabels": false,
+          "showThresholdMarkers": true
+        },
+        "pluginVersion": "9.3.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "topk(7,histogram_quantile(0.95, sum(rate(duration_milliseconds_bucket{service_name=~\"$service\", span_name=~\"$operation\", build_name=~\"$build_name\", build_number=~\"$build_number\",}[$__range])) by (le,span_name,build_name,build_number))) > 0",
+            "hide": false,
+            "instant": true,
+            "interval": "",
+            "legendFormat": "{{span_name}}",
+            "range": false,
+            "refId": "B"
+          }
+        ],
+        "title": "Top 3x3 - Operation Latency - quantile95",
+        "type": "gauge"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "description": "Shows the top 7 operation latency means, by rate of increase.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "continuous-BlYlRd"
+            },
+            "decimals": 2,
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "ms"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 13,
+          "w": 12,
+          "x": 12,
+          "y": 22
+        },
+        "id": 10,
+        "interval": "5m",
+        "options": {
+          "displayMode": "lcd",
+          "minVizHeight": 10,
+          "minVizWidth": 0,
+          "orientation": "horizontal",
+          "reduceOptions": {
+            "calcs": [
+              "mean"
+            ],
+            "fields": "",
+            "values": false
+          },
+          "showUnfilled": true
+        },
+        "pluginVersion": "9.3.6",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "topk(7, sum by (span_name,service_name,build_name,build_number)(increase(duration_milliseconds_sum{service_name=~\"${service}\", span_name=~\"$operation\", build_name=~\"$build_name\", build_number=~\"$build_number\",}[$__range]) / increase(duration_milliseconds_count{service_name=~\"${service}\",span_name=~\"$operation\", build_name=~\"$build_name\", build_number=~\"$build_number\",}[$__range]))) > 0",
+            "instant": true,
+            "interval": "",
+            "legendFormat": "{{span_name}} [{{service_name}}]",
+            "range": false,
+            "refId": "A"
+          }
+        ],
+        "title": "Top 7 Highest Endpoint Latencies Mean Over Range ",
+        "transformations": [],
+        "type": "bargauge"
+      },
+      {
+        "datasource": {
+          "type": "prometheus",
+          "uid": "${datasource}"
+        },
+        "description": "Shows the top 50 latencies by operation/span name. Displays by duration, not by rate.",
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "mode": "palette-classic"
+            },
+            "custom": {
+              "axisCenteredZero": false,
+              "axisColorMode": "text",
+              "axisLabel": "",
+              "axisPlacement": "auto",
+              "barAlignment": 0,
+              "drawStyle": "line",
+              "fillOpacity": 15,
+              "gradientMode": "none",
+              "hideFrom": {
+                "legend": false,
+                "tooltip": false,
+                "viz": false
+              },
+              "lineInterpolation": "smooth",
+              "lineWidth": 1,
+              "pointSize": 5,
+              "scaleDistribution": {
+                "type": "linear"
+              },
+              "showPoints": "auto",
+              "spanNulls": true,
+              "stacking": {
+                "group": "A",
+                "mode": "none"
+              },
+              "thresholdsStyle": {
+                "mode": "off"
+              }
+            },
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                },
+                {
+                  "color": "red",
+                  "value": 80
+                }
+              ]
+            },
+            "unit": "ms"
+          },
+          "overrides": []
+        },
+        "gridPos": {
+          "h": 12,
+          "w": 24,
+          "x": 0,
+          "y": 35
+        },
+        "id": 26,
+        "interval": "5m",
+        "options": {
+          "legend": {
+            "calcs": [
+              "mean"
+            ],
+            "displayMode": "table",
+            "placement": "bottom",
+            "showLegend": true,
+            "sortBy": "Mean",
+            "sortDesc": true
+          },
+          "tooltip": {
+            "mode": "single",
+            "sort": "none"
+          }
+        },
+        "pluginVersion": "8.4.7",
+        "targets": [
+          {
+            "datasource": {
+              "type": "prometheus",
+              "uid": "${datasource}"
+            },
+            "editorMode": "code",
+            "exemplar": false,
+            "expr": "topk(50, avg by (build_name, service_name, span_name) (duration_milliseconds_sum{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"$service\", span_name=~\"$operation\"} / duration_milliseconds_count{build_name=~\"$build_name\", build_number=~\"$build_number\",service_name=~\"$service\", span_name=~\"$operation\"}))",
+            "format": "time_series",
+            "instant": false,
+            "interval": "",
+            "legendFormat": "{{build_name}} {{build_number}}: {{span_name}}",
+            "range": true,
+            "refId": "A"
+          }
+        ],
+        "title": "Top 50 Durations By Operation",
+        "transformations": [
+          {
+            "id": "renameByRegex",
+            "options": {
+              "regex": "(.{150}).*",
+              "renamePattern": "$1..."
+            }
+          },
+          {
+            "id": "sortBy",
+            "options": {
+              "fields": {},
+              "sort": [
+                {
+                  "field": "Time"
+                }
+              ]
+            }
+          }
+        ],
+        "type": "timeseries"
+      }
+    ],
+    "refresh": false,
+    "schemaVersion": 37,
+    "style": "dark",
+    "tags": [
+      "apm",
+      "spanmetrics",
+      "opentelemetry"
+    ],
+    "templating": {
+      "list": [
+        {
+          "current": {
+            "selected": false,
+            "text": "prometheus-app-prod-hq",
+            "value": "prometheus-app-prod-hq"
+          },
+          "hide": 0,
+          "includeAll": false,
+          "multi": false,
+          "name": "datasource",
+          "options": [],
+          "query": "prometheus",
+          "queryValue": "",
+          "refresh": 1,
+          "regex": "/default|prometheus-/",
+          "skipUrlSync": false,
+          "type": "datasource"
+        },
+        {
+          "allValue": ".+",
+          "current": {
+            "selected": true,
+            "text": [
+              "jenkins"
+            ],
+            "value": [
+              "jenkins"
+            ]
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "definition": "label_values(calls_total, service_name)",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Service",
+          "multi": true,
+          "name": "service",
+          "options": [],
+          "query": {
+            "query": "label_values(calls_total, service_name)",
+            "refId": "StandardVariableQuery"
+          },
+          "refresh": 2,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "type": "query"
+        },
+        {
+          "current": {
+            "selected": true,
+            "text": "",
+            "value": ""
+          },
+          "hide": 0,
+          "label": "Regex Filter",
+          "name": "filter",
+          "options": [
+            {
+              "selected": true,
+              "text": "",
+              "value": ""
+            }
+          ],
+          "query": "",
+          "skipUrlSync": false,
+          "type": "textbox"
+        },
+        {
+          "allValue": ".*${filter}.*",
+          "current": {
+            "selected": true,
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "definition": "label_values(calls_total{service_name=~\"$service\", span_name=~\".*$filter.*\", build_name=~\"$build_name\", build_number=~\"$build_number\"}, span_name)",
+          "description": "Span name of a trace.",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Operation",
+          "multi": true,
+          "name": "operation",
+          "options": [],
+          "query": {
+            "query": "label_values(calls_total{service_name=~\"$service\", span_name=~\".*$filter.*\", build_name=~\"$build_name\", build_number=~\"$build_number\"}, span_name)",
+            "refId": "StandardVariableQuery"
+          },
+          "refresh": 2,
+          "regex": "(?!.*PR-\\d)^.*$",
+          "skipUrlSync": false,
+          "sort": 0,
+          "type": "query"
+        },
+        {
+          "allValue": ".+",
+          "current": {
+            "selected": true,
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "definition": "label_values(calls_total{service_name=~\"$service\"}, build_name)",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Build Name",
+          "multi": true,
+          "name": "build_name",
+          "options": [],
+          "query": {
+            "query": "label_values(calls_total{service_name=~\"$service\"}, build_name)",
+            "refId": "StandardVariableQuery"
+          },
+          "refresh": 2,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "type": "query"
+        },
+        {
+          "allValue": ".+",
+          "current": {
+            "selected": true,
+            "text": [
+              "All"
+            ],
+            "value": [
+              "$__all"
+            ]
+          },
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "definition": "label_values(calls_total{service_name=~\"$service\", build_name=~\"$build_name\"}, build_number)",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Build Number",
+          "multi": true,
+          "name": "build_number",
+          "options": [],
+          "query": {
+            "query": "label_values(calls_total{service_name=~\"$service\", build_name=~\"$build_name\"}, build_number)",
+            "refId": "StandardVariableQuery"
+          },
+          "refresh": 2,
+          "regex": "",
+          "skipUrlSync": false,
+          "sort": 1,
+          "type": "query"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-3h",
+      "to": "now"
+    },
+    "timepicker": {},
+    "timezone": "",
+    "title": "Spanmetrics Dashboard",
+    "uid": "Dkz2q7CaHQM",
+    "version": 19,
+    "weekStart": ""
+  }
