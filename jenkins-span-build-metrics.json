@@ -713,8 +713,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -939,8 +938,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1138,12 +1136,12 @@
       {
         "allValue": ".+",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
-            "tempo-main"
+            "nitro-web-master"
           ],
           "value": [
-            "tempo-main"
+            "nitro-web-master"
           ]
         },
         "datasource": {
@@ -1170,7 +1168,7 @@
       {
         "allValue": ".+",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "All"
           ],
@@ -1222,7 +1220,7 @@
       {
         "allValue": ".*${filter}.*",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
             "All"
           ],
@@ -1264,6 +1262,6 @@
   "timezone": "",
   "title": "Jenkins Span Build Dashboard",
   "uid": "lUhxZIrVk",
-  "version": 13,
+  "version": 14,
   "weekStart": ""
 }
