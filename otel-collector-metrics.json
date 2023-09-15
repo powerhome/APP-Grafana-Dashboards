@@ -228,7 +228,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(increase(otelcol_receiver_accepted_spans[1m])) by (receiver)",
+          "expr": "sum(rate(otelcol_receiver_accepted_spans[1m])) by (receiver)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -242,7 +242,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(increase(otelcol_receiver_refused_spans[1m])) by (receiver)",
+          "expr": "sum(rate(otelcol_receiver_refused_spans[1m])) by (receiver)",
           "interval": "",
           "legendFormat": "{{ receiver }} spans refused",
           "range": true,
@@ -339,7 +339,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(increase(otelcol_receiver_accepted_log_records[1m])) by (receiver)",
+          "expr": "sum(rate(otelcol_receiver_accepted_log_records[1m])) by (receiver)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -353,7 +353,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(increase(otelcol_receiver_refused_log_records[1m])) by (receiver)",
+          "expr": "sum(rate(otelcol_receiver_refused_log_records[1m])) by (receiver)",
           "interval": "",
           "legendFormat": "{{ receiver }} logs refused",
           "range": true,
@@ -507,7 +507,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(increase(otelcol_exporter_sent_spans[1m])) by (exporter)",
+          "expr": "sum(rate(otelcol_exporter_sent_spans[1m])) by (exporter)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -578,7 +578,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(increase(otelcol_exporter_sent_log_records[1m])) by (exporter)",
+          "expr": "sum(rate(otelcol_exporter_sent_log_records[1m])) by (exporter)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
@@ -592,7 +592,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(increase(otelcol_exporter_send_failed_log_records[1m])) by (exporter)",
+          "expr": "sum(rate(otelcol_exporter_send_failed_log_records[1m])) by (exporter)",
           "interval": "",
           "legendFormat": "{{ exporter }} failed",
           "range": true,
@@ -719,7 +719,7 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(increase(otelcol_exporter_sent_metric_points[1m])) by (exporter)",
+          "expr": "sum(rate(otelcol_exporter_sent_metric_points[1m])) by (exporter)",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
