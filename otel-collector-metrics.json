@@ -703,7 +703,7 @@
         "legend": {
           "calcs": [],
           "displayMode": "list",
-          "placement": "bottom",
+          "placement": "right",
           "showLegend": true
         },
         "tooltip": {
@@ -719,11 +719,11 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "sum(rate(otelcol_exporter_sent_metric_points[1m])) by (exporter)",
+          "expr": "rate(otelcol_exporter_sent_metric_points[1m])",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{exporter}}",
+          "legendFormat": "{{pod}}",
           "range": true,
           "refId": "A"
         }
