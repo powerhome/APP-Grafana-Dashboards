@@ -727,7 +727,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "bRate"
+              "options": "Span Count"
             },
             "properties": [
               {
@@ -864,6 +864,41 @@
           }
         },
         {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Build Name": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "Span Count": {
+                "aggregations": [
+                  "sum"
+                ],
+                "operation": "aggregate"
+              },
+              "Span Name": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "bRate": {
+                "aggregations": [
+                  "sum"
+                ],
+                "operation": "aggregate"
+              },
+              "build_name": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "span_name": {
+                "aggregations": [],
+                "operation": "groupby"
+              }
+            }
+          }
+        },
+        {
           "id": "organize",
           "options": {
             "excludeByName": {
@@ -878,21 +913,16 @@
               "build_number 2": true
             },
             "indexByName": {
-              "Error Service": 5,
-              "Error Span Count": 6,
-              "Service": 4,
-              "Span Count": 3,
-              "bRate": 0,
-              "build_name 1": 7,
-              "build_name 2": 8,
-              "eRate": 1,
-              "span_name": 2
+              "bRate (sum)": 0,
+              "build_name": 2,
+              "span_name": 1
             },
             "renameByName": {
               "Error Span Count": "",
               "Rate in Service": "Service",
               "Service": "",
               "bRate": "Span Count",
+              "bRate (sum)": "Span Count",
               "build_name": "Build Name",
               "build_name 1": "Build Name",
               "build_name 2": "Error Build Name",
@@ -912,6 +942,12 @@
                 "field": "Span Count"
               }
             ]
+          }
+        },
+        {
+          "id": "limit",
+          "options": {
+            "limitField": 25
           }
         }
       ],
