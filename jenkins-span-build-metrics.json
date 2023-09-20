@@ -1253,7 +1253,7 @@
     ]
   },
   "time": {
-    "from": "now-3h",
+    "from": "now-30d",
     "to": "now"
   },
   "timepicker": {
