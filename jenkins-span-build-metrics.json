@@ -46,6 +46,379 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "string"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "0"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Success"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "green",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "1"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Unstable"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "orange",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "2"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Failed"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "red",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "3"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Not Built"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "4"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Aborted"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.displayMode",
+                "value": "color-text"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Job\\Value #C"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 272
+              },
+              {
+                "id": "displayName",
+                "value": "Job"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "jenkins_job"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 261
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 36,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "frameIndex": 0,
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "(label_join(label_replace(jenkins_builds_build_start_time_milliseconds{number=~\"$build_number\"}+0, \"build_name\", \"$1-$2\", \"jenkins_job\", \".*/([^/]+)/(?:PR-)?(main|master|[0-9]+)$\"), \"combined_label\", \":\", \"build_name\", \"number\") >= $__from) and (label_join(label_replace(jenkins_builds_build_start_time_milliseconds{number=~\"$build_number\"}+0, \"build_name\", \"$1-$2\", \"jenkins_job\", \".*/([^/]+)/(?:PR-)?(main|master|[0-9]+)$\"), \"combined_label\", \":\", \"build_name\", \"number\") <= $__to) OR on() vector(0)",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "{{number}} {{buildable}}",
+          "range": false,
+          "refId": "D"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "label_join(label_replace(jenkins_builds_build_result_ordinal{number=~\"$build_number\"}+0, \"build_name\", \"$1-$2\", \"jenkins_job\", \".*/([^/]+)/(?:PR-)?(main|master|[0-9]+)\"), \"combined_label\", \":\", \"build_name\", \"number\")",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "{{number}} {{buildable}}",
+          "range": false,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum by (jenkins_build_name, combined_label) (label_join(label_replace(calls_total{service_name=~\"jenkins\", build_name=~\"$build_name\", build_number=~\"$build_number\"}, \"jenkins_build_name\", \"$1-$2\", \"build_name\", \"^(.+?)(?:(?:-|-pr-)(main|master|[0-9]+))$\"), \"combined_label\", \":\", \"jenkins_build_name\", \"build_number\"))",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "B"
+        }
+      ],
+      "title": "Build Count",
+      "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "lowerOrEqual",
+                  "options": {
+                    "value": 0
+                  }
+                },
+                "fieldName": "Value #D"
+              },
+              {
+                "config": {
+                  "id": "isNull",
+                  "options": {}
+                },
+                "fieldName": "Value #D"
+              },
+              {
+                "config": {
+                  "id": "isNull",
+                  "options": {}
+                },
+                "fieldName": "Value #B"
+              }
+            ],
+            "match": "any",
+            "type": "exclude"
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Value #B": true,
+              "Value #D": true,
+              "__name__": true,
+              "buildable": true,
+              "container": true,
+              "endpoint": true,
+              "instance": true,
+              "jenkins_build_name": true,
+              "job": true,
+              "namespace": true,
+              "pod": true,
+              "repo": true,
+              "service": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "Value #A": "Duration",
+              "Value #B": "Time",
+              "Value #C": "",
+              "buildable": "Buildable",
+              "jenkins_job": "Job",
+              "namespace": "",
+              "number": "Build"
+            }
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Build": {
+                "aggregations": [
+                  "count"
+                ],
+                "operation": "aggregate"
+              },
+              "Job": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "Result": {
+                "aggregations": [
+                  "allValues"
+                ],
+                "operation": "aggregate"
+              },
+              "Time": {
+                "aggregations": []
+              },
+              "Value #C": {
+                "aggregations": [
+                  "allValues"
+                ],
+                "operation": "groupby"
+              }
+            }
+          }
+        },
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "destinationType": "string",
+                "targetField": "Value #C"
+              },
+              {
+                "destinationType": "string",
+                "targetField": "Build (count)"
+              }
+            ],
+            "fields": {}
+          }
+        },
+        {
+          "id": "groupingToMatrix",
+          "options": {
+            "columnField": "Value #C",
+            "rowField": "Job",
+            "valueField": "Build (count)"
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": false,
+                "field": "Job\\Value #C"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
       "description": "Average build duration, filterable by build name and number.",
       "fieldConfig": {
         "defaults": {
