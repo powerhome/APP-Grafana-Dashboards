@@ -209,7 +209,7 @@
       },
       "gridPos": {
         "h": 10,
-        "w": 24,
+        "w": 12,
         "x": 0,
         "y": 1
       },
@@ -419,6 +419,131 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
+      "description": "Inform the kubernetes cluster where the build ran",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "left",
+            "displayMode": "auto",
+            "filterable": true,
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "string"
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Build Time"
+            },
+            "properties": [
+              {
+                "id": "custom.displayMode",
+                "value": "color-background-solid"
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "continuous-reds"
+                }
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 12,
+        "x": 12,
+        "y": 1
+      },
+      "id": 38,
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "mean"
+          ],
+          "show": false
+        },
+        "frameIndex": 30,
+        "showHeader": true
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum by (build_name, build_number, kubernetes_cluster) (calls_total{build_name=~\"$build_name\",build_number=~\"$build_number\"})",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Build Cluster",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "Value": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "Metric": "Build",
+              "Value (mean)": "Build Time",
+              "build_name": "Build Name",
+              "build_number": "Build Number",
+              "combined_label": "Build",
+              "kubernetes_cluster": "Cluster"
+            }
+          }
+        },
+        {
+          "id": "sortBy",
+          "options": {
+            "fields": {},
+            "sort": [
+              {
+                "desc": true,
+                "field": "Build"
+              }
+            ]
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "${datasource}"
+      },
       "description": "Average build duration, filterable by build name and number.",
       "fieldConfig": {
         "defaults": {
@@ -445,24 +570,18 @@
               }
             ]
           },
-          "unit": "ms"
+          "unit": "string"
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "Build Time"
+              "options": "Duration"
             },
             "properties": [
               {
-                "id": "custom.displayMode",
-                "value": "color-background-solid"
-              },
-              {
-                "id": "color",
-                "value": {
-                  "mode": "continuous-reds"
-                }
+                "id": "unit",
+                "value": "dtdurationms"
               }
             ]
           }
@@ -472,18 +591,22 @@
         "h": 11,
         "w": 12,
         "x": 0,
-        "y": 1
+        "y": 11
       },
       "id": 31,
       "options": {
         "footer": {
-          "fields": "",
+          "fields": [
+            "Value #A"
+          ],
           "reducer": [
             "mean"
           ],
           "show": true
         },
-        "showHeader": true
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": []
       },
       "pluginVersion": "9.3.6",
       "targets": [
@@ -493,44 +616,88 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "duration_milliseconds_sum{span_name=~\"Agent\",build_name=~\"$build_name\",build_number=~\"$build_number\"}",
+          "exemplar": false,
+          "expr": "label_join(label_replace(jenkins_builds_build_duration_milliseconds{number=~\"$build_number\"}, \"build_name\", \"$1-$2\", \"jenkins_job\", \".*/([^/]+)/(?:PR-)?(main|master|[0-9]+)$\"), \"combined_label\", \":\", \"build_name\", \"number\")",
+          "format": "table",
           "hide": false,
-          "legendFormat": "{{build_name}}: {{build_number}}",
-          "range": true,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum by (jenkins_build_name, combined_label) (label_join(label_replace(calls_total{service_name=~\"jenkins\", build_name=~\"$build_name\", build_number=~\"$build_number\"}, \"jenkins_build_name\", \"$1-$2\", \"build_name\", \"^(.+?)(?:(?:-|-pr-)(main|master|[0-9]+))$\"), \"combined_label\", \":\", \"jenkins_build_name\", \"build_number\"))",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "B"
         }
       ],
       "title": "Average Build Duration By Build Number",
       "transformations": [
         {
-          "id": "seriesToRows",
+          "id": "merge",
           "options": {}
         },
         {
-          "id": "groupBy",
+          "id": "filterByValue",
           "options": {
-            "fields": {
-              "Metric": {
-                "aggregations": [],
-                "operation": "groupby"
+            "filters": [
+              {
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                },
+                "fieldName": "Value #B"
               },
-              "Value": {
-                "aggregations": [
-                  "mean"
-                ],
-                "operation": "aggregate"
+              {
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                },
+                "fieldName": "Value #A"
               }
-            }
+            ],
+            "match": "all",
+            "type": "include"
           }
         },
         {
           "id": "organize",
           "options": {
-            "excludeByName": {},
+            "excludeByName": {
+              "Time": true,
+              "Value #B": true,
+              "__name__": true,
+              "build_name": true,
+              "buildable": true,
+              "combined_label": true,
+              "container": true,
+              "endpoint": true,
+              "instance": true,
+              "jenkins_build_name": true,
+              "job": true,
+              "namespace": true,
+              "pod": true,
+              "repo": true,
+              "service": true
+            },
             "indexByName": {},
             "renameByName": {
               "Metric": "Build",
-              "Value (mean)": "Build Time"
+              "Value #A": "Duration",
+              "Value (mean)": "Build Time",
+              "jenkins_job": "Build Name",
+              "namespace": "",
+              "number": "Build Number"
             }
           }
         },
@@ -541,7 +708,7 @@
             "sort": [
               {
                 "desc": true,
-                "field": "Build Time"
+                "field": "Duration"
               }
             ]
           }
@@ -580,24 +747,18 @@
               }
             ]
           },
-          "unit": "ms"
+          "unit": "string"
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "Build Time"
+              "options": "Duration"
             },
             "properties": [
               {
-                "id": "custom.displayMode",
-                "value": "color-background-solid"
-              },
-              {
-                "id": "color",
-                "value": {
-                  "mode": "continuous-reds"
-                }
+                "id": "unit",
+                "value": "dtdurationms"
               }
             ]
           }
@@ -609,7 +770,7 @@
         "x": 12,
         "y": 11
       },
-      "id": 37,
+      "id": 39,
       "options": {
         "footer": {
           "fields": "",
@@ -618,144 +779,9 @@
           ],
           "show": true
         },
-        "frameIndex": 6,
-        "showHeader": true
-      },
-      "pluginVersion": "9.3.6",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "editorMode": "code",
-          "expr": "duration_milliseconds_sum{span_name=~\"Agent\",build_name=~\"$build_name\"}",
-          "hide": false,
-          "legendFormat": "{{build_name}}",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Average Build Duration By Build Name",
-      "transformations": [
-        {
-          "id": "seriesToRows",
-          "options": {}
-        },
-        {
-          "id": "groupBy",
-          "options": {
-            "fields": {
-              "Metric": {
-                "aggregations": [],
-                "operation": "groupby"
-              },
-              "Value": {
-                "aggregations": [
-                  "mean"
-                ],
-                "operation": "aggregate"
-              }
-            }
-          }
-        },
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {},
-            "indexByName": {},
-            "renameByName": {
-              "Metric": "Build",
-              "Value (mean)": "Build Time"
-            }
-          }
-        },
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "desc": true,
-                "field": "Build Time"
-              }
-            ]
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
-      "description": "Inform the kubernetes cluster where the build ran",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "left",
-            "displayMode": "auto",
-            "filterable": true,
-            "inspect": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "ms"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Build Time"
-            },
-            "properties": [
-              {
-                "id": "custom.displayMode",
-                "value": "color-background-solid"
-              },
-              {
-                "id": "color",
-                "value": {
-                  "mode": "continuous-reds"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 11,
-        "w": 12,
-        "x": 0,
-        "y": 22
-      },
-      "id": 38,
-      "options": {
-        "footer": {
-          "fields": "",
-          "reducer": [
-            "mean"
-          ],
-          "show": false
-        },
-        "frameIndex": 30,
-        "showHeader": true
+        "frameIndex": 1,
+        "showHeader": true,
+        "sortBy": []
       },
       "pluginVersion": "9.3.6",
       "targets": [
@@ -766,30 +792,115 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (combined_label, kubernetes_cluster) (label_join(calls_total{build_name=~\"$build_name\",build_number=~\"$build_number\"}, \"combined_label\", \" : \", \"build_name\", \"build_number\"))",
+          "expr": "label_join(label_replace(jenkins_builds_build_duration_milliseconds{number=~\"$build_number\"}, \"build_name\", \"$1-$2\", \"jenkins_job\", \".*/([^/]+)/(?:PR-)?(main|master|[0-9]+)$\"), \"combined_label\", \":\", \"build_name\", \"number\")",
           "format": "table",
           "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum by (jenkins_build_name, combined_label) (label_join(label_replace(calls_total{service_name=~\"jenkins\", build_name=~\"$build_name\", build_number=~\"$build_number\"}, \"jenkins_build_name\", \"$1-$2\", \"build_name\", \"^(.+?)(?:(?:-|-pr-)(main|master|[0-9]+))$\"), \"combined_label\", \":\", \"jenkins_build_name\", \"build_number\"))",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "B"
         }
       ],
-      "title": "Build Cluster",
+      "title": "Average Build Duration By Build Name",
       "transformations": [
+        {
+          "id": "merge",
+          "options": {}
+        },
+        {
+          "id": "filterByValue",
+          "options": {
+            "filters": [
+              {
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                },
+                "fieldName": "Value #B"
+              },
+              {
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                },
+                "fieldName": "Value #A"
+              }
+            ],
+            "match": "all",
+            "type": "include"
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Build Name": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "Duration": {
+                "aggregations": [
+                  "mean"
+                ],
+                "operation": "aggregate"
+              },
+              "Value #A": {
+                "aggregations": [
+                  "mean"
+                ],
+                "operation": "aggregate"
+              },
+              "jenkins_job": {
+                "aggregations": [],
+                "operation": "groupby"
+              }
+            }
+          }
+        },
         {
           "id": "organize",
           "options": {
             "excludeByName": {
               "Time": true,
-              "Value": true
+              "Value #B": true,
+              "__name__": true,
+              "build_name": true,
+              "buildable": true,
+              "combined_label": true,
+              "container": true,
+              "endpoint": true,
+              "instance": true,
+              "jenkins_build_name": true,
+              "job": true,
+              "namespace": true,
+              "pod": true,
+              "repo": true,
+              "service": true
             },
             "indexByName": {},
             "renameByName": {
               "Metric": "Build",
+              "Value #A": "Duration",
+              "Value #A (mean)": "Duration",
               "Value (mean)": "Build Time",
-              "combined_label": "Build",
-              "kubernetes_cluster": "Cluster"
+              "jenkins_job": "Build Name",
+              "namespace": "",
+              "number": "Build Number"
             }
           }
         },
@@ -800,13 +911,39 @@
             "sort": [
               {
                 "desc": true,
-                "field": "Build"
+                "field": "Duration"
               }
             ]
           }
         }
       ],
       "type": "table"
+    },
+    {
+      "collapsed": false,
+      "datasource": {
+        "type": "prometheus",
+        "uid": "webstore-metrics"
+      },
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 22
+      },
+      "id": 20,
+      "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "webstore-metrics"
+          },
+          "refId": "A"
+        }
+      ],
+      "title": "Operation Durations",
+      "type": "row"
     },
     {
       "datasource": {
@@ -839,15 +976,28 @@
               }
             ]
           },
-          "unit": "ms"
+          "unit": "string"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Duration"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dtdurationms"
+              }
+            ]
+          }
+        ]
       },
       "gridPos": {
-        "h": 11,
-        "w": 12,
-        "x": 12,
-        "y": 1
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 23
       },
       "id": 34,
       "options": {
@@ -869,20 +1019,17 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "topk(10, avg by (build_name, span_name) (duration_milliseconds_sum{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name!=\"Agent\", span_name!~\".*Parallel branch:.*\", span_name!~\".*bin/cobra.*\",span_name=~\"$operation\"} / duration_milliseconds_count{build_name=~\"$build_name\", build_number=~\"$build_number\",service_name=~\"jenkins\", span_name!=\"Agent\", span_name!~\".*Parallel branch:.*\", span_name!~\".*bin/cobra.*\",span_name=~\"$operation\"}))",
+          "expr": "topk(10, avg by (build_name, build_number, span_name) (duration_milliseconds_sum{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name=~\"$operation\", span_name!~\"^(Agent|Parallel branch:.*|.*bin/cobra.*)\"} / duration_milliseconds_count{build_name=~\"$build_name\", build_number=~\"$build_number\",service_name=~\"jenkins\",  span_name=~\"$operation\", span_name!~\"^(Agent|Parallel branch:.*|.*bin/cobra.*)\"}))",
+          "format": "table",
           "hide": false,
-          "instant": false,
-          "legendFormat": "{{span_name}}",
-          "range": true,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
           "refId": "A"
         }
       ],
       "title": "Top 10 Longest Operations",
       "transformations": [
-        {
-          "id": "seriesToRows",
-          "options": {}
-        },
         {
           "id": "organize",
           "options": {
@@ -893,38 +1040,15 @@
             "renameByName": {
               "Metric": "Operation",
               "Value": "Duration",
-              "Value (mean)": "Build Time"
+              "Value (mean)": "Build Time",
+              "build_name": "Build Name",
+              "build_number": "Build Number",
+              "span_name": "Operation"
             }
           }
         }
       ],
       "type": "table"
-    },
-    {
-      "collapsed": false,
-      "datasource": {
-        "type": "prometheus",
-        "uid": "webstore-metrics"
-      },
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 12
-      },
-      "id": 20,
-      "panels": [],
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "webstore-metrics"
-          },
-          "refId": "A"
-        }
-      ],
-      "title": "Operation Durations",
-      "type": "row"
     },
     {
       "datasource": {
@@ -989,7 +1113,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 33
       },
       "id": 26,
       "interval": "5m",
@@ -1113,7 +1237,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 25
+        "y": 45
       },
       "id": 28,
       "interval": "5m",
@@ -1237,7 +1361,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 25
+        "y": 45
       },
       "id": 29,
       "interval": "5m",
@@ -1308,7 +1432,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 54
       },
       "id": 14,
       "panels": [],
@@ -1345,7 +1469,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1359,7 +1484,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Span Count"
+              "options": "bRate"
             },
             "properties": [
               {
@@ -1410,7 +1535,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 35
+        "y": 55
       },
       "id": 22,
       "interval": "5m",
@@ -1496,41 +1621,6 @@
           }
         },
         {
-          "id": "groupBy",
-          "options": {
-            "fields": {
-              "Build Name": {
-                "aggregations": [],
-                "operation": "groupby"
-              },
-              "Span Count": {
-                "aggregations": [
-                  "sum"
-                ],
-                "operation": "aggregate"
-              },
-              "Span Name": {
-                "aggregations": [],
-                "operation": "groupby"
-              },
-              "bRate": {
-                "aggregations": [
-                  "sum"
-                ],
-                "operation": "aggregate"
-              },
-              "build_name": {
-                "aggregations": [],
-                "operation": "groupby"
-              },
-              "span_name": {
-                "aggregations": [],
-                "operation": "groupby"
-              }
-            }
-          }
-        },
-        {
           "id": "organize",
           "options": {
             "excludeByName": {
@@ -1545,16 +1635,21 @@
               "build_number 2": true
             },
             "indexByName": {
-              "bRate (sum)": 0,
-              "build_name": 2,
-              "span_name": 1
+              "Error Service": 5,
+              "Error Span Count": 6,
+              "Service": 4,
+              "Span Count": 3,
+              "bRate": 0,
+              "build_name 1": 7,
+              "build_name 2": 8,
+              "eRate": 1,
+              "span_name": 2
             },
             "renameByName": {
               "Error Span Count": "",
               "Rate in Service": "Service",
               "Service": "",
               "bRate": "Span Count",
-              "bRate (sum)": "Span Count",
               "build_name": "Build Name",
               "build_name 1": "Build Name",
               "build_name 2": "Error Build Name",
@@ -1574,12 +1669,6 @@
                 "field": "Span Count"
               }
             ]
-          }
-        },
-        {
-          "id": "limit",
-          "options": {
-            "limitField": 25
           }
         }
       ],
@@ -1606,7 +1695,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1671,7 +1761,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 35
+        "y": 55
       },
       "id": 27,
       "interval": "5m",
@@ -1804,7 +1894,7 @@
       {
         "allValue": ".+",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "nitro-web-master"
           ],
@@ -1836,7 +1926,7 @@
       {
         "allValue": ".+",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],
@@ -1888,7 +1978,7 @@
       {
         "allValue": ".*${filter}.*",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],
