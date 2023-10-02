@@ -26,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 12553,
   "graphTooltip": 0,
-  "id": 1540,
+  "id": 1778,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -67,6 +67,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineStyle": {
               "fill": "solid"
@@ -153,7 +154,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 9
       },
       "id": 23,
       "panels": [],
@@ -191,7 +192,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 1
+        "y": 10
       },
       "hiddenSeries": false,
       "id": 28,
@@ -213,7 +214,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "10.1.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -302,7 +303,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 1
+        "y": 10
       },
       "hiddenSeries": false,
       "id": 19,
@@ -324,7 +325,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "10.1.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -401,7 +402,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 10
+        "y": 19
       },
       "id": 25,
       "panels": [],
@@ -442,6 +443,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -482,7 +484,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 11
+        "y": 20
       },
       "id": 30,
       "interval": "",
@@ -541,7 +543,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 11
+        "y": 20
       },
       "hiddenSeries": false,
       "id": 31,
@@ -563,7 +565,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "10.1.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -655,6 +657,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineStyle": {
               "fill": "solid"
@@ -694,7 +697,7 @@
         "h": 9,
         "w": 24,
         "x": 0,
-        "y": 20
+        "y": 29
       },
       "id": 33,
       "interval": "",
@@ -732,8 +735,8 @@
       "type": "timeseries"
     }
   ],
-  "refresh": false,
-  "schemaVersion": 37,
+  "refresh": "",
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [
     "opentelemetry"
@@ -742,9 +745,9 @@
     "list": [
       {
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "prometheus-app-prod-hq",
-          "value": "prometheus-app-prod-hq"
+          "value": "000000006"
         },
         "hide": 0,
         "includeAll": false,
