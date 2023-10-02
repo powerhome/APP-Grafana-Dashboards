@@ -26,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 18264,
   "graphTooltip": 0,
-  "id": 1655,
+  "id": 1781,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -474,6 +474,46 @@
                 "value": "dtdurationms"
               }
             ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Build Start"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dateTimeAsUS"
+              },
+              {
+                "id": "custom.width",
+                "value": 211
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Build Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 312
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Build Number"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 134
+              }
+            ]
           }
         ]
       },
@@ -496,7 +536,7 @@
           ],
           "show": true
         },
-        "frameIndex": 1,
+        "frameIndex": 2,
         "showHeader": true,
         "sortBy": []
       },
@@ -531,9 +571,24 @@
           "legendFormat": "__auto",
           "range": false,
           "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "${datasource}"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum by (combined_label) (label_join(label_replace(jenkins_builds_build_start_time_milliseconds{number=~\"$build_number\"}, \"build_name\", \"$1-$2\", \"jenkins_job\", \".*/([^/]+)/(?:PR-)?(main|master|[0-9]+)$\"), \"combined_label\", \":\", \"build_name\", \"number\"))",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "C"
         }
       ],
-      "title": "Average Build Duration By Build Number",
+      "title": "Average Build Duration",
       "transformations": [
         {
           "id": "merge",
@@ -556,6 +611,13 @@
                   "options": {}
                 },
                 "fieldName": "Value #A"
+              },
+              {
+                "config": {
+                  "id": "isNotNull",
+                  "options": {}
+                },
+                "fieldName": "Value #C"
               }
             ],
             "match": "all",
@@ -582,10 +644,31 @@
               "repo": true,
               "service": true
             },
-            "indexByName": {},
+            "indexByName": {
+              "Time": 1,
+              "Value #A": 16,
+              "Value #B": 18,
+              "Value #C": 0,
+              "__name__": 2,
+              "build_name": 3,
+              "buildable": 4,
+              "combined_label": 5,
+              "container": 6,
+              "endpoint": 7,
+              "instance": 8,
+              "jenkins_build_name": 17,
+              "jenkins_job": 9,
+              "job": 10,
+              "namespace": 11,
+              "number": 12,
+              "pod": 13,
+              "repo": 14,
+              "service": 15
+            },
             "renameByName": {
               "Metric": "Build",
               "Value #A": "Duration",
+              "Value #C": "Build Start",
               "Value (mean)": "Build Time",
               "jenkins_job": "Build Name",
               "namespace": "",
