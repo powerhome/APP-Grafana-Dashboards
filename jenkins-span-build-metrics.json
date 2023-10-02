@@ -54,7 +54,9 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "inspect": false
           },
           "mappings": [],
@@ -92,8 +94,10 @@
                 }
               },
               {
-                "id": "custom.displayMode",
-                "value": "color-text"
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
               }
             ]
           },
@@ -115,8 +119,10 @@
                 }
               },
               {
-                "id": "custom.displayMode",
-                "value": "color-text"
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
               }
             ]
           },
@@ -138,8 +144,10 @@
                 }
               },
               {
-                "id": "custom.displayMode",
-                "value": "color-text"
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
               }
             ]
           },
@@ -172,8 +180,10 @@
                 }
               },
               {
-                "id": "custom.displayMode",
-                "value": "color-text"
+                "id": "custom.cellOptions",
+                "value": {
+                  "type": "color-text"
+                }
               }
             ]
           },
@@ -208,14 +218,16 @@
         ]
       },
       "gridPos": {
-        "h": 10,
-        "w": 12,
+        "h": 8,
+        "w": 24,
         "x": 0,
         "y": 1
       },
       "id": 36,
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -226,7 +238,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
@@ -419,131 +431,6 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
-      "description": "Inform the kubernetes cluster where the build ran",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "left",
-            "displayMode": "auto",
-            "filterable": true,
-            "inspect": false
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "string"
-        },
-        "overrides": [
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Build Time"
-            },
-            "properties": [
-              {
-                "id": "custom.displayMode",
-                "value": "color-background-solid"
-              },
-              {
-                "id": "color",
-                "value": {
-                  "mode": "continuous-reds"
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "gridPos": {
-        "h": 10,
-        "w": 12,
-        "x": 12,
-        "y": 1
-      },
-      "id": 38,
-      "options": {
-        "footer": {
-          "fields": "",
-          "reducer": [
-            "mean"
-          ],
-          "show": false
-        },
-        "frameIndex": 30,
-        "showHeader": true
-      },
-      "pluginVersion": "9.3.6",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "sum by (build_name, build_number, kubernetes_cluster) (calls_total{build_name=~\"$build_name\",build_number=~\"$build_number\"})",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "legendFormat": "__auto",
-          "range": false,
-          "refId": "A"
-        }
-      ],
-      "title": "Build Cluster",
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "Value": true
-            },
-            "indexByName": {},
-            "renameByName": {
-              "Metric": "Build",
-              "Value (mean)": "Build Time",
-              "build_name": "Build Name",
-              "build_number": "Build Number",
-              "combined_label": "Build",
-              "kubernetes_cluster": "Cluster"
-            }
-          }
-        },
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "desc": true,
-                "field": "Build"
-              }
-            ]
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "${datasource}"
-      },
       "description": "Average build duration, filterable by build name and number.",
       "fieldConfig": {
         "defaults": {
@@ -552,10 +439,13 @@
           },
           "custom": {
             "align": "left",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": true,
             "inspect": false
           },
+          "decimals": 1,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -588,14 +478,16 @@
         ]
       },
       "gridPos": {
-        "h": 11,
+        "h": 10,
         "w": 12,
         "x": 0,
-        "y": 11
+        "y": 9
       },
       "id": 31,
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
           "fields": [
             "Value #A"
           ],
@@ -608,7 +500,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
@@ -721,7 +613,7 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
-      "description": "Average build duration, filterable by build name.",
+      "description": "Inform the kubernetes cluster where the build ran",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -729,7 +621,9 @@
           },
           "custom": {
             "align": "left",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": true,
             "inspect": false
           },
@@ -753,37 +647,47 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Duration"
+              "options": "Build Time"
             },
             "properties": [
               {
-                "id": "unit",
-                "value": "dtdurationms"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "color-background"
+                }
+              },
+              {
+                "id": "color",
+                "value": {
+                  "mode": "continuous-reds"
+                }
               }
             ]
           }
         ]
       },
       "gridPos": {
-        "h": 11,
+        "h": 10,
         "w": 12,
         "x": 12,
-        "y": 11
+        "y": 9
       },
-      "id": 39,
+      "id": 38,
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "mean"
           ],
-          "show": true
+          "show": false
         },
-        "frameIndex": 1,
-        "showHeader": true,
-        "sortBy": []
+        "frameIndex": 30,
+        "showHeader": true
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
@@ -792,115 +696,32 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "label_join(label_replace(jenkins_builds_build_duration_milliseconds{number=~\"$build_number\"}, \"build_name\", \"$1-$2\", \"jenkins_job\", \".*/([^/]+)/(?:PR-)?(main|master|[0-9]+)$\"), \"combined_label\", \":\", \"build_name\", \"number\")",
+          "expr": "sum by (build_name, build_number, kubernetes_cluster) (calls_total{build_name=~\"$build_name\",build_number=~\"$build_number\"})",
           "format": "table",
           "hide": false,
           "instant": true,
           "legendFormat": "__auto",
           "range": false,
           "refId": "A"
-        },
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "${datasource}"
-          },
-          "editorMode": "code",
-          "exemplar": false,
-          "expr": "sum by (jenkins_build_name, combined_label) (label_join(label_replace(calls_total{service_name=~\"jenkins\", build_name=~\"$build_name\", build_number=~\"$build_number\"}, \"jenkins_build_name\", \"$1-$2\", \"build_name\", \"^(.+?)(?:(?:-|-pr-)(main|master|[0-9]+))$\"), \"combined_label\", \":\", \"jenkins_build_name\", \"build_number\"))",
-          "format": "table",
-          "hide": false,
-          "instant": true,
-          "legendFormat": "__auto",
-          "range": false,
-          "refId": "B"
         }
       ],
-      "title": "Average Build Duration By Build Name",
+      "title": "Build Cluster",
       "transformations": [
-        {
-          "id": "merge",
-          "options": {}
-        },
-        {
-          "id": "filterByValue",
-          "options": {
-            "filters": [
-              {
-                "config": {
-                  "id": "isNotNull",
-                  "options": {}
-                },
-                "fieldName": "Value #B"
-              },
-              {
-                "config": {
-                  "id": "isNotNull",
-                  "options": {}
-                },
-                "fieldName": "Value #A"
-              }
-            ],
-            "match": "all",
-            "type": "include"
-          }
-        },
-        {
-          "id": "groupBy",
-          "options": {
-            "fields": {
-              "Build Name": {
-                "aggregations": [],
-                "operation": "groupby"
-              },
-              "Duration": {
-                "aggregations": [
-                  "mean"
-                ],
-                "operation": "aggregate"
-              },
-              "Value #A": {
-                "aggregations": [
-                  "mean"
-                ],
-                "operation": "aggregate"
-              },
-              "jenkins_job": {
-                "aggregations": [],
-                "operation": "groupby"
-              }
-            }
-          }
-        },
         {
           "id": "organize",
           "options": {
             "excludeByName": {
               "Time": true,
-              "Value #B": true,
-              "__name__": true,
-              "build_name": true,
-              "buildable": true,
-              "combined_label": true,
-              "container": true,
-              "endpoint": true,
-              "instance": true,
-              "jenkins_build_name": true,
-              "job": true,
-              "namespace": true,
-              "pod": true,
-              "repo": true,
-              "service": true
+              "Value": true
             },
             "indexByName": {},
             "renameByName": {
               "Metric": "Build",
-              "Value #A": "Duration",
-              "Value #A (mean)": "Duration",
               "Value (mean)": "Build Time",
-              "jenkins_job": "Build Name",
-              "namespace": "",
-              "number": "Build Number"
+              "build_name": "Build Name",
+              "build_number": "Build Number",
+              "combined_label": "Build",
+              "kubernetes_cluster": "Cluster"
             }
           }
         },
@@ -911,7 +732,7 @@
             "sort": [
               {
                 "desc": true,
-                "field": "Duration"
+                "field": "Build Number"
               }
             ]
           }
@@ -929,7 +750,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 22
+        "y": 19
       },
       "id": 20,
       "panels": [],
@@ -958,10 +779,13 @@
           },
           "custom": {
             "align": "left",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "filterable": true,
             "inspect": false
           },
+          "decimals": 1,
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -997,11 +821,13 @@
         "h": 10,
         "w": 24,
         "x": 0,
-        "y": 23
+        "y": 20
       },
       "id": 34,
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "mean"
@@ -1010,7 +836,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
@@ -1075,6 +901,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1113,7 +940,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 33
+        "y": 30
       },
       "id": 26,
       "interval": "5m",
@@ -1199,6 +1026,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1237,7 +1065,7 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 45
+        "y": 42
       },
       "id": 28,
       "interval": "5m",
@@ -1323,6 +1151,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1361,7 +1190,7 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 45
+        "y": 42
       },
       "id": 29,
       "interval": "5m",
@@ -1432,7 +1261,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 54
+        "y": 51
       },
       "id": 14,
       "panels": [],
@@ -1461,7 +1290,9 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "inspect": false
           },
           "mappings": [],
@@ -1488,8 +1319,11 @@
             },
             "properties": [
               {
-                "id": "custom.displayMode",
-                "value": "color-background-solid"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "color-background"
+                }
               },
               {
                 "id": "color",
@@ -1506,8 +1340,11 @@
             },
             "properties": [
               {
-                "id": "custom.displayMode",
-                "value": "lcd-gauge"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "lcd",
+                  "type": "gauge"
+                }
               },
               {
                 "id": "color",
@@ -1535,12 +1372,14 @@
         "h": 9,
         "w": 12,
         "x": 0,
-        "y": 55
+        "y": 52
       },
       "id": 22,
       "interval": "5m",
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -1550,7 +1389,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
@@ -1687,7 +1526,9 @@
           },
           "custom": {
             "align": "auto",
-            "displayMode": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
             "inspect": false
           },
           "mappings": [],
@@ -1714,8 +1555,11 @@
             },
             "properties": [
               {
-                "id": "custom.displayMode",
-                "value": "lcd-gauge"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "lcd",
+                  "type": "gauge"
+                }
               },
               {
                 "id": "color",
@@ -1732,8 +1576,11 @@
             },
             "properties": [
               {
-                "id": "custom.displayMode",
-                "value": "color-background-solid"
+                "id": "custom.cellOptions",
+                "value": {
+                  "mode": "basic",
+                  "type": "color-background"
+                }
               },
               {
                 "id": "color",
@@ -1761,12 +1608,14 @@
         "h": 9,
         "w": 12,
         "x": 12,
-        "y": 55
+        "y": 52
       },
       "id": 27,
       "interval": "5m",
       "options": {
+        "cellHeight": "sm",
         "footer": {
+          "countRows": false,
           "fields": "",
           "reducer": [
             "sum"
@@ -1776,7 +1625,7 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
@@ -1867,8 +1716,8 @@
       "type": "table"
     }
   ],
-  "refresh": false,
-  "schemaVersion": 37,
+  "refresh": "",
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [],
   "templating": {
@@ -1877,7 +1726,7 @@
         "current": {
           "selected": false,
           "text": "prometheus-app-prod-hq",
-          "value": "prometheus-app-prod-hq"
+          "value": "000000006"
         },
         "hide": 0,
         "includeAll": false,
@@ -1966,7 +1815,7 @@
         "name": "filter",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "",
             "value": ""
           }
