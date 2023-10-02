@@ -388,27 +388,21 @@
           }
         },
         {
-          "id": "convertFieldType",
-          "options": {
-            "conversions": [
-              {
-                "destinationType": "string",
-                "targetField": "Value #C"
-              },
-              {
-                "destinationType": "string",
-                "targetField": "Build (count)"
-              }
-            ],
-            "fields": {}
-          }
-        },
-        {
           "id": "groupingToMatrix",
           "options": {
             "columnField": "Value #C",
             "rowField": "Job",
             "valueField": "Build (count)"
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "mode": "reduceRow",
+            "reduce": {
+              "include": [],
+              "reducer": "sum"
+            }
           }
         },
         {
@@ -1131,8 +1125,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1256,8 +1249,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1383,8 +1375,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -1619,8 +1610,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
