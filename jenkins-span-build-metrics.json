@@ -277,7 +277,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (jenkins_build_name, combined_label) (label_join(label_replace(calls_total{service_name=~\"jenkins\", build_name=~\"$build_name\", build_number=~\"$build_number\"}, \"jenkins_build_name\", \"$1-$2\", \"build_name\", \"^(.+?)(?:(?:-|-pr-)(main|master|[0-9]+))$\"), \"combined_label\", \":\", \"jenkins_build_name\", \"build_number\"))",
+          "expr": "sum by (jenkins_build_name, combined_label) (label_join(label_replace(increase(calls_total{service_name=~\"jenkins\", build_name=~\"$build_name\", build_number=~\"$build_number\"}[$__range]), \"jenkins_build_name\", \"$1-$2\", \"build_name\", \"^(.+?)(?:(?:-|-pr-)(main|master|[0-9]+))$\"), \"combined_label\", \":\", \"jenkins_build_name\", \"build_number\"))",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -558,7 +558,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (jenkins_build_name, combined_label) (label_join(label_replace(calls_total{service_name=~\"jenkins\", build_name=~\"$build_name\", build_number=~\"$build_number\"}, \"jenkins_build_name\", \"$1-$2\", \"build_name\", \"^(.+?)(?:(?:-|-pr-)(main|master|[0-9]+))$\"), \"combined_label\", \":\", \"jenkins_build_name\", \"build_number\"))",
+          "expr": "sum by (jenkins_build_name, combined_label) (label_join(label_replace(increase(calls_total{service_name=~\"jenkins\", build_name=~\"$build_name\", build_number=~\"$build_number\"}[$__range]), \"jenkins_build_name\", \"$1-$2\", \"build_name\", \"^(.+?)(?:(?:-|-pr-)(main|master|[0-9]+))$\"), \"combined_label\", \":\", \"jenkins_build_name\", \"build_number\"))",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -773,7 +773,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sum by (build_name, build_number, kubernetes_cluster) (calls_total{build_name=~\"$build_name\",build_number=~\"$build_number\"})",
+          "expr": "sum by (build_name, build_number, kubernetes_cluster) (increase(calls_total{build_name=~\"$build_name\",build_number=~\"$build_number\"}[$__range]))",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -923,7 +923,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "topk(10, avg by (build_name, build_number, span_name) (duration_milliseconds_sum{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name=~\"$operation\", span_name!~\"^(Agent|Parallel branch:.*|.*bin/cobra.*)\"} / duration_milliseconds_count{build_name=~\"$build_name\", build_number=~\"$build_number\",service_name=~\"jenkins\",  span_name=~\"$operation\", span_name!~\"^(Agent|Parallel branch:.*|.*bin/cobra.*)\"}))",
+          "expr": "topk(10, avg by (build_name, build_number, span_name) (increase(duration_milliseconds_sum{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name=~\"$operation\"}[$__range]) / increase(duration_milliseconds_count{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name=~\"$operation\"}[$__range]) > 0))",
           "format": "table",
           "hide": false,
           "instant": true,
@@ -1142,38 +1142,14 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
+            "mode": "thresholds"
           },
           "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 15,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
             },
-            "insertNulls": false,
-            "lineInterpolation": "smooth",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": true,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
+            "inspect": false
           },
           "mappings": [],
           "thresholds": {
@@ -1202,22 +1178,18 @@
       "id": 26,
       "interval": "5m",
       "options": {
-        "legend": {
-          "calcs": [
-            "mean"
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
           ],
-          "displayMode": "table",
-          "placement": "bottom",
-          "showLegend": true,
-          "sortBy": "Mean",
-          "sortDesc": true
+          "show": false
         },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
+        "showHeader": true
       },
-      "pluginVersion": "9.3.6",
+      "pluginVersion": "10.1.2",
       "targets": [
         {
           "datasource": {
@@ -1226,22 +1198,29 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "topk(50, avg by (build_name, span_name) (duration_milliseconds_sum{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name!=\"Agent\", span_name!~\".*Parallel branch:.*\", span_name!~\".*bin/cobra.*\",span_name=~\"$operation\"} / duration_milliseconds_count{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name!=\"Agent\", span_name!~\".*Parallel branch:.*\", span_name!~\".*bin/cobra.*\",span_name=~\"$operation\"}))",
-          "format": "time_series",
-          "instant": false,
+          "expr": "topk(10, avg by (build_name, span_name) (increase(duration_milliseconds_sum{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name!~\"^(Agent|Parallel branch:.*|.*bin/cobra.*)\", span_name=~\"$operation\"}[$__range]) / increase(duration_milliseconds_count{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name!~\"^(Agent|Parallel branch:.*|.*bin/cobra.*)\", span_name=~\"$operation\"}[$__range]) > 0))",
+          "format": "table",
+          "instant": true,
           "interval": "",
-          "legendFormat": "{{build_name}} {{build_number}}: {{span_name}}",
-          "range": true,
+          "legendFormat": "{{build_name}} : {{span_name}}",
+          "range": false,
           "refId": "A"
         }
       ],
-      "title": "All Operation Durations",
+      "title": "Operations By Build Name",
       "transformations": [
         {
-          "id": "renameByRegex",
+          "id": "organize",
           "options": {
-            "regex": "(.{200}).*",
-            "renamePattern": "$1..."
+            "excludeByName": {
+              "Time": true
+            },
+            "indexByName": {},
+            "renameByName": {
+              "Value": "Avg Duration",
+              "build_name": "Build Name",
+              "span_name": "Operation"
+            }
           }
         },
         {
@@ -1250,13 +1229,14 @@
             "fields": {},
             "sort": [
               {
-                "field": "Time"
+                "desc": true,
+                "field": "Duration"
               }
             ]
           }
         }
       ],
-      "type": "timeseries"
+      "type": "table"
     }
   ],
   "refresh": "",
