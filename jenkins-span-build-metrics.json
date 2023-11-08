@@ -239,9 +239,9 @@
           "exemplar": false,
           "expr": "topk(10, avg by (build_name, span_name) (duration_milliseconds_sum{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name!=\"Agent\", span_name!~\".*Parallel branch:.*\", span_name!~\".*bin/cobra.*\",span_name=~\"$operation\"} / duration_milliseconds_count{build_name=~\"$build_name\", build_number=~\"$build_number\",service_name=~\"jenkins\", span_name!=\"Agent\", span_name!~\".*Parallel branch:.*\", span_name!~\".*bin/cobra.*\",span_name=~\"$operation\"}))",
           "hide": false,
-          "instant": false,
+          "instant": true,
           "legendFormat": "{{span_name}}",
-          "range": true,
+          "range": false,
           "refId": "A"
         }
       ],
@@ -1262,6 +1262,6 @@
   "timezone": "",
   "title": "Jenkins Span Build Dashboard",
   "uid": "lUhxZIrVk",
-  "version": 14,
+  "version": 15,
   "weekStart": ""
 }
