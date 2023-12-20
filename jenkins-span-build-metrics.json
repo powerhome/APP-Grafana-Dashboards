@@ -1056,7 +1056,7 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
-      "description": "Shows the top 25 errors spans.",
+      "description": "Shows the top 30 errors spans.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1087,25 +1087,7 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "bRate"
-            },
-            "properties": [
-              {
-                "id": "custom.displayMode",
-                "value": "lcd-gauge"
-              },
-              {
-                "id": "color",
-                "value": {
-                  "mode": "continuous-YlRd"
-                }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "eRate"
+              "options": "Count"
             },
             "properties": [
               {
@@ -1115,20 +1097,8 @@
               {
                 "id": "color",
                 "value": {
-                  "mode": "continuous-YlRd"
+                  "mode": "continuous-reds"
                 }
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Span Count"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 667
               }
             ]
           }
@@ -1162,7 +1132,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "topk(25, sum(calls_total{status_code=\"STATUS_CODE_ERROR\",service_name=~\"jenkins\", span_name=~\"$operation\",build_name=~\"$build_name\",build_number=~\"$build_number\"}) by (span_name,build_name))",
+          "expr": "topk(30, count(calls_total{status_code=\"STATUS_CODE_ERROR\",service_name=~\"jenkins\", span_name=~\"$operation\",build_name=~\"$build_name\",build_number=~\"$build_number\"}) by (span_name,build_name))",
           "format": "table",
           "hide": false,
           "instant": false,
@@ -1172,59 +1142,38 @@
           "refId": "Rate"
         }
       ],
-      "title": "Top 25 Error Count by Operation",
+      "title": "Top 30 Error Count by Operation",
       "transformations": [
         {
-          "id": "calculateField",
+          "id": "groupBy",
           "options": {
-            "alias": "eRate",
-            "mode": "reduceRow",
-            "reduce": {
-              "include": [
-                "Value"
-              ],
-              "reducer": "sum"
+            "fields": {
+              "Value": {
+                "aggregations": [
+                  "sum"
+                ],
+                "operation": "aggregate"
+              },
+              "build_name": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "span_name": {
+                "aggregations": [],
+                "operation": "groupby"
+              }
             }
           }
         },
         {
           "id": "organize",
           "options": {
-            "excludeByName": {
-              "Error Rate": true,
-              "Error Span Count": true,
-              "Rate": true,
-              "Time": true,
-              "Value": true,
-              "bRate": false,
-              "build_name 1": false,
-              "build_name 2": false,
-              "build_number 1": true,
-              "build_number 2": true
-            },
-            "indexByName": {
-              "Error Service": 5,
-              "Error Span Count": 6,
-              "Service": 4,
-              "Span Count": 3,
-              "bRate": 0,
-              "build_name 1": 7,
-              "build_name 2": 8,
-              "eRate": 1,
-              "span_name": 2
-            },
+            "excludeByName": {},
+            "indexByName": {},
             "renameByName": {
-              "Error Span Count": "",
-              "Rate in Service": "Service",
-              "Service": "",
-              "Time": "",
-              "bRate": "Span Count",
+              "Value (sum)": "Count",
               "build_name": "Build Name",
-              "build_name 1": "Build Name",
-              "build_name 2": "Error Build Name",
-              "eRate": "Error Count",
-              "operation": "Operation Name",
-              "span_name": "Span Name"
+              "span_name": "Operation"
             }
           }
         },
@@ -1235,7 +1184,7 @@
             "sort": [
               {
                 "desc": true,
-                "field": "Error Span Count"
+                "field": "Count"
               }
             ]
           }
