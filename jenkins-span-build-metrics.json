@@ -26,7 +26,7 @@
   "fiscalYearStartMonth": 0,
   "gnetId": 18264,
   "graphTooltip": 0,
-  "id": 1631,
+  "id": 1915,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -82,10 +82,6 @@
             },
             "properties": [
               {
-                "id": "unit",
-                "value": "ms"
-              },
-              {
                 "id": "custom.displayMode",
                 "value": "color-background-solid"
               },
@@ -94,6 +90,10 @@
                 "value": {
                   "mode": "continuous-reds"
                 }
+              },
+              {
+                "id": "unit",
+                "value": "ms"
               }
             ]
           },
@@ -105,7 +105,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 191
+                "value": 175
               }
             ]
           },
@@ -117,7 +117,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 134
+                "value": 156
               }
             ]
           },
@@ -129,7 +129,7 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 835
+                "value": 523
               }
             ]
           }
@@ -162,11 +162,11 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "topk(30, duration_milliseconds_sum{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name!=\"Agent\", span_name!~\".*Parallel branch:.*\", span_name!~\".*bin/cobra.*\", span_name=~\"$operation\"} / duration_milliseconds_count{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name!=\"Agent\", span_name!~\".*Parallel branch:.*\", span_name!~\".*bin/cobra.*\", span_name=~\"$operation\"})",
+          "expr": "topk(30, duration_milliseconds_sum{build_name=~\"$build_name\", build_number=~\"$build_number\", service_name=~\"jenkins\", span_name!=\"Agent\", span_name=~\"$operation\"} / duration_milliseconds_count{build_name=~\"$build_name\", build_number=~\"$build_number\",service_name=~\"jenkins\", span_name!=\"Agent\", span_name=~\"$operation\"})",
           "format": "table",
           "hide": false,
           "instant": true,
-          "legendFormat": "__auto",
+          "legendFormat": "{{span_name}}",
           "range": false,
           "refId": "A"
         }
@@ -199,18 +199,6 @@
               "build_number": "Build Number",
               "span_name": "Operation"
             }
-          }
-        },
-        {
-          "id": "sortBy",
-          "options": {
-            "fields": {},
-            "sort": [
-              {
-                "desc": true,
-                "field": "Duration"
-              }
-            ]
           }
         }
       ],
@@ -295,8 +283,11 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "expr": "duration_milliseconds_sum{span_name=~\"Agent\",build_name=~\"$build_name\",build_number=~\"$build_number\"}",
+          "exemplar": false,
+          "expr": "max by (build_name, build_number) (duration_milliseconds_sum{span_name=~\"Agent\",build_name=~\"$build_name\",build_number=~\"$build_number\"})",
+          "format": "time_series",
           "hide": false,
+          "instant": false,
           "legendFormat": "{{build_name}}: {{build_number}}",
           "range": true,
           "refId": "A"
@@ -356,7 +347,7 @@
         "type": "prometheus",
         "uid": "${datasource}"
       },
-      "description": "Inform the kubernetes cluster where the build ran",
+      "description": "Cluster used on each build.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -409,12 +400,10 @@
             "uid": "${datasource}"
           },
           "editorMode": "code",
-          "exemplar": false,
-          "expr": "sum by (build_name, build_number, kubernetes_cluster) (increase(calls_total{build_name=~\"$build_name\",build_number=~\"$build_number\"}[$__range]))",
+          "expr": "max by (build_name, build_number, kubernetes_cluster) (calls_total{build_name=~\"$build_name\", build_number=~\"$build_number\"})",
           "format": "table",
-          "instant": true,
           "legendFormat": "__auto",
-          "range": false,
+          "range": true,
           "refId": "A"
         }
       ],
@@ -432,6 +421,25 @@
               "build_name": "Build Name",
               "build_number": "Build Number",
               "kubernetes_cluster": "Cluster"
+            }
+          }
+        },
+        {
+          "id": "groupBy",
+          "options": {
+            "fields": {
+              "Build Name": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "Build Number": {
+                "aggregations": [],
+                "operation": "groupby"
+              },
+              "Cluster": {
+                "aggregations": [],
+                "operation": "groupby"
+              }
             }
           }
         },
@@ -920,8 +928,20 @@
               {
                 "id": "color",
                 "value": {
-                  "mode": "continuous-purples"
+                  "mode": "continuous-BlPu"
                 }
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Build Name"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 195
               }
             ]
           }
@@ -955,84 +975,51 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "topk(30, count(calls_total{service_name=~\"jenkins\", span_name=~\"$operation\",build_name=~\"$build_name\",build_number=~\"$build_number\"}) by (span_name,build_name)) ",
+          "expr": "topk(30, count by (span_name,build_name) (rate(calls_total{service_name=~\"jenkins\", span_name=~\"$operation\",build_name=~\"$build_name\",build_number=~\"$build_number\"}[$__range]))) ",
           "format": "table",
           "hide": false,
-          "instant": false,
+          "instant": true,
           "interval": "",
           "legendFormat": "__auto",
-          "range": true,
+          "range": false,
           "refId": "Rate"
         }
       ],
       "title": "Top 30 Span Count By Operation",
       "transformations": [
         {
-          "id": "groupBy",
-          "options": {
-            "fields": {
-              "Build Name": {
-                "aggregations": [],
-                "operation": "groupby"
-              },
-              "Count": {
-                "aggregations": [
-                  "sum"
-                ],
-                "operation": "aggregate"
-              },
-              "Operation": {
-                "aggregations": [],
-                "operation": "groupby"
-              },
-              "Value": {
-                "aggregations": [
-                  "sum"
-                ],
-                "operation": "aggregate"
-              },
-              "build_name": {
-                "aggregations": [],
-                "operation": "groupby"
-              },
-              "span_name": {
-                "aggregations": [],
-                "operation": "groupby"
-              }
-            }
-          }
-        },
-        {
           "id": "organize",
           "options": {
             "excludeByName": {
+              "Error Rate": true,
+              "Error Span Count": true,
+              "Rate": true,
               "Time": true,
-              "Time 1": true,
-              "Time 2": true,
-              "Value #Rate": false,
-              "build_name 1": false
+              "Value": false,
+              "bRate": false,
+              "build_name 1": false,
+              "build_name 2": false,
+              "build_number 1": true,
+              "build_number 2": true
             },
             "indexByName": {
-              "Time": 2,
+              "Time": 0,
               "Value": 3,
-              "build_name": 0,
-              "span_name": 1
+              "build_name": 1,
+              "span_name": 2
             },
             "renameByName": {
-              "Time": "",
-              "Time 1": "",
-              "Time 2": "",
+              "Error Span Count": "",
+              "Rate in Service": "Service",
+              "Service": "",
               "Value": "Count",
-              "Value #Error Rate": "",
-              "Value #Rate": "",
-              "Value (sum)": "Count",
+              "bRate": "Span Count",
               "build_name": "Build Name",
-              "build_name 1": "",
-              "build_name 2": "",
-              "build_number 2": "",
-              "service_name 1": "Service",
-              "service_name 2": "Error Service",
-              "span_name": "Operation"
+              "build_name 1": "Build Name",
+              "build_name 2": "Error Build Name",
+              "eRate": "Error Span Count",
+              "operation": "Operation Name",
+              "span_name": "Span Name"
             }
           }
         },
@@ -1097,7 +1084,7 @@
               {
                 "id": "color",
                 "value": {
-                  "mode": "continuous-reds"
+                  "mode": "continuous-YlRd"
                 }
               }
             ]
@@ -1132,48 +1119,52 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "topk(30, count(calls_total{status_code=\"STATUS_CODE_ERROR\",service_name=~\"jenkins\", span_name=~\"$operation\",build_name=~\"$build_name\",build_number=~\"$build_number\"}) by (span_name,build_name))",
+          "expr": "topk(30, count by (span_name, build_name) (rate(calls_total{status_code=\"STATUS_CODE_ERROR\",service_name=~\"jenkins\", span_name=~\"$operation\", build_name=~\"$build_name\", build_number=~\"$build_number\"}[$__range]))) ",
           "format": "table",
           "hide": false,
-          "instant": false,
+          "instant": true,
           "interval": "",
-          "legendFormat": "",
-          "range": true,
+          "legendFormat": "__auto",
+          "range": false,
           "refId": "Rate"
         }
       ],
       "title": "Top 30 Error Count by Operation",
       "transformations": [
         {
-          "id": "groupBy",
-          "options": {
-            "fields": {
-              "Value": {
-                "aggregations": [
-                  "sum"
-                ],
-                "operation": "aggregate"
-              },
-              "build_name": {
-                "aggregations": [],
-                "operation": "groupby"
-              },
-              "span_name": {
-                "aggregations": [],
-                "operation": "groupby"
-              }
-            }
-          }
-        },
-        {
           "id": "organize",
           "options": {
-            "excludeByName": {},
-            "indexByName": {},
+            "excludeByName": {
+              "Error Rate": true,
+              "Error Span Count": true,
+              "Rate": true,
+              "Time": true,
+              "Value": false,
+              "bRate": false,
+              "build_name 1": false,
+              "build_name 2": false,
+              "build_number 1": true,
+              "build_number 2": true
+            },
+            "indexByName": {
+              "Time": 0,
+              "Value": 3,
+              "build_name": 1,
+              "span_name": 2
+            },
             "renameByName": {
-              "Value (sum)": "Count",
+              "Error Span Count": "",
+              "Rate in Service": "Service",
+              "Service": "",
+              "Time": "",
+              "Value": "Count",
+              "bRate": "Span Count",
               "build_name": "Build Name",
-              "span_name": "Operation"
+              "build_name 1": "Build Name",
+              "build_name 2": "Error Build Name",
+              "eRate": "Error Count",
+              "operation": "Operation Name",
+              "span_name": "Span Name"
             }
           }
         },
