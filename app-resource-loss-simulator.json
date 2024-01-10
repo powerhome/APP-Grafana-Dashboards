@@ -29,7 +29,7 @@
   "liveNow": false,
   "panels": [
     {
-      "collapsed": true,
+      "collapsed": false,
       "datasource": {
         "type": "prometheus",
         "uid": "000000006"
@@ -41,42 +41,7 @@
         "y": 0
       },
       "id": 30,
-      "panels": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "000000006"
-          },
-          "gridPos": {
-            "h": 10,
-            "w": 24,
-            "x": 0,
-            "y": 1
-          },
-          "id": 28,
-          "options": {
-            "code": {
-              "language": "plaintext",
-              "showLineNumbers": false,
-              "showMiniMap": false
-            },
-            "content": "This Dashboard was created to consider the worst possible scenario, which means it uses the worst possible values. It will calculate `TotalWrks - (SumTopN + SumPods) = Remaining`, where:\n* `TotalWrks` - Total sum of workers resources\n* `SumTopN` - Sum of the top N workers with the most amount of resources (CPU or memory) in the loss scenario where N is the value of `Simulated work loss`\n* `SumPods` - The max value of sum of resource requested of pods during the time slot selected \n* `Remaining` - The remaining available resource for the scenario.\n\n## Time window\nIt's best to select a large enough range since it uses the worst value. During tests, we found that **7** days was a good range. Just be mindful of the `Min interval` that was added to reduce spikes.\n\n## Select the number of Simulated worker loss\nWe left that value flexible because we have heterogeneous clusters where `app-prod-*` are composed of baremetal workers and `app-beta-*` mostly virtualized workers with the exception of `app-beta-hq` which has a big baremetal dell. For the worker loss we need to consider the physical server and because of that on `app-beta-*` can be 1 or 2 workers per physical server.",
-            "mode": "markdown"
-          },
-          "pluginVersion": "9.3.6",
-          "targets": [
-            {
-              "datasource": {
-                "type": "prometheus",
-                "uid": "000000006"
-              },
-              "refId": "A"
-            }
-          ],
-          "transparent": true,
-          "type": "text"
-        }
-      ],
+      "panels": [],
       "targets": [
         {
           "datasource": {
@@ -90,6 +55,40 @@
       "type": "row"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "000000006"
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
+      "id": 28,
+      "options": {
+        "code": {
+          "language": "plaintext",
+          "showLineNumbers": false,
+          "showMiniMap": false
+        },
+        "content": "This Dashboard was created to consider the worst possible scenario, which means it uses the worst possible values. It will calculate `TotalWrks - (SumTopN + SumPods) = Remaining`, where:\n* `TotalWrks` - Total sum of workers resources\n* `SumTopN` - Sum of the top N workers with the most amount of resources (CPU or memory) in the loss scenario where N is the value of `Simulated work loss`\n* `SumPods` - The max value of sum of resource requested of pods during the time slot selected \n* `Remaining` - The remaining available resource for the scenario.\n\n## Time window\nIt's best to select a large enough range since it uses the worst value. During tests, we found that **7** days was a good range. Just be mindful of the `Min interval` that was added to reduce spikes.\n\n## Select the number of Simulated worker loss\nWe left that value flexible because we have heterogeneous clusters where `app-prod-*` are composed of baremetal workers and `app-beta-*` mostly virtualized workers with the exception of `app-beta-hq` which has a big baremetal dell. For the worker loss we need to consider the physical server and because of that on `app-beta-*` can be 1 or 2 workers per physical server.",
+        "mode": "markdown"
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "000000006"
+          },
+          "refId": "A"
+        }
+      ],
+      "transparent": true,
+      "type": "text"
+    },
+    {
       "collapsed": false,
       "datasource": {
         "type": "prometheus",
@@ -99,7 +98,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 1
+        "y": 11
       },
       "id": 2,
       "panels": [],
@@ -202,7 +201,7 @@
         "h": 4,
         "w": 12,
         "x": 0,
-        "y": 2
+        "y": 12
       },
       "id": 14,
       "interval": "$min_interval",
@@ -412,7 +411,7 @@
         "h": 4,
         "w": 12,
         "x": 12,
-        "y": 2
+        "y": 12
       },
       "id": 13,
       "interval": "$min_interval",
@@ -545,14 +544,14 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
-            "prometheus-app-prod-hq",
-            "prometheus-app-prod-gm"
+            "prometheus-app-prod-gm",
+            "prometheus-app-prod-hq"
           ],
           "value": [
-            "prometheus-app-prod-hq",
-            "prometheus-app-prod-gm"
+            "prometheus-app-prod-gm",
+            "prometheus-app-prod-hq"
           ]
         },
         "hide": 0,
@@ -569,7 +568,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "1",
           "value": "1"
         },
@@ -616,7 +615,7 @@
         "auto_count": 10,
         "auto_min": "10s",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "1h",
           "value": "1h"
         },
@@ -675,12 +674,12 @@
     ]
   },
   "time": {
-    "from": "now-2d",
+    "from": "now-7d",
     "to": "now"
   },
   "timepicker": {},
   "timezone": "",
-  "title": "PAC Resource Loss Simulator",
+  "title": "PAC Resource Loss Simulator v2",
   "uid": "5g0bD1u7k",
   "version": 2,
   "weekStart": ""
