@@ -24,6 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
+  "id": 2110,
   "links": [],
   "liveNow": false,
   "panels": [
@@ -225,8 +226,9 @@
           "datasource": {
             "uid": "${datasource}"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(max(machine_cpu_cores{node=~\".*app-worker.*\"}) by (node))",
+          "expr": "sum(max(kube_node_status_allocatable{resource=\"cpu\",node=~\".*app-worker.*\"}) by (node))",
           "format": "time_series",
           "instant": false,
           "interval": "",
@@ -237,8 +239,9 @@
           "datasource": {
             "uid": "${datasource}"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(topk($spare_workers, max(machine_cpu_cores{node=~\".*app-worker.*\"}) by (node))) or vector(0)",
+          "expr": "sum(topk($spare_workers, max(kube_node_status_allocatable{resource=\"cpu\",node=~\".*app-worker.*\"}) by (node))) or vector(0)",
           "hide": false,
           "instant": false,
           "interval": "",
@@ -435,21 +438,25 @@
           "datasource": {
             "uid": "${datasource}"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(max(machine_memory_bytes{node=~\".*app-worker.*\"}) by (node))",
+          "expr": "sum(max(kube_node_status_allocatable{resource=\"memory\",node=~\".*app-worker.*\"}) by (node))",
           "interval": "",
           "legendFormat": "sum of workers memory",
+          "range": true,
           "refId": "A"
         },
         {
           "datasource": {
             "uid": "${datasource}"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum(topk($spare_workers, max(machine_memory_bytes{node=~\".*app-worker.*\"}) by (node))) or vector(0)",
+          "expr": "sum(topk($spare_workers, max(kube_node_status_allocatable{resource=\"memory\",node=~\".*app-worker.*\"}) by (node))) or vector(0)",
           "hide": false,
           "interval": "",
           "legendFormat": "sum of biggest spare workers memory",
+          "range": true,
           "refId": "B"
         },
         {
@@ -537,14 +544,14 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
-            "prometheus-app-prod-hq",
-            "prometheus-app-prod-gm"
+            "prometheus-app-prod-gm",
+            "prometheus-app-prod-hq"
           ],
           "value": [
-            "prometheus-app-prod-hq",
-            "prometheus-app-prod-gm"
+            "prometheus-app-prod-gm",
+            "prometheus-app-prod-hq"
           ]
         },
         "hide": 0,
@@ -561,7 +568,7 @@
       },
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "1",
           "value": "1"
         },
@@ -608,7 +615,7 @@
         "auto_count": 10,
         "auto_min": "10s",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "1h",
           "value": "1h"
         },
@@ -672,8 +679,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "APP Resource Loss Simulator",
+  "title": "PAC Resource Loss Simulator",
   "uid": "5g0bD1u7k",
-  "version": 1,
+  "version": 2,
   "weekStart": ""
 }
