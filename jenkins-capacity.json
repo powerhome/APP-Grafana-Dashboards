@@ -3,7 +3,10 @@
     "list": [
       {
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -20,16 +23,17 @@
   },
   "editable": true,
   "fiscalYearStartMonth": 0,
-  "gnetId": null,
   "graphTooltip": 0,
-  "id": 1145,
-  "iteration": 1665061479260,
+  "id": 1825,
   "links": [],
   "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "datasource",
+        "uid": "grafana"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -39,11 +43,23 @@
       "id": 75,
       "panels": [],
       "repeat": "datasource",
+      "targets": [
+        {
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "$datasource",
       "type": "row"
     },
     {
-      "datasource": "$datasource",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -76,7 +92,7 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 8,
+        "w": 7,
         "x": 0,
         "y": 1
       },
@@ -95,25 +111,118 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.2.3",
-      "repeat": "typePhysical",
-      "repeatDirection": "h",
+      "pluginVersion": "9.3.6",
       "targets": [
         {
-          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"requests.$typePhysical\"}\n)\n/\nsum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"hard\",resource=\"requests.$typePhysical\"}\n)\n*100",
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"requests.memory\"}\n)\n/\nsum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"hard\",resource=\"requests.memory\"}\n)\n*100",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
+          "legendFormat": "requests.memory",
           "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"limits.memory\"}\n)\n/\nsum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"hard\",resource=\"limits.memory\"}\n)\n*100",
+          "hide": false,
+          "legendFormat": "limits.memory",
+          "range": true,
+          "refId": "B"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Quota: requests.$typePhysical",
+      "title": "Current Memory Quota",
       "type": "gauge"
     },
     {
-      "datasource": "$datasource",
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "decimals": 2,
+          "displayName": "requests.cpu",
+          "mappings": [],
+          "max": 100,
+          "min": 0,
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "#EAB839",
+                "value": 75
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 7,
+        "y": 1
+      },
+      "id": 145,
+      "links": [],
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "last"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true,
+        "text": {}
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"requests.cpu\"}\n)\n/\nsum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"hard\",resource=\"requests.cpu\"}\n)\n*100",
+          "format": "time_series",
+          "instant": true,
+          "intervalFactor": 1,
+          "legendFormat": "requests.cpu",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Current CPU Quota",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -146,11 +255,11 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 8,
-        "x": 0,
-        "y": 2
+        "w": 7,
+        "x": 10,
+        "y": 1
       },
-      "id": 2,
+      "id": 136,
       "links": [],
       "options": {
         "orientation": "auto",
@@ -165,31 +274,381 @@
         "showThresholdMarkers": true,
         "text": {}
       },
-      "pluginVersion": "8.2.3",
-      "repeat": "typePhysical",
-      "repeatDirection": "h",
+      "pluginVersion": "9.3.6",
       "targets": [
         {
-          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"limits.$typePhysical\"}\n)\n/\nsum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"hard\",resource=\"limits.$typePhysical\"}\n)\n*100",
+          "datasource": {
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"requests.ephemeral-storage\"}\n)\n/\nsum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"hard\",resource=\"requests.ephemeral-storage\"}\n)\n*100",
           "format": "time_series",
           "instant": true,
           "intervalFactor": 1,
+          "legendFormat": "requests.ephemeral-storage",
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "sum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"used\",resource=\"limits.ephemeral-storage\"}\n)\n/\nsum(\n    kube_resourcequota{namespace=~\"$namespace\",type=\"hard\",resource=\"limits.ephemeral-storage\"}\n)\n*100",
+          "hide": false,
+          "legendFormat": "limits.ephemeral-storage",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "Current Ephemeral Storage Quota",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "displayMode": "auto",
+            "inspect": false
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 15,
+        "w": 7,
+        "x": 17,
+        "y": 1
+      },
+      "id": 193,
+      "links": [],
+      "options": {
+        "footer": {
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true,
+        "sortBy": []
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "kube_resourcequota{namespace=\"jenkins-builds\", type=\"hard\"}",
+          "format": "table",
+          "hide": false,
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
           "refId": "A"
         }
       ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "Quota: limits.$typePhysical",
-      "type": "gauge"
+      "title": "Current Quota Hard",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "__name__": true,
+              "container": true,
+              "endpoint": true,
+              "instance": true,
+              "job": true,
+              "namespace": true,
+              "pod": true,
+              "resource": false,
+              "resourcequota": true,
+              "service": true,
+              "type": true
+            },
+            "indexByName": {},
+            "renameByName": {}
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "none"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 8,
+        "x": 0,
+        "y": 6
+      },
+      "id": 169,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "kube_resourcequota{namespace=\"jenkins-builds\", resource=\"requests.cpu\", type=\"used\"}",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "requests.cpu USED",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "kube_resourcequota{namespace=\"jenkins-builds\", resource=\"requests.cpu\", type=\"hard\"}",
+          "format": "time_series",
+          "hide": false,
+          "legendFormat": "requests.cpu LIMIT",
+          "range": true,
+          "refId": "B"
+        }
+      ],
+      "title": "CPU Quota Range",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "$datasource"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "decimals": 2,
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "bytes"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 10,
+        "w": 9,
+        "x": 8,
+        "y": 6
+      },
+      "id": 180,
+      "links": [],
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "pluginVersion": "9.3.6",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "kube_resourcequota{namespace=\"jenkins-builds\", resource=\"requests.memory\", type=\"used\"}",
+          "format": "time_series",
+          "hide": false,
+          "instant": false,
+          "legendFormat": "requests.memory USED",
+          "range": true,
+          "refId": "A"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "kube_resourcequota{namespace=\"jenkins-builds\", resource=\"requests.memory\", type=\"hard\"}",
+          "format": "time_series",
+          "hide": false,
+          "legendFormat": "requests.memory LIMIT",
+          "range": true,
+          "refId": "B"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "kube_resourcequota{namespace=\"jenkins-builds\", resource=\"limits.memory\", type=\"used\"}",
+          "hide": false,
+          "legendFormat": "limits.memory USED",
+          "range": true,
+          "refId": "C"
+        },
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "$datasource"
+          },
+          "editorMode": "code",
+          "expr": "kube_resourcequota{namespace=\"jenkins-builds\", resource=\"limits.memory\", type=\"hard\"}",
+          "hide": false,
+          "legendFormat": "limits.memory LIMIT",
+          "range": true,
+          "refId": "D"
+        }
+      ],
+      "title": "Memory Quota Range",
+      "type": "timeseries"
     }
   ],
-  "refresh": "10s",
-  "schemaVersion": 1,
+  "refresh": "",
+  "schemaVersion": 37,
   "style": "dark",
   "tags": [],
   "templating": {
     "list": [
       {
+        "allFormat": "glob",
         "current": {
           "selected": true,
           "text": [
@@ -199,11 +658,8 @@
             "$__all"
           ]
         },
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
-        "label": null,
         "multi": true,
         "name": "datasource",
         "options": [],
@@ -215,14 +671,12 @@
         "type": "datasource"
       },
       {
-        "allValue": null,
+        "allFormat": "glob",
         "current": {
           "selected": false,
           "text": "All",
           "value": "$__all"
         },
-        "description": null,
-        "error": null,
         "hide": 2,
         "includeAll": true,
         "label": "Type Physical",
@@ -255,16 +709,16 @@
         "type": "custom"
       },
       {
-        "allValue": null,
+        "allFormat": "glob",
         "current": {
           "selected": false,
           "text": "jenkins-builds",
           "value": "jenkins-builds"
         },
-        "datasource": "$datasource",
+        "datasource": {
+          "uid": "$datasource"
+        },
         "definition": "label_values({__name__=~\"kube_pod_info|kube_resourcequota\"}, namespace)",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Namespace",
@@ -318,5 +772,6 @@
   "timezone": "",
   "title": "Jenkins Capacity",
   "uid": "BFnCww44z",
-  "version": 4
+  "version": 1,
+  "weekStart": ""
 }
