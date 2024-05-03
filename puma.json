@@ -68,7 +68,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "puma_backlog{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}",
+          "expr": "sum by (pod)(puma_backlog{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"})",
           "interval": "",
           "legendFormat": "{{ pod }}",
           "refId": "A"
@@ -165,7 +165,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "puma_pool_capacity{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}",
+          "expr": "sum by (pod)(puma_pool_capacity{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"})",
           "interval": "",
           "legendFormat": "{{ pod }}",
           "refId": "A"
@@ -279,7 +279,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "expr": "increase(puma_requests_count{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}[1m])",
+          "expr": "sum by (pod)(increase(puma_requests_count{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}[1m]))",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{ pod }}",
@@ -368,7 +368,7 @@
       "pluginVersion": "7.0.3",
       "targets": [
         {
-          "expr": "increase(puma_requests_count{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}[$__range])",
+          "expr": "sum by (pod)(increase(puma_requests_count{namespace=~\"$namespace\",job=~\".*$job.*\",pod=~\".*$filter.*\",pod=~\"$pod\"}[$__range]))",
           "format": "time_series",
           "interval": "",
           "legendFormat": "{{ pod }}",
